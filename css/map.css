@@ -160,13 +160,16 @@ path.shadow.selected {
 
 path.area.stroke {
     stroke: white;
-    stroke-width: 1;
+    stroke-width: 2;
 }
 
 path.area.fill {
-    fill:#fff;
-    fill-opacity:0.3;
+    fill: none;
     fill-rule: evenodd;
+    fill-opacity: 0.3;
+    stroke: #fff;
+    stroke-width: 30px;
+    stroke-opacity: 0.3;
 }
 
 path.line.stroke {
@@ -178,36 +181,37 @@ path.stroke.tag-natural {
     stroke: #b6e199;
 }
 path.fill.tag-natural {
-    fill: #b6e199;
+    stroke: #b6e199;
 }
 
 path.stroke.tag-natural-water {
     stroke: #77d3de;
 }
 path.fill.tag-natural-water {
-    fill: #77d3de;
+    stroke: #77d3de;
 }
 
 path.stroke.tag-amenity-school {
     stroke: #ffff94;
 }
 path.fill.tag-amenity-school {
-    fill: #ffff94;
-    fill-opacity: 0.2;
+    stroke: #ffff94;
+    stroke-opacity: 0.2;
 }
 
 path.stroke.tag-amenity-university {
     stroke: #ffff94;
 }
 path.fill.tag-amenity-university {
-    fill: #ffff94;
-    fill-opacity: 0.1;
+    stroke: #ffff94;
+    stroke-opacity: 0.1;
 }
 
 path.stroke.tag-building {
     stroke: #e06e5f;
 }
 path.fill.tag-building {
+    stroke: none;
     fill: #e06e5f;
 }
 
@@ -266,15 +270,14 @@ path.fill.tag-natural-grassland,
 path.fill.tag-natural-grass,
 path.fill.tag-leisure-pitch,
 path.fill.tag-leisure-park {
-    fill: #8cd05f;
-    fill-opacity: 0.2;
+    stroke: #8cd05f;
 }
 
 path.fill.tag-landuse-retail,
 path.fill.tag-landuse-residential,
 path.fill.tag-landuse-commercial,
 path.fill.tag-landuse-industrial {
-    fill-opacity: 0.1;
+    stroke-opacity: 0.1;
 }
 
 path.fill.tag-natural-wetland,
@@ -287,7 +290,7 @@ path.fill.tag-landuse-farmland,
 path.fill.tag-landuse-construction,
 path.fill.tag-landuse-orchard {
     /* background color is applied a further opacity later */
-    fill-opacity: 0.8;
+    stroke-opacity: 0.8;
 }
 
 .pattern-color-beach,
@@ -299,100 +302,96 @@ path.fill.tag-landuse-orchard {
 .pattern-color-farmland,
 .pattern-color-construction,
 .pattern-color-orchard {
-    fill-opacity: 0.2;
+    stroke-opacity: 0.2;
 }
 
 path.fill.tag-landuse-basin,
 path.fill.tag-landuse-reservoir {
-    fill: #77d3de;
+    stroke: #77d3de;
 }
 
 path.fill.tag-landuse-quarry {
-    fill: #a6957b;
+    stroke: #a6957b;
 }
 
 path.fill.tag-landuse-residential {
-    fill: #e06e5f;
+    stroke: #e06e5f;
 }
 
 path.fill.tag-landuse-farm,
 path.fill.tag-landuse-farmland {
-    fill: url(#pattern-farmland) #8cd05f;
+    stroke: url(#pattern-farmland) #8cd05f;
 }
 
 .pattern-color-farm,
 .pattern-color-farmland {
-    fill: url(#pattern-farmland) #8cd05f;
+    stroke: url(#pattern-farmland) #8cd05f;
 }
 
 path.fill.tag-landuse-meadow {
-    fill: url(#pattern-meadow) #b6e199;
+    stroke: url(#pattern-meadow) #b6e199;
 }
 .pattern-color-meadow {
-    fill: #b6e199;
+    stroke: #b6e199;
 }
 
 path.fill.tag-natural-wetland {
-    fill: url(#pattern-wetland) #b6e199;
+    stroke: url(#pattern-wetland) #b6e199;
 }
 .pattern-color-wetland {
-    fill: #B6E199;
+    stroke: #B6E199;
 }
 
 path.fill.tag-natural-beach {
-    fill: url(#pattern-beach) #ffff7e;
+    stroke: url(#pattern-beach) #ffff7e;
 }
 .pattern-color-beach {
-    fill: #ffff7e;
+    stroke: #ffff7e;
 }
 
 path.fill.tag-natural-scrub {
-    fill: url(#pattern-scrub) #dbf08b;
+    stroke: url(#pattern-scrub) #dbf08b;
 }
 .pattern-color-scrub {
-    fill: #dbf08b;
+    stroke: #dbf08b;
 }
 
 path.fill.tag-landuse-cemetery {
-    fill: url(#pattern-cemetery) #8cd05f;
+    stroke: url(#pattern-cemetery) #8cd05f;
 }
 .pattern-color-cemetery {
-    fill: #8cd05f
+    stroke: #8cd05f
 }
 
 path.fill.tag-landuse-orchard {
-    fill: url(#pattern-orchard) #8cd05f;
+    stroke: url(#pattern-orchard) #8cd05f;
 }
 .pattern-color-orchard {
-    fill: #8cd05f
+    stroke: #8cd05f
 }
 
 path.fill.tag-landuse-construction {
-    fill: url(#pattern-construction) #e06e5f;
+    stroke: url(#pattern-construction) #e06e5f;
 }
 .pattern-color-construction {
-    fill: #e06e5f;
+    stroke: #e06e5f;
 }
 
 path.fill.tag-landuse-retail,
 path.fill.tag-landuse-commercial {
-    fill: #eab056;
+    stroke: #eab056;
 }
 
 path.fill.tag-landuse-industrial {
-    fill: #e4a4f5;
+    stroke: #e4a4f5;
 }
 
 path.stroke.tag-amenity-parking {
     stroke: #aaa;
 }
 path.fill.tag-amenity-parking {
+    stroke: none;
     fill: #aaa;
-}
-
-path.fill.tag-place,
-path.fill.tag-boundary {
-    fill: none;
 }
 
 /* highways */

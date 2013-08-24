@@ -73,6 +73,23 @@ iD.svg.Areas = function(projection) {
             }
         }
 
+        var clipPaths = surface.selectAll('defs')
+            .selectAll('.clipPath')
+            .filter(filter)
+            .data(data.stroke, iD.Entity.key);
+
+        clipPaths.enter()
+            .append('clipPath')
+            .attr('class', 'clipPath')
+            .attr('id', function(entity) { return entity.id + '-clippath'; })
+            .append('path');
+
+        clipPaths.selectAll('path')
+            .attr('d', path);
+
+        clipPaths.exit()
+            .remove();
+
         var paths = surface.selectAll('.layer-shadow, .layer-stroke, .layer-fill')
             .selectAll('path.area')
             .filter(filter)
@@ -84,6 +101,7 @@ iD.svg.Areas = function(projection) {
                 var layer = this.parentNode.__data__;
 
                 this.setAttribute('class', entity.type + ' area ' + layer + ' ' + entity.id);
+                this.setAttribute('clip-path', 'url(#' + entity.id + '-clippath)');
 
                 if (layer === 'fill') {
                     setPattern.apply(this, arguments);
