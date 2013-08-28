@@ -2,6 +2,13 @@ var fs = require('fs');
 var sources = require('editor-imagery-index/imagery.json');
 var imagery = [];
 
+var feature = {
+    "Bing aerial imagery": true,
+    "OpenStreetMap (Mapnik)": true,
+    "USGS Topographic Maps": true,
+    "Locator Overlay": true
+};
+
 // CENSORSHIP! No, these are just layers that essentially duplicate other layers
 // or which have no clear use case.
 var censor = {
@@ -38,7 +45,8 @@ sources.forEach(function(source) {
         type: source.type
     };
 
-    if (description[im.name]) im.description = description[im.name];
+    if (source.name in feature) im.featured = true;
+    if (source.name in description) im.description = description[im.name];
 
     im.template = source.url;
 

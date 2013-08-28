@@ -58,6 +58,10 @@ iD.ui = function(context) {
 
         content.append('div')
             .style('display', 'none')
+            .attr('class', 'background-wrap fillL col5 content');
+
+        content.append('div')
+            .style('display', 'none')
             .attr('class', 'help-wrap fillL col5 content');
 
         var controls = bar.append('div')

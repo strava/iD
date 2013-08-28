@@ -7,9 +7,11 @@ iD.ui.Background = function(context) {
             ['right', [-1, 0]],
             ['bottom', [0, 1]]],
         opacityDefault = (context.storage('background-opacity') != undefined) ?
-            (+context.storage('background-opacity')) : 0.5;
+            (+context.storage('background-opacity')) : 0.5,
+        projection = d3.geo.mercator();
 
     function background(selection) {
+        var shown = false;
 
         function setOpacity(d) {
             context.container().selectAll('.background-layer')
@@ -28,7 +30,7 @@ iD.ui.Background = function(context) {
                 return context.background().showsLayer(d);
             }
 
-            content.selectAll('label.layer, label.custom_layer')
+            pane.selectAll('.layer, .custom_layer')
                 .classed('active', active)
                 .selectAll('input')
                 .property('checked', active);
@@ -68,35 +70,64 @@ iD.ui.Background = function(context) {
         function drawList(layerList, type, change, filter) {
             var sources = context.background()
                 .sources(context.map().extent())
-                .filter(filter);
+                .filter(filter)
+                .sort(function(a, b) {
+                    return +(b.featured || 0) - +(a.featured || 0);
+                });
 
-            var layerLinks = layerList.selectAll('label.layer')
+            var layerLinks = layerList.selectAll('li.layer')
                 .data(sources, function(d) { return d.name; });
 
-            var layerInner = layerLinks.enter()
-                .insert('label', '.custom_layer')
+            var enter = layerLinks.enter()
+                .insert('li', '.custom_layer')
                 .attr('class', 'layer');
 
-            // only set tooltips for layers with tooltips
-            layerInner
-                .filter(function(d) { return d.description; })
+            enter.filter(function(d) { return d.description; })
                 .call(bootstrap.tooltip()
                     .title(function(d) { return d.description; })
-                    .placement('left'));
+                    .placement('bottom'));
 
-            layerInner.append('input')
+            layerLinks
+                .order()
+                .each(function(d) {
+                    if (!d.featured) return;
+
+                    var minimap = d3.select(this)
+                        .selectAll('.minimap')
+                        .data([0]);
+
+                    minimap.enter().append('div')
+                        .attr('class', 'minimap');
+
+                    var dimensions = minimap.dimensions();
+
+                    projection
+                        .scale(context.projection.scale() / 8)
+                        .center(context.map().center())
+                        .translate([dimensions[0] / 2, dimensions[1] / 2])
+                        .translate(projection([0, 0])) // compute appropriate translate
+                        .center([0, 0]); // reset
+
+                    minimap.call(iD.TileLayer()
+                        .projection(projection)
+                        .dimensions(dimensions)
+                        .source(d));
+                });
+
+            var label = enter.append('label');
+
+            label.append('input')
                 .attr('type', type)
                 .attr('name', 'layers')
-                .attr('value', function(d) { return d.name; })
                 .on('change', change);
 
-            layerInner.append('span')
+            label.append('span')
                 .text(function(d) { return d.name; });
 
             layerLinks.exit()
                 .remove();
 
-            layerList.style('display', layerList.selectAll('label.layer').data().length > 0 ? 'block' : 'none');
+            layerList.style('display', layerList.selectAll('li.layer').data().length > 0 ? 'block' : 'none');
         }
 
         function update() {
@@ -136,21 +167,14 @@ iD.ui.Background = function(context) {
             }
         }
 
-        var content = selection.append('div')
-                .attr('class', 'fillL map-overlay content hide'),
-            tooltip = bootstrap.tooltip()
-                .placement('left')
-                .html(true)
-                .title(iD.ui.tooltipHtml(t('background.description'), key));
-
-        function hide() { setVisible(false); }
+        function hide() {
+            setVisible(false);
+        }
 
         function toggle() {
             if (d3.event) d3.event.preventDefault();
             tooltip.hide(button);
-            var visible = !button.classed('active');
-            setVisible(visible);
-            if (visible) content.selectAll('.toggle-list label:first-child').node().focus();
+            setVisible(!button.classed('active'));
         }
 
         function setVisible(show) {
@@ -159,103 +183,119 @@ iD.ui.Background = function(context) {
                 shown = show;
 
                 if (show) {
-                    selection.on('mousedown.background-inside', function() {
-                        return d3.event.stopPropagation();
-                    });
-                    content.style('display', 'block')
-                        .style('left', '0px')
+                    pane.style('display', 'block')
+                        .style('right', '-500px')
                         .transition()
                         .duration(200)
-                        .style('left', '-260px');
+                        .style('right', '0px');
+
+                    context.map()
+                        .on('move.background-update', _.debounce(update, 1000));
+
+                    update();
+
                 } else {
-                    content.style('display', 'block')
-                        .style('left', '-260px')
+                    pane.style('right', '0px')
                         .transition()
                         .duration(200)
-                        .style('left', '0px')
+                        .style('right', '-500px')
                         .each('end', function() {
                             d3.select(this).style('display', 'none');
                         });
-                    selection.on('mousedown.background-inside', null);
+
+                    context.map()
+                        .on('move.background-update', null);
                 }
             }
         }
 
+        var tooltip = bootstrap.tooltip()
+            .placement('left')
+            .html(true)
+            .title(iD.ui.tooltipHtml(t('background.description'), key));
+
         var button = selection.append('button')
-                .attr('tabindex', -1)
-                .on('click', toggle)
-                .call(tooltip),
-            opa = content
-                .append('div')
-                .attr('class', 'opacity-options-wrapper'),
-            shown = false;
+            .attr('tabindex', -1)
+            .on('click', toggle)
+            .call(tooltip);
 
         button.append('span')
             .attr('class', 'icon layers light');
 
-        opa.append('h4')
-            .text(t('background.title'));
+        var pane = context.container()
+            .select('.background-wrap');
 
-        var opacityList = opa.append('ul')
+        var inner = pane.append('div')
+            .attr('class', 'background-wrap-inner');
+
+        var opacityList = inner.append('ul')
             .attr('class', 'opacity-options');
 
         opacityList.selectAll('div.opacity')
             .data(opacities)
             .enter()
             .append('li')
-            .attr('data-original-title', function(d) {
-                return t('background.percent_brightness', { opacity: (d * 100) });
-            })
             .on('click.set-opacity', setOpacity)
             .html("<div class='select-box'></div>")
             .call(bootstrap.tooltip()
-                .placement('top'))
+                .placement('bottom')
+                .title(function(d) {
+                    return t('background.percent_brightness', { opacity: (d * 100) });
+                }))
             .append('div')
             .attr('class', 'opacity')
             .style('opacity', String);
 
-        var backgroundList = content
-            .append('div')
-            .attr('class', 'toggle-list layer-list');
+        inner.append('h4')
+            .text(t('background.title'));
 
-        var custom = backgroundList
-            .append('label')
+        var backgroundList = inner.append('ul')
+            .attr('class', 'layer-list');
+
+        var custom = backgroundList.append('li')
             .attr('class', 'custom_layer')
             .datum({name: 'Custom'});
 
-        custom.append('input')
+        var label = custom.append('label');
+
+        label.append('input')
             .attr('type', 'radio')
             .attr('name', 'layers')
             .on('change', clickCustom);
 
-        custom.append('span')
+        label.append('span')
             .text(t('background.custom'));
 
-        var overlayList = content
-            .append('div')
-            .attr('class', 'toggle-list layer-list');
+        inner.append('h4')
+            .text('Overlays');
 
-        var gpxLayerItem = content
-            .append('div')
+        var overlayList = inner.append('ul')
+            .attr('class', 'layer-list');
+
+        inner.append('h4')
+            .text('GPX');
+
+        var gpxLayerItem = inner.append('ul')
             .style('display', iD.detect().filedrop ? 'block' : 'none')
-            .attr('class', 'toggle-list layer-list')
-            .append('label')
+            .attr('class', 'layer-list')
+            .append('li')
             .classed('layer-toggle-gpx', true);
 
         gpxLayerItem.call(bootstrap.tooltip()
             .title(t('gpx.drag_drop'))
-            .placement('left'));
+            .placement('bottom'));
 
-        gpxLayerItem.append('input')
+        label = gpxLayerItem.append('label');
+
+        label.append('input')
             .attr('type', 'checkbox')
             .property('disabled', true)
             .on('change', clickGpx);
 
-        gpxLayerItem.append('span')
+        label.append('span')
             .text(t('gpx.local_layer'));
 
-        gpxLayerItem
-            .append('button')
+        label.append('button')
             .attr('class', 'minor layer-extent')
             .on('click', function() {
                 d3.event.preventDefault();
@@ -263,36 +303,18 @@ iD.ui.Background = function(context) {
                 context.background().zoomToGpxLayer();
             })
             .append('span')
-                .attr('class', 'icon geocode' );
+            .attr('class', 'icon geocode' );
 
-        var adjustments = content
-            .append('div')
+        var adjustments = pane.append('div')
             .attr('class', 'adjustments');
 
-        adjustments.append('a')
-            .text(t('background.fix_misalignment'))
-            .attr('href', '#')
-            .classed('hide-toggle', true)
-            .classed('expanded', false)
-            .on('click', function() {
-                var exp = d3.select(this).classed('expanded');
-                nudgeContainer.style('display', exp ? 'none' : 'block');
-                d3.select(this).classed('expanded', !exp);
-                d3.event.preventDefault();
-            });
-
-        var nudgeContainer = adjustments
-            .append('div')
-            .attr('class', 'nudge-container cf')
-            .style('display', 'none');
-
-        nudgeContainer.selectAll('button')
-            .data(directions).enter()
-            .append('button')
+        adjustments.selectAll('button')
+            .data(directions)
+            .enter().append('button')
             .attr('class', function(d) { return d[0] + ' nudge'; })
             .on('mousedown', clickNudge);
 
-        var resetButton = nudgeContainer.append('button')
+        var resetButton = adjustments.append('button')
             .attr('class', 'reset disabled')
             .on('click', function () {
                 context.background().offset([0, 0]);
@@ -304,21 +326,26 @@ iD.ui.Background = function(context) {
 
         resetButton.call(bootstrap.tooltip()
             .title(t('background.reset'))
-            .placement('bottom'));
+            .placement('top'));
 
-        context.map()
-            .on('move.background-update', _.debounce(update, 1000));
-        update();
         setOpacity(opacityDefault);
 
-        var keybinding = d3.keybinding('background');
-        keybinding.on(key, toggle);
+        var keybinding = d3.keybinding('background')
+            .on(key, toggle);
 
         d3.select(document)
             .call(keybinding);
 
         context.surface().on('mousedown.background-outside', hide);
         context.container().on('mousedown.background-outside', hide);
+
+        pane.on('mousedown.help-inside', function() {
+            return d3.event.stopPropagation();
+        });
+
+        selection.on('mousedown.background-inside', function() {
+            return d3.event.stopPropagation();
+        });
     }
 
     return background;

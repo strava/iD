@@ -1792,17 +1792,6 @@ img.wiki-image {
     background: #7092ff;
 }
 
-.map-overlay {
-    z-index: -1;
-    right: 75%;
-    max-width: 260px;
-    min-width: 210px;
-    position: fixed;
-    left: 30px;
-    display: block;
-    padding: 10px 10px 0 10px;
-}
-
 /* Zoomer */
 
 .zoombuttons button.zoom-in {
@@ -1811,41 +1800,163 @@ img.wiki-image {
 
 /* Background Settings */
 
+.background-wrap {
+    position: fixed;
+    top: 60px;
+    bottom: 30px;
+    right: 0;
+    width: 300px;
+}
 
-.toggle-list.layer-list {
+.background-wrap-inner {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 40px;
+    right: 0;
+    padding: 20px 50px 20px 20px;
+    overflow-y: scroll;
+}
+
+.opacity-options {
+    float: right;
+    background: url(img/background-pattern-opacity.png) 0 0 repeat;
+    height: 20px;
+    width: 62px;
+    border: 1px solid #ccc;
+}
+
+.opacity-options li {
+    height: 100%;
+    display: block;
+    float: left;
+}
+
+.opacity-options li .select-box {
+    position: absolute;
+    width: 20px;
+    height: 18px;
+    z-index: 9999;
+}
+
+.opacity-options li .opacity {
+    display: inline-block;
+    width: 20px;
+    height: 18px;
+    background: #222;
+}
+
+.opacity-options li:hover .select-box,
+.opacity-options li.active .select-box {
+    border: 2px solid #7092ff;
+    background: rgba(89, 123, 231, .5);
+    opacity: .5;
+}
+
+.opacity-options li.active:hover .select-box,
+.opacity-options li.active .select-box {
+    opacity: 1;
+}
+
+.layer-list li {
+    position: relative;
+    border: 1px solid #ccc;
+    border-radius: 4px;
     margin-bottom: 10px;
+}
+
+.layer-list .minimap {
+    height: 50px;
+    position: relative;
+    overflow: hidden;
+    background: #888;
+}
+
+.layer-list label {
+    padding: 5px 10px;
+    display: block;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.layer-list > li.active {
+    background: #E8EBFF;
+}
+
+.layer-toggle-gpx .layer-extent {
+    border-left: 1px solid #CCC;
+    border-radius: 0 4px 4px 0;
+}
+
+.layer-toggle-gpx.selected .layer-extent {
+    display: inline-block;
 }
 
 .background-control button {
     border-radius: 4px 0 0 0;
 }
 
-
-.background-control button.active {
-    border-radius: 0;
-}
-
 .background-control {
     position: relative;
 }
 
-.background-control .map-overlay {
+.adjustments {
+    height: 40px;
     position: absolute;
-    top: 0;
-}
-
-.nudge-container {
+    bottom: 0;
+    width: 100%;
     border-top: 1px solid #CCC;
-    margin: 0 -10px;
 }
 
-.background-control .adjustments button:last-child {
+.adjustments button {
+    float: left;
+    display: block;
+    width:20%;
+    border-radius: 0;
+    border-right: 1px solid #CCC;
+    position: relative;
+}
+
+.adjustments button:last-child {
     border: 0;
 }
 
-.background-control .hide-toggle  {
-    padding-bottom: 10px;
+.adjustments .nudge::after {
+    content: '';
+    display: block;
+    position: absolute;
+    margin: auto;
+    left: 0; right: 0; top: 0; bottom: 0;
+    height: 0;
+    width: 0;
 }
+
+.adjustments .nudge.left::after {
+    border-top:  5px solid transparent;
+    border-bottom:  5px solid transparent;
+    border-left:  5px solid #222;
+}
+
+.adjustments .nudge.right::after {
+    border-top:  5px solid transparent;
+    border-bottom:  5px solid transparent;
+    border-right:  5px solid #222;
+}
+
+.adjustments .nudge.top::after {
+    border-right:  5px solid transparent;
+    border-left:  5px solid transparent;
+    border-bottom:  5px solid #222;
+}
+
+.adjustments .nudge.bottom::after {
+    border-right:  5px solid transparent;
+    border-left:  5px solid transparent;
+    border-top:  5px solid #222;
+}
+
+/* Hide toggle */
 
 .hide-toggle {
     display: block;
@@ -1871,100 +1982,6 @@ img.wiki-image {
     border-bottom: 0;
     border-right:  4px solid transparent;
     border-left:  4px solid transparent;
-}
-
-.background-control .nudge-container button {
-    float: left;
-    display: block;
-    width:20%;
-    border-radius: 0;
-    border-right: 1px solid #CCC;
-    position: relative;
-}
-
-.background-control .nudge::after {
-    content: '';
-    display: block;
-    position: absolute;
-    margin: auto;
-    left: 0; right: 0; top: 0; bottom: 0;
-    height: 0;
-    width: 0;
-}
-
-.background-control .nudge.left::after {
-    border-top:  5px solid transparent;
-    border-bottom:  5px solid transparent;
-    border-left:  5px solid #222;
-}
-
-.background-control .nudge.right::after {
-    border-top:  5px solid transparent;
-    border-bottom:  5px solid transparent;
-    border-right:  5px solid #222;
-}
-
-.background-control .nudge.top::after {
-    border-right:  5px solid transparent;
-    border-left:  5px solid transparent;
-    border-bottom:  5px solid #222;
-}
-
-.background-control .nudge.bottom::after {
-    border-right:  5px solid transparent;
-    border-left:  5px solid transparent;
-    border-top:  5px solid #222;
-}
-
-.opacity-options {
-    background: url(img/background-pattern-opacity.png) 0 0 repeat;
-    height:20px;
-    width:62px;
-    position: absolute;
-    right: 10px;
-    top: 10px;
-    border: 1px solid #ccc;
-}
-
-.opacity-options li {
-    height: 100%;
-    display: block;
-    float: left;
-}
-
-.opacity-options li .select-box{
-    position: absolute;
-    width:20px;
-    height:18px;
-    z-index: 9999;
-}
-
-.background-control li:hover .select-box,
-.background-control li.selected .select-box {
-    border: 2px solid #7092ff;
-    background: rgba(89, 123, 231, .5);
-    opacity: .5;
-}
-
-.background-control li.selected:hover .select-box,
-.background-control li.selected .select-box {
-    opacity: 1;
-}
-
-.background-control .opacity {
-    background:#222;
-    display:inline-block;
-    width:20px;
-    height:18px;
-}
-
-.background-control .layer-toggle-gpx .layer-extent {
-    border-left: 1px solid #CCC;
-    border-radius: 0 4px 4px 0;
-}
-
-.background-control .layer-toggle-gpx.selected .layer-extent {
-    display:inline-block;
 }
 
 /* Geolocator */

@@ -257,6 +257,7 @@
     {
         "name": "Bing aerial imagery",
         "type": "bing",
+        "featured": true,
         "description": "Satellite and aerial imagery.",
         "template": "http://www.bing.com/maps/",
         "scaleExtent": [
@@ -5287,6 +5288,7 @@
     {
         "name": "Locator Overlay",
         "type": "tms",
+        "featured": true,
         "template": "http://{switch:a,b,c}.tiles.mapbox.com/v3/openstreetmap.map-btyhiati/{zoom}/{x}/{y}.png",
         "scaleExtent": [
             0,
@@ -11531,6 +11533,7 @@
     {
         "name": "OpenStreetMap (Mapnik)",
         "type": "tms",
+        "featured": true,
         "description": "The default OpenStreetMap layer.",
         "template": "http://tile.openstreetmap.org/{zoom}/{x}/{y}.png",
         "scaleExtent": [
@@ -19624,6 +19627,7 @@
     {
         "name": "USGS Topographic Maps",
         "type": "tms",
+        "featured": true,
         "template": "http://{switch:a,b,c}.tile.openstreetmap.us/usgs_scanned_topos/{zoom}/{x}/{y}.png",
         "polygon": [
             [
