@@ -6,7 +6,8 @@ var fs = require('fs'),
     jsonschema = require('jsonschema'),
     fieldSchema = require('./data/presets/schema/field.json'),
     presetSchema = require('./data/presets/schema/preset.json'),
-    suggestions = require('./data/name-suggestions.json');
+    suggestions = require('./data/name-suggestions.json'),
+    canonicalNames = require('name-suggestion-index/canonical.json');
 
 function readtxt(f) {
     return fs.readFileSync(f, 'utf8');
@@ -124,7 +125,8 @@ function suggestionsToPresets(presets) {
             icon: parent.icon,
             geometry: parent.geometry,
             fields: parent.fields,
-            suggestion: true
+            suggestion: true,
+            terms: (canonicalNames[name] && canonicalNames[name].matches) ? canonicalNames[name].matches : []
         };
 
         existing[name] = {
