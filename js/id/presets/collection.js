@@ -38,6 +38,7 @@ iD.presets.Collection = function(collection) {
 
             // matches value to preset.terms values
             var leading_terms = _.filter(searchable, function(a) {
+                if (value.length < 3) return false;
                 return _.any(a.terms() || [], leading);
             });
 
@@ -69,18 +70,21 @@ iD.presets.Collection = function(collection) {
                     };
                 }).filter(function(a) {
                     return a.dist + Math.min(value.length - a.preset.name().length, 0) < 3;
-                }).sort(function(a, b) {
-                    return a.dist - b.dist;
-                }).map(function(a) {
-                    return a.preset;
                 });
 
             // finds close matches to value in preset.terms
             var leventstein_terms = _.filter(searchable, function(a) {
-                    return _.any(a.terms() || [], function(b) {
-                        return iD.util.editDistance(value, b) + Math.min(value.length - b.length, 0) < 3;
-                    });
+                if (value.length < 3) return false;
+                return _.any(a.terms() || [], function(b) {
+                    a.editDist = iD.util.editDistance(value, b);
+                    return iD.util.editDistance(value, b) + Math.min(value.length - b.length, 0) < 2;
                 });
+            }).map(function(c) {
+                return {
+                    dist: c.editDist,
+                    preset: c
+                };
+            });
 
             function suggestionName(name) {
                 var nameArray = name.split(' - ');
@@ -97,7 +101,12 @@ iD.presets.Collection = function(collection) {
                     };
                 }).filter(function(a) {
                     return a.dist + Math.min(value.length - suggestionName(a.preset.name()).length, 0) < 1;
-                }).sort(function(a, b) {
+                });
+
+            var theLeven = levenstein_name.concat(
+                    leventstein_terms,
+                    leven_suggestions
+                ).sort(function(a, b) {
                     return a.dist - b.dist;
                 }).map(function(a) {
                     return a.preset;
@@ -105,11 +114,7 @@ iD.presets.Collection = function(collection) {
 
             var other = presets.item(geometry);
 
-            var results = theLead.concat(
-                            levenstein_name,
-                            leventstein_terms,
-                            leven_suggestions.slice(0, maxSuggestionResults)
-                        ).slice(0, maxSearchResults-1);
+            var results = theLead.concat(theLeven).slice(0, maxSearchResults-1);
 
             return iD.presets.Collection(_.unique(
                     results.concat(other)
