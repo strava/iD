@@ -1,4 +1,43 @@
 [
+        {
+        "name": "Strava Global Heat",
+        "type": "tms",
+        "template": "http://gometry.strava.com/tiles/both/color4/{zoom}/{x}/{y}.png",
+        "overlay": true,
+        "description": "Strava Global Heat",
+        "scaleExtent": [
+            13,
+            17
+        ],
+        "sourcetag": "Strava Global Heat",
+        "default": "yes"
+    },
+    {
+        "name": "Strava Cycling Heat",
+        "type": "tms",
+        "template": "http://gometry.strava.com/tiles/cycling/color4/{zoom}/{x}/{y}.png",
+        "overlay": true,
+        "description": "Strava Global Cycling Heat",
+        "scaleExtent": [
+            13,
+            17
+        ],
+        "sourcetag": "Strava Cycling Heat",
+        "default": "no"
+    },
+    {
+        "name": "Strava Running Heat",
+        "type": "tms",
+        "template": "http://gometry.strava.com/tiles/running/color4/{zoom}/{x}/{y}.png",
+        "overlay": true,
+        "description": "Strava Global Running Heat",
+        "scaleExtent": [
+            13,
+            17
+        ],
+        "sourcetag": "Strava Running Heat",
+        "default": "no"
+    },
     {
         "name": "2013 aerial imagery for San Juan County WA",
         "type": "tms",

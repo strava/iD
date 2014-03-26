@@ -21,20 +21,15 @@ iD.ui.Splash = function(context) {
         introModal.append('div')
             .attr('class','modal-section')
             .append('p')
-            .html(t('splash.text', {
-                version: iD.version,
-                website: '<a href="http://ideditor.com/">ideditor.com</a>',
-                github: '<a href="https://github.com/openstreetmap/iD">github.com</a>'
-            }));
+            .html(t('splash.text'));
 
         var buttons = introModal.append('div').attr('class', 'modal-actions cf');
 
         buttons.append('button')
-            .attr('class', 'col6 walkthrough')
+            .attr('class', 'col6')
             .text(t('splash.walkthrough'))
             .on('click', function() {
-                d3.select(document.body).call(iD.ui.intro(context));
-                modal.close();
+                window.location = 'http://labs.strava.com/slide';
             });
 
         buttons.append('button')

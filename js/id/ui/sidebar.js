@@ -3,6 +3,12 @@ iD.ui.Sidebar = function(context) {
         current;
 
     function sidebar(selection) {
+        var text = '<img src="http://labs.strava.com/img/strava-logo.png">';
+        text += '<div style="float:right; font-weight: bold; margin-top: 3px">Includes the <a href="http://labs.strava.com/slide" target="_blank">Slide add-on</a> &nbsp; </div>';
+        selection.append('div')
+            .style({position: 'absolute', 'z-index': 1000, width: '400px'})
+            .html(text);
+
         var featureListWrap = selection.append('div')
             .attr('class', 'feature-list-pane')
             .call(iD.ui.FeatureList(context));

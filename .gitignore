@@ -6,3 +6,7 @@ dist/*.js
 dist/*.css
 dist/img/*.svg
 data/data.js
+transifex.auth
+node_modules
+serve.go
+publish.sh

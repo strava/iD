@@ -384,8 +384,7 @@ window.iD = function () {
     return d3.rebind(context, dispatch, 'on');
 };
 
-
-iD.version = '1.9.7';
+iD.version = '1.9.7-slide';
 
 (function() {
     var detected = {};
