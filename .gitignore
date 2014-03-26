@@ -2,3 +2,5 @@ _site/
 *~
 *.swp
 *.swo
+serve.go
+node_modules

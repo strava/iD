@@ -86,6 +86,13 @@
             },
             "not_squarish": "This can't be made square because it is not squarish."
         },
+        "slide": {
+            "title": "Slide",
+            "description": "Slide geometry to Strava heatmap",
+            "annotation": "Slide geometry",
+            "disabled": "Select more than one vertex.",
+            "key": "D"
+        },
         "straighten": {
             "title": "Straighten",
             "description": "Straighten this line.",
@@ -300,9 +307,9 @@
         "okay": "Okay"
     },
     "splash": {
-        "welcome": "Welcome to the iD OpenStreetMap editor",
-        "text": "iD is a friendly but powerful tool for contributing to the world's best free world map. This is version {version}. For more information see {website} and report bugs at {github}.",
-        "walkthrough": "Start the Walkthrough",
+        "welcome": "Welcome to the iD editor WITH SLIDE",
+        "text": "This fork of iD includes the <a href=\"http://labs.strava.com/slide\" target=\"_blank\">Slide add-on</a>, a tool which slides ways<br />to high density corridors in <a href=\"http://strava.com\" target=\"_blank\">Strava's</a> GPS data.<br /><br /><strong>How to use</strong> &nbsp; &nbsp; <i>Select a way</i> or <i>select 2+ vertexes on the same way</i>, then run the Slide Operation.",
+        "walkthrough": "Learn more about Slide",
         "start": "Edit Now"
     },
     "source_switch": {
@@ -565,6 +572,9 @@
             "covered": {
                 "label": "Covered"
             },
+            "crop": {
+                "label": "Crop"
+            },
             "crossing": {
                 "label": "Type"
             },
@@ -605,6 +615,9 @@
             "fixme": {
                 "label": "Fix Me"
             },
+            "fuel": {
+                "label": "Fuel"
+            },
             "gauge": {
                 "label": "Gauge"
             },
@@ -630,6 +643,10 @@
             },
             "historic": {
                 "label": "Type"
+            },
+            "hoops": {
+                "label": "Hoops",
+                "placeholder": "1, 2, 4..."
             },
             "iata": {
                 "label": "IATA"
@@ -785,6 +802,9 @@
             "sac_scale": {
                 "label": "Path Difficulty"
             },
+            "seasonal": {
+                "label": "Seasonal"
+            },
             "service": {
                 "label": "Type"
             },
@@ -797,6 +817,9 @@
             "shop": {
                 "label": "Type"
             },
+            "smoking": {
+                "label": "Smoking"
+            },
             "social_facility_for": {
                 "label": "People served",
                 "placeholder": "Homeless, Disabled, Child, etc"
@@ -805,6 +828,9 @@
                 "label": "Source"
             },
             "sport": {
+                "label": "Sport"
+            },
+            "sport_ice": {
                 "label": "Sport"
             },
             "structure": {
@@ -843,6 +869,9 @@
             },
             "tree_type": {
                 "label": "Type"
+            },
+            "trees": {
+                "label": "Trees"
             },
             "tunnel": {
                 "label": "Tunnel"
@@ -974,6 +1003,10 @@
                 "name": "Bar",
                 "terms": ""
             },
+            "amenity/bbq": {
+                "name": "Barbecue/Grill",
+                "terms": "barbecue,bbq,grill"
+            },
             "amenity/bench": {
                 "name": "Bench",
                 "terms": ""
@@ -1081,6 +1114,10 @@
             "amenity/marketplace": {
                 "name": "Marketplace",
                 "terms": ""
+            },
+            "amenity/nightclub": {
+                "name": "Nightclub",
+                "terms": "disco*,night club,dancing,dance club"
             },
             "amenity/parking": {
                 "name": "Car Parking",
@@ -1886,6 +1923,10 @@
                 "name": "Industrial",
                 "terms": ""
             },
+            "landuse/landfill": {
+                "name": "Landfill",
+                "terms": "dump"
+            },
             "landuse/meadow": {
                 "name": "Meadow",
                 "terms": ""
@@ -1922,6 +1963,10 @@
                 "name": "Dog Park",
                 "terms": ""
             },
+            "leisure/firepit": {
+                "name": "Firepit",
+                "terms": "fireplace,campfire"
+            },
             "leisure/garden": {
                 "name": "Garden",
                 "terms": ""
@@ -1930,6 +1975,10 @@
                 "name": "Golf Course",
                 "terms": "links"
             },
+            "leisure/ice_rink": {
+                "name": "Ice Rink",
+                "terms": "hockey,skating,curling"
+            },
             "leisure/marina": {
                 "name": "Marina",
                 "terms": ""
@@ -1937,6 +1986,10 @@
             "leisure/park": {
                 "name": "Park",
                 "terms": "esplanade,estate,forest,garden,grass,green,grounds,lawn,lot,meadow,parkland,place,playground,plaza,pleasure garden,recreation area,square,tract,village green,woodland"
+            },
+            "leisure/picnic_table": {
+                "name": "Picnic Table",
+                "terms": "bench,table"
             },
             "leisure/pitch": {
                 "name": "Sport Pitch",
