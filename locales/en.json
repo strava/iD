@@ -71,7 +71,8 @@
                 "line": "Made a line circular.",
                 "area": "Made an area circular."
             },
-            "not_closed": "This can't be made circular because it's not a loop."
+            "not_closed": "This can't be made circular because it's not a loop.",
+            "too_large": "This can't be made circular because not enough of it is currently visible."
         },
         "orthogonalize": {
             "title": "Square",
@@ -84,7 +85,8 @@
                 "line": "Squared the corners of a line.",
                 "area": "Squared the corners of an area."
             },
-            "not_squarish": "This can't be made square because it is not squarish."
+            "not_squarish": "This can't be made square because it is not squarish.",
+            "too_large": "This can't be made square because not enough of it is currently visible."
         },
         "slide": {
             "title": "Slide",
@@ -2319,6 +2321,10 @@
                 "name": "Locality",
                 "terms": ""
             },
+            "place/neighbourhood": {
+                "name": "Neighborhood",
+                "terms": "neighbourhood"
+            },
             "place/town": {
                 "name": "Town",
                 "terms": ""
@@ -2542,6 +2548,10 @@
             "shop/florist": {
                 "name": "Florist",
                 "terms": ""
+            },
+            "shop/funeral_directors": {
+                "name": "Funeral Home",
+                "terms": "undertaker,funeral parlour,funeral parlor,memorial home"
             },
             "shop/furniture": {
                 "name": "Furniture Store",
