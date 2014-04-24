@@ -278,7 +278,8 @@
         "percent_brightness": "{opacity}% brightness",
         "none": "None",
         "custom": "Custom",
-        "custom_prompt": "Enter a tile template. Valid tokens are {z}, {x}, {y} for Z/X/Y scheme and {u} for quadtile scheme.",
+        "custom_button": "Edit custom background",
+        "custom_prompt": "Enter a tile URL template. Valid tokens are {z}, {x}, {y} for Z/X/Y scheme and {u} for quadtile scheme.",
         "fix_misalignment": "Fix alignment",
         "reset": "reset"
     },
@@ -1553,9 +1554,9 @@
                 "name": "Photographer",
                 "terms": "photographer"
             },
-            "craft/photographic_labratory": {
-                "name": "Photographic Labratory",
-                "terms": "photographic labratory,film developer"
+            "craft/photographic_laboratory": {
+                "name": "Photographic Laboratory",
+                "terms": "photographic laboratory,film developer"
             },
             "craft/plasterer": {
                 "name": "Plasterer",
@@ -1931,6 +1932,10 @@
             },
             "landuse/meadow": {
                 "name": "Meadow",
+                "terms": ""
+            },
+            "landuse/military": {
+                "name": "Military",
                 "terms": ""
             },
             "landuse/orchard": {
@@ -2640,6 +2645,10 @@
             "shop/photo": {
                 "name": "Photography Store",
                 "terms": ""
+            },
+            "shop/seafood": {
+                "name": "Seafood Shop",
+                "terms": "fishmonger"
             },
             "shop/shoes": {
                 "name": "Shoe Store",
