@@ -820,6 +820,9 @@
             "shop": {
                 "label": "Type"
             },
+            "sloped_curb": {
+                "label": "Sloped Curb"
+            },
             "smoking": {
                 "label": "Smoking"
             },
@@ -854,6 +857,9 @@
             },
             "surface": {
                 "label": "Surface"
+            },
+            "tactile_paving": {
+                "label": "Tactile Paving"
             },
             "toilets/disposal": {
                 "label": "Disposal"
@@ -1894,6 +1900,10 @@
                 "name": "Cemetery",
                 "terms": ""
             },
+            "landuse/churchyard": {
+                "name": "Churchyard",
+                "terms": ""
+            },
             "landuse/commercial": {
                 "name": "Commercial",
                 "terms": ""
@@ -2689,6 +2699,10 @@
             "shop/video": {
                 "name": "Video Store",
                 "terms": ""
+            },
+            "shop/wine": {
+                "name": "Wine Shop",
+                "terms": "winery"
             },
             "tourism": {
                 "name": "Tourism",
