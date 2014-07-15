@@ -391,10 +391,8 @@
             "address": {
                 "label": "ঠিকানা",
                 "placeholders": {
-                    "number": "১২৩",
                     "street": "স্ট্রীট",
-                    "city": "শহর",
-                    "postcode": "পিনকোড"
+                    "city": "শহর"
                 }
             },
             "aeroway": {
@@ -809,9 +807,6 @@
             "building/commercial": {
                 "name": "বানিজ্যিক ভবন"
             },
-            "building/entrance": {
-                "name": "দ্বার"
-            },
             "building/garage": {
                 "name": "গ্যারেজ"
             },
@@ -829,9 +824,6 @@
             },
             "emergency/phone": {
                 "name": "অাপদকালীন দুরভাষ"
-            },
-            "entrance": {
-                "name": "প্রবেশপথ"
             },
             "footway/crossing": {
                 "name": "ক্রসিং"

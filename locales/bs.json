@@ -458,10 +458,8 @@
             "address": {
                 "label": "Adresa",
                 "placeholders": {
-                    "number": "123",
                     "street": "Ulica",
-                    "city": "Grad",
-                    "postcode": "Poštanski broj"
+                    "city": "Grad"
                 }
             },
             "admin_level": {
@@ -1183,10 +1181,6 @@
                 "name": "Poslovna zgrada",
                 "terms": "poslovna zgrada,zgrada firme"
             },
-            "building/entrance": {
-                "name": "Ulaz",
-                "terms": "ulaz,vrata"
-            },
             "building/garage": {
                 "name": "Garaža",
                 "terms": "garaža"
@@ -1308,10 +1302,6 @@
                 "name": "Telefon za hitne slučajeve",
                 "terms": "telefon za hitne slučajeve,hitna telefonska linija"
             },
-            "entrance": {
-                "name": "Ulaz",
-                "terms": "ulaz,vrata"
-            },
             "footway/crossing": {
                 "name": "Prelaz",
                 "terms": "prelaz,pješački prelaz"
@@ -1387,10 +1377,6 @@
             "highway/motorway": {
                 "name": "Autoput",
                 "terms": "autoput,autocesta"
-            },
-            "highway/motorway_junction": {
-                "name": "Čvorište autoputa",
-                "terms": "čvorište autoceste,čvorište autoputa"
             },
             "highway/motorway_link": {
                 "name": "Poveznica na autoput",
@@ -1667,10 +1653,6 @@
             "leisure/slipway": {
                 "name": "Navoz",
                 "terms": "navoz,navoz na šine"
-            },
-            "leisure/sports_center": {
-                "name": "Sportski centar",
-                "terms": "sportski centar,centar za sport, centar za sportske aktivnosti"
             },
             "leisure/stadium": {
                 "name": "Stadion",

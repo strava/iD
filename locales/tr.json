@@ -351,10 +351,8 @@
             "address": {
                 "label": "Adres",
                 "placeholders": {
-                    "number": "123",
                     "street": "Sokak",
-                    "city": "Şehir",
-                    "postcode": "Posta kodu"
+                    "city": "Şehir"
                 }
             },
             "aerialway/capacity": {
@@ -848,9 +846,6 @@
             "building/construction": {
                 "name": "Yapı İnşaat Aşamasında"
             },
-            "building/entrance": {
-                "name": "Giriş"
-            },
             "building/garage": {
                 "name": "Garaj"
             },
@@ -952,9 +947,6 @@
             },
             "emergency/fire_hydrant": {
                 "name": "Yangın Musluğu"
-            },
-            "entrance": {
-                "name": "Giriş"
             },
             "footway/sidewalk": {
                 "name": "Kaldırım"

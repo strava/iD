@@ -157,7 +157,8 @@
                 "area": "Moved an area.",
                 "multiple": "Moved multiple objects."
             },
-            "incomplete_relation": "This feature can't be moved because it hasn't been fully downloaded."
+            "incomplete_relation": "This feature can't be moved because it hasn't been fully downloaded.",
+            "too_large": "This can't be moved because not enough of it is currently visible."
         },
         "rotate": {
             "title": "Rotate",
@@ -166,7 +167,8 @@
             "annotation": {
                 "line": "Rotated a line.",
                 "area": "Rotated an area."
-            }
+            },
+            "too_large": "This can't be rotated because not enough of it is currently visible."
         },
         "reverse": {
             "title": "Reverse",
@@ -189,6 +191,18 @@
             },
             "not_eligible": "Lines can't be split at their beginning or end.",
             "multiple_ways": "There are too many lines here to split."
+        },
+        "restriction": {
+            "help": {
+                "select": "Click to select a road segment.",
+                "toggle": "Click to toggle turn restrictions.",
+                "toggle_on": "Click to add a \"{restriction}\" restriction.",
+                "toggle_off": "Click to remove the \"{restriction}\" restriction."
+            },
+            "annotation": {
+                "create": "Added a turn restriction",
+                "delete": "Deleted a turn restriction"
+            }
         }
     },
     "undo": {
@@ -331,7 +345,9 @@
         "untagged_area": "Untagged area",
         "many_deletions": "You're deleting {n} objects. Are you sure you want to do this? This will delete them from the map that everyone else sees on openstreetmap.org.",
         "tag_suggests_area": "The tag {tag} suggests line should be area, but it is not an area",
-        "untagged_tooltip": "Select a feature type that describes what this {geometry} is.",
+        "untagged_point_tooltip": "Select a feature type that describes what this point is.",
+        "untagged_line_tooltip": "Select a feature type that describes what this line is.",
+        "untagged_area_tooltip": "Select a feature type that describes what this area is.",
         "deprecated_tags": "Deprecated tags: {tags}"
     },
     "zoom": {
@@ -423,6 +439,9 @@
             "category-rail": {
                 "name": "Rail"
             },
+            "category-restriction": {
+                "name": "Restriction"
+            },
             "category-road": {
                 "name": "Road"
             },
@@ -475,15 +494,28 @@
                 }
             },
             "access_simple": {
+                "label": "Access",
+                "placeholder": "yes"
+            },
+            "access_toilets": {
                 "label": "Access"
             },
             "address": {
                 "label": "Address",
                 "placeholders": {
-                    "number": "123",
+                    "housename": "Housename",
+                    "housenumber": "123",
                     "street": "Street",
                     "city": "City",
-                    "postcode": "Postal code"
+                    "postcode": "Postcode",
+                    "place": "Place",
+                    "hamlet": "Hamlet",
+                    "suburb": "Suburb",
+                    "subdistrict": "Subdistrict",
+                    "district": "District",
+                    "province": "Province",
+                    "state": "State",
+                    "country": "Country"
                 }
             },
             "admin_level": {
@@ -605,6 +637,9 @@
             "entrance": {
                 "label": "Type"
             },
+            "except": {
+                "label": "Exceptions"
+            },
             "fax": {
                 "label": "Fax",
                 "placeholder": "+31 42 123 4567"
@@ -620,6 +655,33 @@
             },
             "fuel": {
                 "label": "Fuel"
+            },
+            "fuel/biodiesel": {
+                "label": "Sells Biodiesel"
+            },
+            "fuel/diesel": {
+                "label": "Sells Diesel"
+            },
+            "fuel/e10": {
+                "label": "Sells E10"
+            },
+            "fuel/e85": {
+                "label": "Sells E85"
+            },
+            "fuel/lpg": {
+                "label": "Sells Propane"
+            },
+            "fuel/octane_100": {
+                "label": "Sells Racing Gasoline"
+            },
+            "fuel/octane_91": {
+                "label": "Sells Regular Gasoline"
+            },
+            "fuel/octane_95": {
+                "label": "Sells Midgrade Gasoline"
+            },
+            "fuel/octane_98": {
+                "label": "Sells Premium Gasoline"
             },
             "gauge": {
                 "label": "Gauge"
@@ -673,6 +735,9 @@
                     "terminal": "Terminal"
                 }
             },
+            "lamp_type": {
+                "label": "Type"
+            },
             "landuse": {
                 "label": "Type"
             },
@@ -685,6 +750,9 @@
             },
             "leisure": {
                 "label": "Type"
+            },
+            "length": {
+                "label": "Length (Meters)"
             },
             "levels": {
                 "label": "Levels",
@@ -720,10 +788,20 @@
                 "label": "Type"
             },
             "oneway": {
-                "label": "One Way"
+                "label": "One Way",
+                "options": {
+                    "undefined": "Assumed to be No",
+                    "yes": "Yes",
+                    "no": "No"
+                }
             },
             "oneway_yes": {
-                "label": "One Way"
+                "label": "One Way",
+                "options": {
+                    "undefined": "Assumed to be Yes",
+                    "yes": "Yes",
+                    "no": "No"
+                }
             },
             "opening_hours": {
                 "label": "Hours"
@@ -756,6 +834,9 @@
             },
             "place": {
                 "label": "Type"
+            },
+            "population": {
+                "label": "Population"
             },
             "power": {
                 "label": "Type"
@@ -795,6 +876,9 @@
             },
             "restriction": {
                 "label": "Type"
+            },
+            "restrictions": {
+                "label": "Turn Restrictions"
             },
             "route": {
                 "label": "Type"
@@ -846,7 +930,8 @@
                     "bridge": "Bridge",
                     "tunnel": "Tunnel",
                     "embankment": "Embankment",
-                    "cutting": "Cutting"
+                    "cutting": "Cutting",
+                    "ford": "Ford"
                 }
             },
             "studio_type": {
@@ -903,6 +988,9 @@
             },
             "wheelchair": {
                 "label": "Wheelchair Access"
+            },
+            "width": {
+                "label": "Width (Meters)"
             },
             "wikipedia": {
                 "label": "Wikipedia"
@@ -1048,6 +1136,10 @@
                 "name": "Car Wash",
                 "terms": ""
             },
+            "amenity/charging_station": {
+                "name": "Charging Station",
+                "terms": "EV,Electric Vehicle,Supercharger"
+            },
             "amenity/childcare": {
                 "name": "Childcare",
                 "terms": "nursery,orphanage,playgroup"
@@ -1068,6 +1160,10 @@
                 "name": "College",
                 "terms": ""
             },
+            "amenity/compressed_air": {
+                "name": "Compressed Air",
+                "terms": ""
+            },
             "amenity/courthouse": {
                 "name": "Courthouse",
                 "terms": ""
@@ -1079,6 +1175,10 @@
             "amenity/doctor": {
                 "name": "Doctor",
                 "terms": "doctor,doctor's office"
+            },
+            "amenity/dojo": {
+                "name": "Dojo / Martial Arts Academy",
+                "terms": "martial arts,dojo,dojang"
             },
             "amenity/drinking_water": {
                 "name": "Drinking Water",
@@ -1130,6 +1230,10 @@
             },
             "amenity/parking": {
                 "name": "Car Parking",
+                "terms": ""
+            },
+            "amenity/parking_entrance": {
+                "name": "Parking Garage Entrance/Exit",
                 "terms": ""
             },
             "amenity/pharmacy": {
@@ -1377,7 +1481,7 @@
                 "terms": ""
             },
             "building/entrance": {
-                "name": "Entrance",
+                "name": "Entrance/Exit",
                 "terms": ""
             },
             "building/garage": {
@@ -1657,15 +1761,23 @@
                 "terms": ""
             },
             "entrance": {
-                "name": "Entrance",
+                "name": "Entrance/Exit",
                 "terms": ""
             },
             "footway/crossing": {
                 "name": "Crossing",
+                "terms": ""
+            },
+            "footway/crosswalk": {
+                "name": "Crosswalk",
                 "terms": "crosswalk,zebra crossing"
             },
             "footway/sidewalk": {
                 "name": "Sidewalk",
+                "terms": ""
+            },
+            "ford": {
+                "name": "Ford",
                 "terms": ""
             },
             "golf/bunker": {
@@ -1714,6 +1826,10 @@
             },
             "highway/crossing": {
                 "name": "Crossing",
+                "terms": ""
+            },
+            "highway/crosswalk": {
+                "name": "Crosswalk",
                 "terms": "crosswalk,zebra crossing"
             },
             "highway/cycleway": {
@@ -1737,7 +1853,7 @@
                 "terms": ""
             },
             "highway/motorway_junction": {
-                "name": "Motorway Junction",
+                "name": "Motorway Junction / Exit",
                 "terms": ""
             },
             "highway/motorway_link": {
@@ -1815,6 +1931,10 @@
             "highway/stop": {
                 "name": "Stop Sign",
                 "terms": "stop sign"
+            },
+            "highway/street_lamp": {
+                "name": "Street Lamp",
+                "terms": "streetlight,street light,lamp,light,gaslight"
             },
             "highway/tertiary": {
                 "name": "Tertiary Road",
@@ -2049,7 +2169,7 @@
                 "terms": ""
             },
             "leisure/sports_center": {
-                "name": "Sports Center",
+                "name": "Sports Center / Gym",
                 "terms": "gym"
             },
             "leisure/stadium": {
@@ -2676,6 +2796,10 @@
                 "name": "Supermarket",
                 "terms": "bazaar,boutique,chain,co-op,cut-rate store,discount store,five-and-dime,flea market,galleria,grocery store,mall,mart,outlet,outlet store,shop,shopping center,shopping centre,shopping plaza,stand,store,supermarket,thrift shop"
             },
+            "shop/tailor": {
+                "name": "Tailor",
+                "terms": "tailor,clothes"
+            },
             "shop/toys": {
                 "name": "Toy Store",
                 "terms": ""
@@ -2786,6 +2910,34 @@
             },
             "type/restriction": {
                 "name": "Restriction",
+                "terms": ""
+            },
+            "type/restriction/no_left_turn": {
+                "name": "No Left Turn",
+                "terms": ""
+            },
+            "type/restriction/no_right_turn": {
+                "name": "No Right Turn",
+                "terms": ""
+            },
+            "type/restriction/no_straight_on": {
+                "name": "No Straight On",
+                "terms": ""
+            },
+            "type/restriction/no_u_turn": {
+                "name": "No U-turn",
+                "terms": ""
+            },
+            "type/restriction/only_left_turn": {
+                "name": "Left Turn Only",
+                "terms": ""
+            },
+            "type/restriction/only_right_turn": {
+                "name": "Right Turn Only",
+                "terms": ""
+            },
+            "type/restriction/only_straight_on": {
+                "name": "No Turns",
                 "terms": ""
             },
             "type/route": {

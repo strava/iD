@@ -139,6 +139,7 @@
         },
         "rotate": {
             "title": "Pööra",
+            "description": "Pööra objekti ümber tema keskpunkti.",
             "key": "R",
             "annotation": {
                 "line": "Pööratud joont.",
@@ -353,10 +354,8 @@
             "address": {
                 "label": "Aadress",
                 "placeholders": {
-                    "number": "123",
                     "street": "Tänav",
-                    "city": "Linn",
-                    "postcode": "Postiindeks"
+                    "city": "Linn"
                 }
             },
             "aeroway": {
@@ -657,9 +656,6 @@
             "building/commercial": {
                 "name": "Ärihoone"
             },
-            "building/entrance": {
-                "name": "Sissepääs"
-            },
             "building/house": {
                 "name": "Maja"
             },
@@ -671,9 +667,6 @@
             },
             "emergency/phone": {
                 "name": "Hädaabi telefon"
-            },
-            "entrance": {
-                "name": "Sissepääs"
             },
             "highway": {
                 "name": "Tee"
@@ -701,9 +694,6 @@
             },
             "highway/motorway": {
                 "name": "Kiirtee"
-            },
-            "highway/motorway_junction": {
-                "name": "Kiirtee liiklussõlm"
             },
             "highway/path": {
                 "name": "Rada"

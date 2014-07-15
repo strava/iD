@@ -267,6 +267,8 @@
         "percent_brightness": "{opacity}% jas",
         "none": "Žiadne",
         "custom": "Voliteľné",
+        "custom_button": "Upraviť volitelné pozadie",
+        "custom_prompt": "Zadajte URL pre vzor mapového podkladu. Platné znaky sú {z}, {x}, {y} pre Z/X/Y schému a {u} pre quadtile schému.",
         "fix_misalignment": "Oprav zarovnanie",
         "reset": "vynulovať"
     },
@@ -318,7 +320,6 @@
         "untagged_area": "Neoznačená plocha",
         "many_deletions": "Vymazávate {n} objektov. Ste si naozaj istý? Týmto ich vymažete z mapy na openstreetmap.org, ktorú používajú ďalší používatelia.",
         "tag_suggests_area": "Označenie {tag} predpokladá, že objekt by mal byť plochou a nie čiarou.",
-        "untagged_tooltip": "Vyberte typ objektu, ktorý popisuje, čo je tento/táto {geometry}.",
         "deprecated_tags": "Neschválené označenie: {tags}"
     },
     "zoom": {
@@ -467,10 +468,8 @@
             "address": {
                 "label": "Adresa",
                 "placeholders": {
-                    "number": "123",
                     "street": "Ulica",
-                    "city": "Mesto",
-                    "postcode": "PSČ"
+                    "city": "Mesto"
                 }
             },
             "admin_level": {
@@ -805,6 +804,9 @@
             "shop": {
                 "label": "Typ"
             },
+            "sloped_curb": {
+                "label": "Znížený obrubník"
+            },
             "smoking": {
                 "label": "Fajčenie"
             },
@@ -839,6 +841,9 @@
             },
             "surface": {
                 "label": "Povrch"
+            },
+            "tactile_paving": {
+                "label": "Taktilné značenie"
             },
             "toilets/disposal": {
                 "label": "Odstraňovanie"
@@ -1355,10 +1360,6 @@
                 "name": "Internát",
                 "terms": "internat,intrak,intrák"
             },
-            "building/entrance": {
-                "name": "Vstup",
-                "terms": "vchod,východ,vychod,únikový východ,unikovy vychod,brána,brana,dvere,vráta,vrata"
-            },
             "building/garage": {
                 "name": "Garáž",
                 "terms": "garaz,garáže,garaze,parkovanie,kryté parkovanie,kryte parkovanie"
@@ -1539,6 +1540,10 @@
                 "name": "Fotograf",
                 "terms": "fotografia,fotografovanie,fotka,fotky"
             },
+            "craft/photographic_laboratory": {
+                "name": "Fotografické laboratórium",
+                "terms": "fotograficke laboratorium,fotolab"
+            },
             "craft/plasterer": {
                 "name": "Fasádnik",
                 "terms": "fasadnik,štukatér,stukater,omietkár,omietkar"
@@ -1631,10 +1636,6 @@
                 "name": "Núdzový telefón",
                 "terms": "nudzovy telefon,SOS,tiesňová linka,tiesnova linka,núdzový telefón.nudzovy telefon"
             },
-            "entrance": {
-                "name": "Vstup",
-                "terms": "vchod,východ,vychod,únikový východ,unikovy vychod,brána,brana,dvere,vráta,vrata"
-            },
             "footway/crossing": {
                 "name": "Prechod",
                 "terms": "Prechod pre chodcov,zebra"
@@ -1710,10 +1711,6 @@
             "highway/motorway": {
                 "name": "Diaľnica",
                 "terms": "dialnica,rýchlocesta,rychlocesta"
-            },
-            "highway/motorway_junction": {
-                "name": "Diaľničná križovatka",
-                "terms": "Dialnicna krizovatka,krizovatka,dialnica,kríženie,krizenie"
             },
             "highway/motorway_link": {
                 "name": "Diaľničný privádzač",
@@ -1875,6 +1872,10 @@
                 "name": "Cintorín",
                 "terms": "cintorin,hroby,pohrebisko,hrobky,cmiter"
             },
+            "landuse/churchyard": {
+                "name": "Kostolný pozemok",
+                "terms": "kostolny pozemok,kostol"
+            },
             "landuse/commercial": {
                 "name": "Obchodné",
                 "terms": "obchodne,komercia,komercne,komerčné"
@@ -1914,6 +1915,10 @@
             "landuse/meadow": {
                 "name": "Lúka",
                 "terms": "luka,pastviny,trava,tráva,paša,pasa"
+            },
+            "landuse/military": {
+                "name": "Armádne",
+                "terms": "armadne, armada"
             },
             "landuse/orchard": {
                 "name": "Sad",
@@ -2014,10 +2019,6 @@
             "leisure/slipway": {
                 "name": "Spúšťanie lodí",
                 "terms": "Spustanie lodi,dok,lodenica,klzacka,kĺzačka"
-            },
-            "leisure/sports_center": {
-                "name": "Športové centrum",
-                "terms": "sportove centrum,fitness centrum,fitnes centrum,fitko"
             },
             "leisure/stadium": {
                 "name": "Štadión",
@@ -2306,6 +2307,10 @@
             "place/neighbourhood": {
                 "name": "Susedstvo",
                 "terms": "okrsok,oblast,oblasť,štvrť,stvrt"
+            },
+            "place/suburb": {
+                "name": "Mestská časť",
+                "terms": "mestska cast"
             },
             "place/town": {
                 "name": "Mesto",
@@ -2619,6 +2624,10 @@
                 "name": "Obchod s fototechnikou",
                 "terms": "Fotoateliér,fotoatelier,fotostudio,fotoštúdio,fotografia"
             },
+            "shop/seafood": {
+                "name": "Obchod s morskými špecialitami",
+                "terms": "obchod s morskymi specialitami,plody mora,ryby,morské ryby,morske ryby,kreverty,treska,tuniak"
+            },
             "shop/shoes": {
                 "name": "Obchod s obuvov",
                 "terms": "obuv,topánky,topanky"
@@ -2658,6 +2667,10 @@
             "shop/video": {
                 "name": "Videopožičovňa",
                 "terms": "videopozicovna,DVD,CD,VHS,blue-ray,blueray,blue ray,video"
+            },
+            "shop/wine": {
+                "name": "Vináreň",
+                "terms": "vinaren,vinoteka,vínotéka,vino,víno"
             },
             "tourism": {
                 "name": "Turizmus",

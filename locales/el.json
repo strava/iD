@@ -387,10 +387,8 @@
             "address": {
                 "label": "Διεύθυνση",
                 "placeholders": {
-                    "number": "123",
                     "street": "Οδός",
-                    "city": "Πόλη",
-                    "postcode": "Ταχυδρομικός Κώδικας"
+                    "city": "Πόλη"
                 }
             },
             "admin_level": {
@@ -961,7 +959,7 @@
             },
             "barrier/bollard": {
                 "name": "Στύλος",
-                "terms": "Κολώνα, Στύλος"
+                "terms": "Κολόνα, Στύλος, Στύλοι"
             },
             "barrier/cattle_grid": {
                 "name": "Συρματόπλεγμα"
@@ -1027,10 +1025,6 @@
             "building/commercial": {
                 "name": "Εμπορικό Κτίριο",
                 "terms": "Εμπορικό Κτήριο, Επαγγελματικό κτήριο"
-            },
-            "building/entrance": {
-                "name": "Είσοδος",
-                "terms": "Είσοδος"
             },
             "building/garage": {
                 "name": "Εργαστήριο",
@@ -1099,10 +1093,6 @@
                 "name": "Τηλέφωνο Ανάγκης",
                 "terms": "Τηλέφωνο επειγόντων, Τηλέφωνο ανάγκης"
             },
-            "entrance": {
-                "name": "Είσοδος",
-                "terms": "Είσοδος"
-            },
             "highway": {
                 "name": "Αυτοκινητόδρομος",
                 "terms": "Οδική αρτηρία, Αυτοκινητόδρομος"
@@ -1134,10 +1124,6 @@
             "highway/motorway": {
                 "name": "Αυτοκινητόδρομος",
                 "terms": "Αυτοκινητόδρομος"
-            },
-            "highway/motorway_junction": {
-                "name": "Διασταύρωση Αυτοκινητόδρομου",
-                "terms": "Διασταύρωση αυτοκινητόδρομου"
             },
             "highway/motorway_link": {
                 "name": "Σύνδεση Αυτοκινητόδρομου",
@@ -1256,7 +1242,7 @@
             },
             "landuse/cemetery": {
                 "name": "Κοιμητήριο",
-                "terms": "Κοιμητήριο"
+                "terms": "Νεκροταφείο"
             },
             "landuse/commercial": {
                 "name": "Εμπορική",
@@ -1367,9 +1353,6 @@
             "leisure/slipway": {
                 "name": "Γλύστρα",
                 "terms": "Γλίστρα"
-            },
-            "leisure/sports_center": {
-                "name": "Αθλητικό Κέντρο"
             },
             "leisure/stadium": {
                 "name": "Στάδιο",
@@ -1881,8 +1864,8 @@
                 "terms": "Χώρος εκδρομής, Χώρος πικ νικ"
             },
             "tourism/theme_park": {
-                "name": "Θεματικό Πάρκο",
-                "terms": "Θεματικό πάρκο"
+                "name": "Πάρκο Ψυχαγωγίας",
+                "terms": "Θεματικό πάρκο, Λούνα παρκ"
             },
             "tourism/viewpoint": {
                 "name": "Σημείο θέασης",

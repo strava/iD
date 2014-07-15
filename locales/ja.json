@@ -182,6 +182,18 @@
             },
             "not_eligible": "基点/終端を境としたライン分割はできません。",
             "multiple_ways": "複数のラインを分割します"
+        },
+        "restriction": {
+            "help": {
+                "select": "道路の区間を選択するにはクリックしてください。",
+                "toggle": "進行方向制限を切り替えるにはクリックしてください。",
+                "toggle_on": "「{restriction}」の制約を追加するにはクリックしてください。",
+                "toggle_off": "「{restriction}」の制約を削除するにはクリックしてください。"
+            },
+            "annotation": {
+                "create": "進行方向制限を追加しました",
+                "delete": "進行方向制限を削除しました"
+            }
         }
     },
     "undo": {
@@ -320,7 +332,9 @@
         "untagged_area": "エリアにタグが付与されていません",
         "many_deletions": "{n} オブジェクトを削除しています。本当に削除してよろしいですか？ 削除した結果はopenstreetmap.orgに反映されます。",
         "tag_suggests_area": "ラインに {tag} タグが付与されています。エリアで描かれるべきです",
-        "untagged_tooltip": "この {geometry} があらわす地物の種類を選択してください。",
+        "untagged_point_tooltip": "この点が表す地物の種類を選択してください。",
+        "untagged_line_tooltip": "この直線が表す地物の種類を選択してください。",
+        "untagged_area_tooltip": "このエリアが表す地物の種類を選択してください。",
         "deprecated_tags": "タグの重複: {tags}"
     },
     "zoom": {
@@ -412,6 +426,9 @@
             "category-rail": {
                 "name": "線路"
             },
+            "category-restriction": {
+                "name": "制限"
+            },
             "category-road": {
                 "name": "道路"
             },
@@ -469,10 +486,19 @@
             "address": {
                 "label": "住所",
                 "placeholders": {
-                    "number": "123",
+                    "housename": "地番",
+                    "housenumber": "123",
                     "street": "所属する街路名",
                     "city": "市町村名",
-                    "postcode": "郵便番号"
+                    "postcode": "郵便番号",
+                    "place": "地名",
+                    "hamlet": "Hamlet",
+                    "suburb": "Suburb",
+                    "subdistrict": "Subdistrict",
+                    "district": "District",
+                    "province": "県",
+                    "state": "州",
+                    "country": "郡"
                 }
             },
             "admin_level": {
@@ -594,6 +620,9 @@
             "entrance": {
                 "label": "タイプ"
             },
+            "except": {
+                "label": "例外"
+            },
             "fax": {
                 "label": "FAX",
                 "placeholder": "+31 42 123 4567"
@@ -609,6 +638,33 @@
             },
             "fuel": {
                 "label": "ガソリンスタンド"
+            },
+            "fuel/biodiesel": {
+                "label": "バイオディーゼルの販売"
+            },
+            "fuel/diesel": {
+                "label": "軽油の販売"
+            },
+            "fuel/e10": {
+                "label": "E10の販売"
+            },
+            "fuel/e85": {
+                "label": "E85の販売"
+            },
+            "fuel/lpg": {
+                "label": "プロパンの販売"
+            },
+            "fuel/octane_100": {
+                "label": "レース用ガソリンの販売"
+            },
+            "fuel/octane_91": {
+                "label": "レギュラーガソリンの販売"
+            },
+            "fuel/octane_95": {
+                "label": "中品質ガソリンの販売"
+            },
+            "fuel/octane_98": {
+                "label": "ハイオクガソリンの販売"
             },
             "gauge": {
                 "label": "軌間"
@@ -660,6 +716,9 @@
                     "terminal": "情報端末"
                 }
             },
+            "lamp_type": {
+                "label": "種別"
+            },
             "landuse": {
                 "label": "土地区分"
             },
@@ -672,6 +731,9 @@
             },
             "leisure": {
                 "label": "タイプ"
+            },
+            "length": {
+                "label": "長さ (m)"
             },
             "levels": {
                 "label": "階数",
@@ -707,10 +769,16 @@
                 "label": "タイプ"
             },
             "oneway": {
-                "label": "一方通行"
+                "label": "一方通行",
+                "options": {
+                    "undefined": "おそらくいいえ"
+                }
             },
             "oneway_yes": {
-                "label": "一方通行"
+                "label": "一方通行",
+                "options": {
+                    "undefined": "おそらくはい"
+                }
             },
             "opening_hours": {
                 "label": "利用可能な時間帯"
@@ -743,6 +811,9 @@
             },
             "place": {
                 "label": "タイプ"
+            },
+            "population": {
+                "label": "人口"
             },
             "power": {
                 "label": "区分"
@@ -783,6 +854,9 @@
             "restriction": {
                 "label": "タイプ"
             },
+            "restrictions": {
+                "label": "進行方向制限"
+            },
             "route": {
                 "label": "タイプ"
             },
@@ -807,6 +881,9 @@
             "shop": {
                 "label": "店舗種別"
             },
+            "sloped_curb": {
+                "label": "歩道のすりつけ勾配"
+            },
             "smoking": {
                 "label": "喫煙"
             },
@@ -830,7 +907,8 @@
                     "bridge": "橋",
                     "tunnel": "トンネル",
                     "embankment": "土手",
-                    "cutting": "切り通し"
+                    "cutting": "切り通し",
+                    "ford": "洗い越し"
                 }
             },
             "studio_type": {
@@ -841,6 +919,9 @@
             },
             "surface": {
                 "label": "路面状態"
+            },
+            "tactile_paving": {
+                "label": "点字ブロック"
             },
             "toilets/disposal": {
                 "label": "汚物処理"
@@ -884,6 +965,9 @@
             },
             "wheelchair": {
                 "label": "車椅子の利用可否"
+            },
+            "width": {
+                "label": "幅 (m)"
             },
             "wikipedia": {
                 "label": "Wikipedia"
@@ -1029,6 +1113,10 @@
                 "name": "車の洗浄",
                 "terms": "洗車機, 洗車, 車洗浄, カーウォッシュ"
             },
+            "amenity/charging_station": {
+                "name": "充電スタンド",
+                "terms": "充電ステーション, 急速充電システム, 充電スタンド, 給電スタンド"
+            },
             "amenity/childcare": {
                 "name": "保育施設",
                 "terms": "託児所,保育園,幼稚園,学童保育"
@@ -1049,6 +1137,10 @@
                 "name": "単科大学",
                 "terms": "大学,短大,専門学校,高専"
             },
+            "amenity/compressed_air": {
+                "name": "空気入れ",
+                "terms": "空気入れ, エアー調整"
+            },
             "amenity/courthouse": {
                 "name": "裁判所",
                 "terms": "裁判所"
@@ -1060,6 +1152,10 @@
             "amenity/doctor": {
                 "name": "医院",
                 "terms": "医者,医師"
+            },
+            "amenity/dojo": {
+                "name": "道場",
+                "terms": "道場"
             },
             "amenity/drinking_water": {
                 "name": "水飲み場",
@@ -1112,6 +1208,10 @@
             "amenity/parking": {
                 "name": "駐車場",
                 "terms": "駐車場"
+            },
+            "amenity/parking_entrance": {
+                "name": "駐車場の出入口",
+                "terms": "駐車場の出入口"
             },
             "amenity/pharmacy": {
                 "name": "薬局",
@@ -1359,7 +1459,7 @@
             },
             "building/entrance": {
                 "name": "出入口",
-                "terms": "出入口, エントランス"
+                "terms": "出入口, 入口, 出口"
             },
             "building/garage": {
                 "name": "車庫",
@@ -1639,15 +1739,23 @@
             },
             "entrance": {
                 "name": "出入口",
-                "terms": "出入口"
+                "terms": "出入口, 入口, 出口"
             },
             "footway/crossing": {
                 "name": "横断歩道",
                 "terms": "横断歩道, 自転車横断帯"
             },
+            "footway/crosswalk": {
+                "name": "横断歩道",
+                "terms": "横断歩道, 歩行者踏切"
+            },
             "footway/sidewalk": {
                 "name": "歩道",
                 "terms": "歩道"
+            },
+            "ford": {
+                "name": "洗い越し",
+                "terms": "洗い越し, 浅瀬"
             },
             "golf/bunker": {
                 "name": "サンドトラップ",
@@ -1696,6 +1804,10 @@
             "highway/crossing": {
                 "name": "横断歩道",
                 "terms": "横断歩道, 自転車横断帯"
+            },
+            "highway/crosswalk": {
+                "name": "横断歩道",
+                "terms": "横断歩道"
             },
             "highway/cycleway": {
                 "name": "自転車道",
@@ -1797,6 +1909,10 @@
                 "name": "一時停止標識",
                 "terms": "一時停止標識"
             },
+            "highway/street_lamp": {
+                "name": "街路灯",
+                "terms": "街灯, 街路灯"
+            },
             "highway/tertiary": {
                 "name": "一般道（2車線以上）",
                 "terms": "一般道（2車線以上）"
@@ -1881,6 +1997,10 @@
                 "name": "霊園",
                 "terms": "霊園, 墓地"
             },
+            "landuse/churchyard": {
+                "name": "教会の敷地",
+                "terms": "教会, 教会の敷地"
+            },
             "landuse/commercial": {
                 "name": "オフィス地区",
                 "terms": "ビジネス街,オフィス街,オフィス地区"
@@ -1903,7 +2023,7 @@
             },
             "landuse/forest": {
                 "name": "人工林",
-                "terms": "人工林, 営林, 保安林, 鉄道林"
+                "terms": "人工林, 二次林, 営林, 保安林, 鉄道林"
             },
             "landuse/grass": {
                 "name": "草地",
@@ -1920,6 +2040,10 @@
             "landuse/meadow": {
                 "name": "牧草地",
                 "terms": "牧草地"
+            },
+            "landuse/military": {
+                "name": "軍事",
+                "terms": "軍事,自衛隊"
             },
             "landuse/orchard": {
                 "name": "果樹園",
@@ -2022,8 +2146,8 @@
                 "terms": "進水路, スリップウェイ"
             },
             "leisure/sports_center": {
-                "name": "スポーツセンター",
-                "terms": "スポーツセンター"
+                "name": "スポーツセンター／ジム",
+                "terms": "スポーツセンター, ジム, フィットネスクラブ"
             },
             "leisure/stadium": {
                 "name": "スタジアム",
@@ -2649,6 +2773,10 @@
                 "name": "スーパーマーケット",
                 "terms": "スーパーマーケット, スーパー"
             },
+            "shop/tailor": {
+                "name": "仕立て屋",
+                "terms": "仕立て屋,テイラー,洋裁店"
+            },
             "shop/toys": {
                 "name": "玩具店",
                 "terms": "玩具店, おもちゃ屋"
@@ -2672,6 +2800,10 @@
             "shop/video": {
                 "name": "ビデオソフト店",
                 "terms": "ビデオソフト店, DVD店"
+            },
+            "shop/wine": {
+                "name": "ワイン店",
+                "terms": "ワイン店, 酒屋"
             },
             "tourism": {
                 "name": "観光",
@@ -2756,6 +2888,34 @@
             "type/restriction": {
                 "name": "進行方向制限",
                 "terms": "進行方向制限"
+            },
+            "type/restriction/no_left_turn": {
+                "name": "左折禁止",
+                "terms": "左折禁止"
+            },
+            "type/restriction/no_right_turn": {
+                "name": "右折禁止",
+                "terms": "右折禁止"
+            },
+            "type/restriction/no_straight_on": {
+                "name": "直進禁止",
+                "terms": "直進禁止"
+            },
+            "type/restriction/no_u_turn": {
+                "name": "転回禁止",
+                "terms": "転回禁止, Uターン禁止"
+            },
+            "type/restriction/only_left_turn": {
+                "name": "左折のみ可",
+                "terms": "左折のみ可"
+            },
+            "type/restriction/only_right_turn": {
+                "name": "右折のみ可",
+                "terms": "右折のみ可"
+            },
+            "type/restriction/only_straight_on": {
+                "name": "直進のみ可",
+                "terms": "直進のみ可"
             },
             "type/route": {
                 "name": "ルート",

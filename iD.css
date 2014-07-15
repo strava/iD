@@ -383,17 +383,6 @@ path.fill.tag-amenity-university {
     background-color: rgba(255, 255, 148, 0.1);
 }
 
-path.stroke.tag-building {
-    stroke: rgb(224, 110, 95);
-}
-path.fill.tag-building {
-    fill: rgba(224, 110, 95, 0.3);
-}
-.preset-icon-fill-area.tag-building {
-    border-color: rgb(224, 110, 95);
-    background-color: rgba(224, 110, 95, 0.3);
-}
-
 path.stroke.tag-landuse,
 path.stroke.tag-natural-wood,
 path.stroke.tag-natural-tree,
@@ -434,34 +423,27 @@ path.fill.tag-landuse-residential {
     background-color: rgba(224, 110, 95, 0.1);
 }
 
-
 path.stroke.tag-landuse-retail,
-path.stroke.tag-landuse-commercial,
-path.stroke.tag-building-commercial {
+path.stroke.tag-landuse-commercial {
     stroke: rgb(234, 176, 86);
 }
 path.fill.tag-landuse-retail,
-path.fill.tag-landuse-commercial,
-path.fill.tag-building-commercial {
+path.fill.tag-landuse-commercial {
     fill: rgba(234, 176, 86, 0.1);
 }
 .preset-icon-fill-area.tag-landuse-retail,
-.preset-icon-fill-area.tag-landuse-commercial,
-.preset-icon-fill-area.tag-building-commercial {
+.preset-icon-fill-area.tag-landuse-commercial {
     border-color: rgb(234, 176, 86);
     background-color: rgba(234, 176, 86, 0.1);
 }
 
-path.stroke.tag-landuse-industrial,
-path.stroke.tag-building-industrial {
+path.stroke.tag-landuse-industrial {
     stroke: rgb(228, 164, 245);
 }
-path.fill.tag-landuse-industrial,
-path.fill.tag-building-industrial {
+path.fill.tag-landuse-industrial {
     fill: rgba(228, 164, 245, 0.1);
 }
-.preset-icon-fill-area.tag-landuse-industrial,
-.preset-icon-fill-area.tag-building-industrial {
+.preset-icon-fill-area.tag-landuse-industrial {
     border-color: rgb(228, 164, 245);
     background-color: rgba(228, 164, 245, 0.1);
 }
@@ -846,102 +828,49 @@ path.fill.tag-aeroway-apron {
 }
 
 
-/* bridges */
-
-path.casing.tag-bridge {
-    stroke-width: 14;
-    stroke-opacity: 0.5;
-    stroke: #000;
-}
-
-path.casing.tag-highway-living_street.tag-bridge,
-path.casing.tag-highway-path.tag-bridge {
-    stroke-width: 6;
-}
-
-path.casing.line.tag-highway-pedestrian,
-path.casing.tag-highway-service.tag-bridge,
-path.casing.tag-highway-track.tag-bridge,
-path.casing.tag-highway-steps.tag-bridge,
-path.casing.tag-highway-footway.tag-bridge,
-path.casing.tag-highway-cycleway.tag-bridge,
-path.casing.tag-highway-bridleway.tag-bridge {
-    stroke-width: 8;
-}
-
-path.shadow.tag-highway-residential.tag-bridge {
-    stroke-width:22;
-}
-
-path.shadow.tag-highway-living_street.tag-bridge,
-path.shadow.tag-highway-path.tag-bridge,
-path.shadow.line.tag-highway-pedestrian,
-path.shadow.tag-highway-service.tag-bridge,
-path.shadow.tag-highway-track.tag-bridge,
-path.shadow.tag-highway-steps.tag-bridge,
-path.shadow.tag-highway-footway.tag-bridge,
-path.shadow.tag-highway-cycleway.tag-bridge,
-path.shadow.tag-highway-bridleway.tag-bridge {
-    stroke-width: 16;
-}
-
-/* tunnels */
-
-path.stroke.tag-highway.tag-tunnel {
-    stroke-opacity: 0.3;
-}
-
-path.casing.tag-highway.tag-tunnel {
-    stroke-opacity: 0.5;
-}
-
-path.stroke.tag-highway-construction,
-path.casing.tag-highway-construction {
-    stroke-linecap: butt;
-    stroke-dasharray: 7, 7;
-}
-
-/* construction */
-
-.low-zoom path.stroke.tag-highway-construction,
-.low-zoom path.casing.tag-highway-construction {
-    stroke-linecap: butt;
-    stroke-dasharray: 5, 5;
-}
-
 /* railways */
 
-.line.stroke.tag-railway {
+path.stroke.tag-railway {
     stroke: #eee;
     stroke-width: 2;
     stroke-linecap: butt;
     stroke-dasharray: 12,12;
 }
-.line.casing.tag-railway {
+
+path.casing.tag-railway {
     stroke: #555;
     stroke-width: 4;
 }
 
-.line.stroke.tag-railway-abandoned {
+path.stroke.tag-railway-abandoned {
     stroke: #eee;
 }
-.line.casing.tag-railway-abandoned {
+path.casing.tag-railway-abandoned {
     stroke: #999;
 }
 
-.line.stroke.tag-railway-subway {
+path.stroke.tag-railway-subway {
     stroke: #666;
 }
-.line.casing.tag-railway-subway {
+path.casing.tag-railway-subway {
     stroke: #222;
 }
 
-.line.stroke.tag-railway-platform {
+path.stroke.tag-railway-platform {
     stroke: #999;
     stroke-width: 4;
     stroke-dasharray: none;
 }
-.line.casing.tag-railway-platform {
+path.casing.tag-railway-platform {
+    stroke: none;
+}
+
+.area.stroke.tag-railway {
+    stroke: white;
+    stroke-width: 1;
+    stroke-dasharray: none;
+}
+.area.casing.tag-railway {
     stroke: none;
 }
 
@@ -1005,6 +934,136 @@ path.casing.tag-boundary-national_park {
 }
 
 
+/* bridges */
+
+path.casing.tag-bridge {
+    stroke-width: 16;
+    stroke-opacity: 0.6;
+    stroke: #000;
+    stroke-linecap: butt;
+}
+
+path.shadow.tag-bridge {
+    stroke-width: 22;
+}
+
+path.casing.line.tag-railway.tag-bridge,
+path.casing.tag-highway-living_street.tag-bridge,
+path.casing.tag-highway-path.tag-bridge,
+path.casing.line.tag-highway-pedestrian.tag-bridge,
+path.casing.tag-highway-service.tag-bridge,
+path.casing.tag-highway-track.tag-bridge,
+path.casing.tag-highway-steps.tag-bridge,
+path.casing.tag-highway-footway.tag-bridge,
+path.casing.tag-highway-cycleway.tag-bridge,
+path.casing.tag-highway-bridleway.tag-bridge {
+    stroke-width: 10;
+}
+
+path.shadow.line.tag-railway.tag-bridge,
+path.shadow.tag-highway-living_street.tag-bridge,
+path.shadow.tag-highway-path.tag-bridge,
+path.shadow.line.tag-highway-pedestrian.tag-bridge,
+path.shadow.tag-highway-service.tag-bridge,
+path.shadow.tag-highway-track.tag-bridge,
+path.shadow.tag-highway-steps.tag-bridge,
+path.shadow.tag-highway-footway.tag-bridge,
+path.shadow.tag-highway-cycleway.tag-bridge,
+path.shadow.tag-highway-bridleway.tag-bridge {
+    stroke-width: 17;
+}
+
+
+.low-zoom path.casing.tag-bridge {
+    stroke-width: 10;
+    stroke-opacity: 0.6;
+    stroke: #000;
+    stroke-linecap: butt;
+}
+
+.low-zoom path.shadow.tag-bridge {
+    stroke-width: 14;
+}
+
+.low-zoom path.casing.line.tag-railway.tag-bridge,
+.low-zoom path.casing.tag-highway-living_street.tag-bridge,
+.low-zoom path.casing.tag-highway-path.tag-bridge,
+.low-zoom path.casing.line.tag-highway-pedestrian.tag-bridge,
+.low-zoom path.casing.tag-highway-service.tag-bridge,
+.low-zoom path.casing.tag-highway-track.tag-bridge,
+.low-zoom path.casing.tag-highway-steps.tag-bridge,
+.low-zoom path.casing.tag-highway-footway.tag-bridge,
+.low-zoom path.casing.tag-highway-cycleway.tag-bridge,
+.low-zoom path.casing.tag-highway-bridleway.tag-bridge {
+    stroke-width: 6;
+}
+
+.low-zoom path.shadow.line.tag-railway.tag-bridge,
+.low-zoom path.shadow.tag-highway-living_street.tag-bridge,
+.low-zoom path.shadow.tag-highway-path.tag-bridge,
+.low-zoom path.shadow.line.tag-highway-pedestrian.tag-bridge,
+.low-zoom path.shadow.tag-highway-service.tag-bridge,
+.low-zoom path.shadow.tag-highway-track.tag-bridge,
+.low-zoom path.shadow.tag-highway-steps.tag-bridge,
+.low-zoom path.shadow.tag-highway-footway.tag-bridge,
+.low-zoom path.shadow.tag-highway-cycleway.tag-bridge,
+.low-zoom path.shadow.tag-highway-bridleway.tag-bridge {
+    stroke-width: 13;
+}
+
+
+
+/* tunnels */
+
+path.stroke.tag-tunnel {
+    stroke-opacity: 0.3;
+}
+
+path.casing.tag-tunnel {
+    stroke-opacity: 0.5;
+}
+
+/* embankments / cuttings */
+
+path.casing.tag-embankment,
+path.casing.tag-cutting {
+    stroke-opacity: 0.5;
+    stroke: #000;
+    stroke-width: 22;
+    stroke-dasharray: 2, 4;
+    stroke-linecap: butt;
+}
+
+path.shadow.tag-embankment,
+path.shadow.tag-cutting {
+    stroke-width: 28;
+}
+
+.low-zoom path.casing.tag-embankment,
+.low-zoom path.casing.tag-cutting {
+    stroke-width: 10;
+}
+
+.low-zoom path.shadow.tag-embankment,
+.low-zoom path.shadow.tag-cutting {
+    stroke-width: 14;
+}
+
+
+/* construction */
+
+path.stroke.tag-highway-construction,
+path.casing.tag-highway-construction {
+    stroke-linecap: butt;
+    stroke-dasharray: 7, 7;
+}
+
+.low-zoom path.stroke.tag-highway-construction,
+.low-zoom path.casing.tag-highway-construction {
+    stroke-linecap: butt;
+    stroke-dasharray: 5, 5;
+}
+
 text {
     font-size:10px;
     pointer-events: none;
@@ -1024,6 +1083,23 @@ marker#oneway-marker path {
 path.oneway {
     stroke-width: 6px;
 }
+
+/* Buildings */
+
+path.stroke.tag-building,
+path.stroke.tag-amenity-shelter {
+    stroke: rgb(224, 110, 95);
+}
+path.fill.tag-building,
+path.fill.tag-amenity-shelter {
+    fill: rgba(224, 110, 95, 0.3);
+}
+.preset-icon-fill-area.tag-building,
+.preset-icon-fill-area.tag-amenity-shelter {
+    border-color: rgb(224, 110, 95);
+    background-color: rgba(224, 110, 95, 0.3);
+}
+
 
 /*
  * Labels
@@ -1072,65 +1148,54 @@ text.point {
   font-size: 10px;
 }
 
+/* Turns */
+
+g.turn rect,
+g.turn circle {
+    fill: none;
+    pointer-events: all;
+}
+
+.form-field-restrictions .vertex {
+    pointer-events: none;
+    cursor: auto !important;
+}
+
 /* Cursors */
 
 #map {
     cursor: auto; /* Opera */
     cursor: url(img/cursor-grab.png) 9 9, auto; /* FF */
-    cursor: -webkit-image-set(
-        url(img/cursor-grab.png) 1x,
-        url(img/cursor-grab2x.png) 2x
-        ) 9 9, auto;
 }
 
 .mode-browse .point,
 .mode-select .point {
     cursor: pointer; /* Opera */
     cursor: url(img/cursor-select-point.png), pointer; /* FF */
-    cursor: -webkit-image-set(
-        url(img/cursor-select-point.png) 1x,
-        url(img/cursor-select-point2x.png) 2x
-        ), pointer;
 }
 
 .mode-select .vertex,
 .mode-browse .vertex {
     cursor: pointer; /* Opera */
     cursor: url(img/cursor-select-vertex.png), pointer; /* FF */
-    cursor: -webkit-image-set(
-        url(img/cursor-select-vertex.png) 1x,
-        url(img/cursor-select-vertex2x.png) 2x
-        ), pointer;
 }
 
 .mode-browse .line,
 .mode-select .line {
     cursor: pointer; /* Opera */
     cursor: url(img/cursor-select-line.png), pointer; /* FF */
-    cursor: -webkit-image-set(
-        url(img/cursor-select-line.png) 1x,
-        url(img/cursor-select-line2x.png) 2x
-        ), pointer;
 }
 
 .mode-select .area,
 .mode-browse .area {
     cursor: pointer; /* Opera */
     cursor: url(img/cursor-select-area.png), pointer; /* FF */
-    cursor: -webkit-image-set(
-        url(img/cursor-select-area.png) 1x,
-        url(img/cursor-select-area2x.png) 2x
-        ), pointer;
 }
 
 .mode-select .midpoint,
 .mode-browse .midpoint {
     cursor: pointer; /* Opera */
     cursor: url(img/cursor-select-split.png), pointer; /* FF */
-    cursor: -webkit-image-set(
-        url(img/cursor-select-split.png) 1x,
-        url(img/cursor-select-split2x.png) 2x
-        ), pointer;
 }
 
 .mode-select .behavior-multiselect .point,
@@ -1139,19 +1204,11 @@ text.point {
 .mode-select .behavior-multiselect .area {
     cursor: pointer; /* Opera */
     cursor: url(img/cursor-select-add.png), pointer; /* FF */
-    cursor: -webkit-image-set(
-        url(img/cursor-select-add.png) 1x,
-        url(img/cursor-select-add2x.png) 2x
-        ), pointer;
 }
 
 .mode-select .behavior-multiselect .selected {
     cursor: pointer; /* Opera */
     cursor: url(img/cursor-select-remove.png), pointer; /* FF */
-    cursor: -webkit-image-set(
-        url(img/cursor-select-remove.png) 1x,
-        url(img/cursor-select-remove2x.png) 2x
-        ), pointer;
 }
 
 #map .point:active,
@@ -1162,10 +1219,6 @@ text.point {
 #map .mode-select .selected {
     cursor: pointer; /* Opera */
     cursor: url(img/cursor-select-acting.png), pointer; /* FF */
-    cursor: -webkit-image-set(
-        url(img/cursor-select-acting.png) 1x,
-        url(img/cursor-select-acting2x.png) 2x
-        ), pointer;
 }
 
 .mode-draw-line #map,
@@ -1175,10 +1228,6 @@ text.point {
 .mode-drag-node #map {
     cursor: crosshair; /* Opera */
     cursor: url(img/cursor-draw.png) 9 9, crosshair; /* FF */
-    cursor: -webkit-image-set(
-        url(img/cursor-draw.png) 1x,
-        url(img/cursor-draw2x.png) 2x
-        ) 9 9, crosshair;
 }
 
 .mode-draw-line .way.hover,
@@ -1188,10 +1237,6 @@ text.point {
 .mode-drag-node .way.hover {
     cursor: crosshair; /* Opera */
     cursor: url(img/cursor-draw-connect-line.png) 9 9, crosshair; /* FF */
-    cursor: -webkit-image-set(
-        url(img/cursor-draw-connect-line.png) 1x,
-        url(img/cursor-draw-connect-line2x.png) 2x
-        ) 9 9, crosshair;
 }
 
 .mode-draw-line .vertex.hover,
@@ -1201,10 +1246,6 @@ text.point {
 .mode-drag-node .vertex.hover {
     cursor: crosshair; /* Opera */
     cursor: url(img/cursor-draw-connect-vertex.png) 9 9, crosshair; /* FF */
-    cursor: -webkit-image-set(
-        url(img/cursor-draw-connect-vertex.png) 1x,
-        url(img/cursor-draw-connect-vertex2x.png) 2x
-        ) 9 9, crosshair;
 }
 
 .mode-add-point #map,
@@ -1213,10 +1254,12 @@ text.point {
 .lasso .vertex {
     cursor: crosshair; /* Opera */
     cursor: url(img/cursor-draw.png) 9 9, crosshair; /* FF */
-    cursor: -webkit-image-set(
-        url(img/cursor-draw.png) 1x,
-        url(img/cursor-draw2x.png) 2x
-        ) 9 9, crosshair;
+}
+
+.turn rect,
+.turn circle {
+    cursor: pointer; /* Opera */
+    cursor: url(img/cursor-pointer.png) 6 1, pointer; /* FF */
 }
 
 .lasso #map {
@@ -1300,6 +1343,13 @@ body {
     height: 100%;
 }
 
+#defs {
+    /* Can't be display: none or the clippaths are ignored. */
+    position: absolute;
+    width: 0;
+    height: 0;
+}
+
 .spacer {
     height: 40px;
     margin-right: 10px;
@@ -1343,10 +1393,6 @@ button,
 .radial-menu-item {
     cursor: pointer; /* Opera */
     cursor: url(img/cursor-pointer.png) 6 1, pointer; /* FF */
-    cursor: -webkit-image-set(
-        url(img/cursor-pointer.png) 1x,
-        url(img/cursor-pointer2x.png) 2x
-        ) 6 1, pointer;
 }
 
 h2 {
@@ -2755,39 +2801,55 @@ input[type=number] {
 
 /* Preset form address */
 
-.form-field .addr-housename {
-    border: 0;
-    border-radius: 0;
+.addr-row input {
+    border-right: 0;
+    border-bottom: 0;
 }
 
-.form-field .addr-number {
-    width: 33.3333%;
-    border: 0;
-    border-radius: 0;
-}
-
-.form-field .addr-street {
-    width: 66.6666%;
+.addr-row:first-of-type input {
     border-top: 0;
-    border-right: 0;
-    border-bottom: 0;
+}
+
+.addr-row input:first-of-type {
+    border-left: 0;
+}
+
+.addr-row input {
     border-radius: 0;
 }
 
-.form-field .addr-city {
-    width: 66.6666%;
-    border-left: 0;
-    border-right: 0;
-    border-bottom: 0;
+.addr-row:last-of-type input:first-of-type {
     border-radius: 0 0 0 4px;
 }
 
-.form-field .addr-postcode {
-    width: 33.3333%;
-    border-right: 0;
-    border-bottom: 0;
+.addr-row:last-of-type input:last-of-type {
     border-radius: 0 0 4px 0;
 }
+
+/* Restrictions editor */
+
+.form-field-restrictions .preset-input-wrap {
+    position: relative;
+    height: 300px;
+}
+
+.form-field-restrictions svg {
+    width: 100%;
+    height: 100%;
+}
+
+.form-field-restrictions .restriction-help {
+    z-index: 1;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: 2px 6px;
+    background-color: rgba(255, 255, 255, .8);
+    color: #999;
+    text-align: center;
+}
+
 /* combobox dropdown */
 
 div.combobox {
@@ -3423,7 +3485,8 @@ img.wiki-image {
 /* About Section
 ------------------------------------------------------- */
 
-.about-block {
+#footer {
+    width: 100%;
     position: absolute;
     right:0;
     bottom:0;
@@ -3434,13 +3497,47 @@ img.wiki-image {
     transition: opacity 200ms;
 }
 
-.about-block:hover {
+#footer:hover {
     opacity: 1;
 }
 
-#about {
+#scale-block {
+    display: table-cell;
+    vertical-align: bottom;
+    width: 250px;
+    height: 30px;
+    float: left;
+    clear: left;
+}
+
+#info-block {
+    float: right;
+    clear: right;
+}
+
+#scale {
+    height: 30px;
+    width: 100%;
+}
+
+#scale text {
+    font: 12px sans-serif;
+    stroke: none;
+    fill: #ccc;
+    text-anchor: start;
+}
+
+#scale path {
+    fill: none;
+    stroke: #ccc;
+    stroke-width: 1;
+    shape-rendering: crispEdges;
+}
+
+#about-list {
     text-align: right;
     margin-right: 10px;
+    clear: right;
 }
 
 .source-switch a {
@@ -3482,29 +3579,18 @@ img.wiki-image {
     content: ', ';
 }
 
-/* API Status */
-
 .api-status {
-    float: left;
+    float: right;
+    clear: both;
+    text-align: right;
+    width: 100%;
 }
 
 .api-status.offline,
-.api-status.readonly {
+.api-status.readonly,
+.api-status.error {
     background: red;
-    padding: 5px 10px;
-}
-
-/* Account Information */
-
-.account {
-    float: left;
-    padding: 5px 10px;
-}
-
-.account .logout {
-    margin-left:10px;
-    border-left: 1px solid white;
-    padding-left: 10px;
+    padding: 0px 5px;
 }
 
 /* Modals
@@ -4010,10 +4096,6 @@ img.wiki-image {
     fill: rgba(255,255,255,.5);
 }
 
-.radial-menu .icon {
-    pointer-events: none;
-}
-
 .lasso-box {
     fill-opacity:0.1;
     stroke: #fff;
@@ -4273,6 +4355,10 @@ img.wiki-image {
 .feature-laundry{background-position:-108px -504px;}
 .feature-car{background-position:-162px -504px;}
 .feature-suitcase{background-position:-216px -504px;}
+.feature-hairdresser{background-position:-0px -528px;}
+.feature-chemist{background-position:-54px -528px;}
+.feature-mobilephone{background-position:-108px -528px;}
+.feature-scooter{background-position:-162px -528px;}
 .preset-icon-line.feature-highway-motorway{background-position:-20px -25px;}
 .preset-icon-line.feature-highway-trunk{background-position:-80px -25px;}
 .preset-icon-line.feature-highway-primary{background-position:-140px -25px;}
@@ -4328,3 +4414,10 @@ img.wiki-image {
 .preset-icon-relation.feature-route-power{background-position:-800px -25px;}
 .preset-icon-relation.feature-route-pipeline{background-position:-860px -25px;}
 .preset-icon-relation.feature-route-master{background-position:-920px -25px;}
+.preset-icon-relation.feature-restriction-no-straight-on{background-position:-980px -25px;}
+.preset-icon-relation.feature-restriction-no-u-turn{background-position:-1040px -25px;}
+.preset-icon-relation.feature-restriction-no-left-turn{background-position:-1100px -25px;}
+.preset-icon-relation.feature-restriction-no-right-turn{background-position:-1160px -25px;}
+.preset-icon-relation.feature-restriction-only-straight-on{background-position:-1220px -25px;}
+.preset-icon-relation.feature-restriction-only-left-turn{background-position:-1280px -25px;}
+.preset-icon-relation.feature-restriction-only-right-turn{background-position:-1340px -25px;}

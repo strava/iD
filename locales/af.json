@@ -328,10 +328,8 @@
             "address": {
                 "label": "Adres",
                 "placeholders": {
-                    "number": "123",
                     "street": "Straat",
-                    "city": "Tipe",
-                    "postcode": "Pos Kode"
+                    "city": "Tipe"
                 }
             },
             "admin_level": {
@@ -830,17 +828,11 @@
             "building/apartments": {
                 "name": "Woonstelle"
             },
-            "building/entrance": {
-                "name": "Ingang"
-            },
             "building/house": {
                 "name": "Huis"
             },
             "emergency/phone": {
                 "name": "Noodtelefoon"
-            },
-            "entrance": {
-                "name": "Ingang"
             },
             "highway": {
                 "name": "Snelweg"
@@ -865,9 +857,6 @@
             },
             "highway/motorway": {
                 "name": "Snelweg"
-            },
-            "highway/motorway_junction": {
-                "name": "Snelwegkruising"
             },
             "highway/motorway_link": {
                 "name": "Snelwegaansluiting"

@@ -182,6 +182,18 @@
             },
             "not_eligible": "Linje kan ikke deles op ved deres begyndelse eller ende.",
             "multiple_ways": "Der er for mange linjer her til at dele op."
+        },
+        "restriction": {
+            "help": {
+                "select": "Vælg et vejsegment.",
+                "toggle": "Klik for at slå dreje restriktioner til.",
+                "toggle_on": "Klik for tilføje \"{restriction}\" restriktion.",
+                "toggle_off": "Klik for at fjerne  \"{restriction}\" restriktionen."
+            },
+            "annotation": {
+                "create": "Tilføjede en dreje restriktion",
+                "delete": "Slettede en dreje restriktion"
+            }
         }
     },
     "undo": {
@@ -320,7 +332,9 @@
         "untagged_area": "Område uden tags",
         "many_deletions": "Du er ved at slette {n} objekter. Er du sikker på du ønsker at gøre dette? Det vil slette dem fra det kort som alle andre ser på openstreetmap.org.",
         "tag_suggests_area": "Tagget {tag} antyder at linjen er et område,  selvom det ikke er et område",
-        "untagged_tooltip": "Vælg en objekttype der beskriver hvad det {geometritype} er.",
+        "untagged_point_tooltip": "Vælg en objekttype der beskriver hvad dette punkt er.",
+        "untagged_line_tooltip": "Vælg en objekttype der beskriver hvad slags linje dette er.",
+        "untagged_area_tooltip": "Vælg en objekttype der beskriver hvad slags område dette er.",
         "deprecated_tags": "Forældede tags: {tags}"
     },
     "zoom": {
@@ -412,6 +426,9 @@
             "category-rail": {
                 "name": "Jernbane"
             },
+            "category-restriction": {
+                "name": "Restriktion"
+            },
             "category-road": {
                 "name": "Vej"
             },
@@ -469,10 +486,19 @@
             "address": {
                 "label": "Adresse",
                 "placeholders": {
-                    "number": "123",
+                    "housename": "Husnavn",
+                    "housenumber": "123",
                     "street": "Gade",
                     "city": "By",
-                    "postcode": "Postnummer"
+                    "postcode": "Postnummer",
+                    "place": "Sted",
+                    "hamlet": "Mindre beboet område",
+                    "suburb": "Bydel",
+                    "subdistrict": "Kvarter",
+                    "district": "Distrikt",
+                    "province": "Provins",
+                    "state": "Region",
+                    "country": "Land"
                 }
             },
             "admin_level": {
@@ -594,6 +620,9 @@
             "entrance": {
                 "label": "Type"
             },
+            "except": {
+                "label": "Undtagelser"
+            },
             "fax": {
                 "label": "Fax",
                 "placeholder": "+31 42 123 4567"
@@ -609,6 +638,33 @@
             },
             "fuel": {
                 "label": "Brændstof"
+            },
+            "fuel/biodiesel": {
+                "label": "Sælger biodiesel"
+            },
+            "fuel/diesel": {
+                "label": "Sælger diesel"
+            },
+            "fuel/e10": {
+                "label": "Sælger E10"
+            },
+            "fuel/e85": {
+                "label": "Sælger E85"
+            },
+            "fuel/lpg": {
+                "label": "Sælger gas"
+            },
+            "fuel/octane_100": {
+                "label": "Sælger høj oktan benzin"
+            },
+            "fuel/octane_91": {
+                "label": "Sælger almindelig benzin"
+            },
+            "fuel/octane_95": {
+                "label": "Sælger medium benzin"
+            },
+            "fuel/octane_98": {
+                "label": "Sælger premium benzin"
             },
             "gauge": {
                 "label": "Sporvidde"
@@ -660,6 +716,9 @@
                     "terminal": "Terminal"
                 }
             },
+            "lamp_type": {
+                "label": "Type"
+            },
             "landuse": {
                 "label": "Type"
             },
@@ -672,6 +731,9 @@
             },
             "leisure": {
                 "label": "Type"
+            },
+            "length": {
+                "label": "Længde(Meter)"
             },
             "levels": {
                 "label": "Etager",
@@ -707,10 +769,16 @@
                 "label": "Type"
             },
             "oneway": {
-                "label": "Ensrettet"
+                "label": "Ensrettet",
+                "options": {
+                    "undefined": "Forventet at være Nej"
+                }
             },
             "oneway_yes": {
-                "label": "Ensrettet"
+                "label": "Ensrettet",
+                "options": {
+                    "undefined": "Forventet at være Ja"
+                }
             },
             "opening_hours": {
                 "label": "Åbningstider"
@@ -743,6 +811,9 @@
             },
             "place": {
                 "label": "Type"
+            },
+            "population": {
+                "label": "Befolkning"
             },
             "power": {
                 "label": "Type"
@@ -783,6 +854,9 @@
             "restriction": {
                 "label": "Type"
             },
+            "restrictions": {
+                "label": "Sving restriktioner"
+            },
             "route": {
                 "label": "Type"
             },
@@ -807,6 +881,9 @@
             "shop": {
                 "label": "Type"
             },
+            "sloped_curb": {
+                "label": "Sløfekurve"
+            },
             "smoking": {
                 "label": "Rygning"
             },
@@ -830,7 +907,8 @@
                     "bridge": "Bro",
                     "tunnel": "Tunnel",
                     "embankment": "Forhøjning til tog, vej",
-                    "cutting": "Forsænkning"
+                    "cutting": "Forsænkning",
+                    "ford": "Vadested"
                 }
             },
             "studio_type": {
@@ -841,6 +919,9 @@
             },
             "surface": {
                 "label": "Overflade"
+            },
+            "tactile_paving": {
+                "label": "Tactile Paving"
             },
             "toilets/disposal": {
                 "label": "Bortskaffelse affald"
@@ -884,6 +965,9 @@
             },
             "wheelchair": {
                 "label": "Kørestolsadgang"
+            },
+            "width": {
+                "label": "Bredde(Meter)"
             },
             "wikipedia": {
                 "label": "Wikipedia"
@@ -1029,6 +1113,10 @@
                 "name": "Bilvask",
                 "terms": "Bilvask, Automobilvask"
             },
+            "amenity/charging_station": {
+                "name": "Opladerstation",
+                "terms": "Opladerstation, elbilopladerstation"
+            },
             "amenity/childcare": {
                 "name": "Børnepasning",
                 "terms": "Børnehave, Børnepasning, Vuggestue, Dagpleje, Fritidshjem"
@@ -1049,6 +1137,10 @@
                 "name": "Gymnasie",
                 "terms": "Gymnasie, Handelsgymnasie"
             },
+            "amenity/compressed_air": {
+                "name": "Luftpumpe",
+                "terms": "Luftpumpe, Billuftpumpe"
+            },
             "amenity/courthouse": {
                 "name": "Domstolsbygning",
                 "terms": "Domstolsbygning, Domstol"
@@ -1060,6 +1152,10 @@
             "amenity/doctor": {
                 "name": "Læge",
                 "terms": "Læge, Doktor"
+            },
+            "amenity/dojo": {
+                "name": "Dojo/Kampsports akdemi",
+                "terms": "Dojo/Kampsports akdemi"
             },
             "amenity/drinking_water": {
                 "name": "Drikkevand",
@@ -1112,6 +1208,10 @@
             "amenity/parking": {
                 "name": "Bilparkering",
                 "terms": "Bilparkering"
+            },
+            "amenity/parking_entrance": {
+                "name": "Parkeringsgarage Indgang/Udgang",
+                "terms": "Parkeringsgarage Indgang/Udgang, Parkeringskælder Indgang/Udgang"
             },
             "amenity/pharmacy": {
                 "name": "Apotek",
@@ -1358,8 +1458,8 @@
                 "terms": " Kollegie, Klubværelse, Kollegium"
             },
             "building/entrance": {
-                "name": "Indgang",
-                "terms": "Indgang"
+                "name": "Indgang/Udgang",
+                "terms": "Indgang/Udgang"
             },
             "building/garage": {
                 "name": "Garage",
@@ -1541,6 +1641,10 @@
                 "name": "Fotograf",
                 "terms": "Fotograf"
             },
+            "craft/photographic_laboratory": {
+                "name": "Fotolaboratorium",
+                "terms": "Fotolaboratorium, Fotoforhandler"
+            },
             "craft/plasterer": {
                 "name": "Oppudser",
                 "terms": "Oppudser"
@@ -1634,16 +1738,24 @@
                 "terms": "Nødtelefon, Nødopkaldstelefon"
             },
             "entrance": {
-                "name": "Indgang",
-                "terms": "Indgang, Indgangsparti"
+                "name": "Indgang/Udgang",
+                "terms": "Indgang/Udgang"
             },
             "footway/crossing": {
                 "name": "Kryds",
                 "terms": "Kryds"
             },
+            "footway/crosswalk": {
+                "name": "Fodgængerovergang",
+                "terms": "Fodgængerovergang"
+            },
             "footway/sidewalk": {
                 "name": "Fortov",
                 "terms": "Fortov"
+            },
+            "ford": {
+                "name": "Vadested",
+                "terms": "Vadested"
             },
             "golf/bunker": {
                 "name": "Sandbunker",
@@ -1693,6 +1805,10 @@
                 "name": "Kryds",
                 "terms": "Kryds"
             },
+            "highway/crosswalk": {
+                "name": "Fodgængerovergang",
+                "terms": "Fodgængerovergang"
+            },
             "highway/cycleway": {
                 "name": "Cykelsti",
                 "terms": "Cykelsti"
@@ -1714,8 +1830,8 @@
                 "terms": "Motorvej"
             },
             "highway/motorway_junction": {
-                "name": "Motorvejskryds",
-                "terms": "Motorvejskryds"
+                "name": "Motorvejsafkørsel/ Udkørsel",
+                "terms": "Motorvejsafkørsel/ Udkørsel"
             },
             "highway/motorway_link": {
                 "name": "Motorvejsafkørsel",
@@ -1792,6 +1908,10 @@
             "highway/stop": {
                 "name": "Stopskilt",
                 "terms": "Stopskilt"
+            },
+            "highway/street_lamp": {
+                "name": "Gadelampe",
+                "terms": "Gadelampe, Gadebelysning"
             },
             "highway/tertiary": {
                 "name": " Tertiær vej",
@@ -1877,6 +1997,10 @@
                 "name": "Gravplads ",
                 "terms": "Gravplads "
             },
+            "landuse/churchyard": {
+                "name": "Kirkegård",
+                "terms": "Kirkegårde"
+            },
             "landuse/commercial": {
                 "name": "Kommercielt område",
                 "terms": "Kommercielt område"
@@ -1916,6 +2040,10 @@
             "landuse/meadow": {
                 "name": "Eng",
                 "terms": "Eng"
+            },
+            "landuse/military": {
+                "name": "Militær",
+                "terms": "Militær"
             },
             "landuse/orchard": {
                 "name": "Frugtplantage",
@@ -2018,8 +2146,8 @@
                 "terms": "Bådrampe, Skibsrampe"
             },
             "leisure/sports_center": {
-                "name": "Sportscenter",
-                "terms": "Sportscenter"
+                "name": "Sportscenter/Gymnastik",
+                "terms": "Sportscenter/Gymnastik"
             },
             "leisure/stadium": {
                 "name": "Stadion",
@@ -2625,6 +2753,10 @@
                 "name": "Fotoforretning",
                 "terms": "<Oversæt med synonymer eller relaterede termer for \"Fotoforretning\", adskilt af kommaer>"
             },
+            "shop/seafood": {
+                "name": "Fiskehandler",
+                "terms": "Fiskehandler, Fiskebutik"
+            },
             "shop/shoes": {
                 "name": "Skobutik",
                 "terms": "Skobutik, Skoforretning"
@@ -2640,6 +2772,10 @@
             "shop/supermarket": {
                 "name": "Supermarked",
                 "terms": "Supermarked, Lavprisbutik, Discountbutik"
+            },
+            "shop/tailor": {
+                "name": "Skrædder",
+                "terms": "Skrædder"
             },
             "shop/toys": {
                 "name": "Legetøjsbutik",
@@ -2664,6 +2800,10 @@
             "shop/video": {
                 "name": "Videobutik",
                 "terms": "Videobutik, Videoforretning, Videoudlejning"
+            },
+            "shop/wine": {
+                "name": "Vinforretning",
+                "terms": "Vinforretning, Vinbutik"
             },
             "tourism": {
                 "name": "Turisme",
@@ -2748,6 +2888,34 @@
             "type/restriction": {
                 "name": "Restriktion",
                 "terms": "Restriktion"
+            },
+            "type/restriction/no_left_turn": {
+                "name": "Ingen venstresving",
+                "terms": "Ingen venstresving"
+            },
+            "type/restriction/no_right_turn": {
+                "name": "Ingen højresving",
+                "terms": "Ingen højresving"
+            },
+            "type/restriction/no_straight_on": {
+                "name": "Ingen lige ud kørsel",
+                "terms": "Ingen lige ud kørsel"
+            },
+            "type/restriction/no_u_turn": {
+                "name": "Ingen U-vending",
+                "terms": "Ingen U-vending"
+            },
+            "type/restriction/only_left_turn": {
+                "name": "Kun venstresving tilladt",
+                "terms": "Kun venstresving tilladt"
+            },
+            "type/restriction/only_right_turn": {
+                "name": "Kun højresving tilladt",
+                "terms": "Kun højresving tilladt"
+            },
+            "type/restriction/only_straight_on": {
+                "name": "Ingen sving tilladt",
+                "terms": "Ingen sving tilladt"
             },
             "type/route": {
                 "name": "Rute",

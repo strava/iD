@@ -84,8 +84,11 @@
             "building/terrace": {
                 "name": "Terraced houses"
             },
-            "leisure/sports_center": {
-                "name": "Sports Centre"
+            "footway/crosswalk": {
+                "name": "Zebra Crossing"
+            },
+            "highway/crosswalk": {
+                "name": "Zebra Crossing"
             },
             "shop/garden_centre": {
                 "name": "Garden Centre"

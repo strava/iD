@@ -318,10 +318,8 @@
             "address": {
                 "label": "Adrese",
                 "placeholders": {
-                    "number": "123",
                     "street": "Iela",
-                    "city": "Pilsēta",
-                    "postcode": "Pasta indekss"
+                    "city": "Pilsēta"
                 }
             },
             "aeroway": {
@@ -676,14 +674,8 @@
             "building/apartments": {
                 "name": "Dzīvokļi"
             },
-            "building/entrance": {
-                "name": "Ieeja"
-            },
             "building/house": {
                 "name": "Māja"
-            },
-            "entrance": {
-                "name": "Ieeja"
             },
             "highway": {
                 "name": "Šoseja"
