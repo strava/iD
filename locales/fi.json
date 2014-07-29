@@ -150,7 +150,8 @@
                 "area": "Alue siirretty.",
                 "multiple": "Monta kohdetta siirretty."
             },
-            "incomplete_relation": "Tätä ominaisuutta ei voi siirtää, sillä sitä ei ole ladattu kokonaan."
+            "incomplete_relation": "Tätä ominaisuutta ei voi siirtää, sillä sitä ei ole ladattu kokonaan.",
+            "too_large": "Tätä ei voi siirtää, koska sitä ei ole nykyisin riittävästi näkyvillä."
         },
         "rotate": {
             "title": "Käännä",
@@ -159,7 +160,8 @@
             "annotation": {
                 "line": "Viiva käännetty.",
                 "area": "Alue käännetty."
-            }
+            },
+            "too_large": "Tätä ei voi pyörittää, koska sitä ei ole nykyisin riittävästi näkyvillä."
         },
         "reverse": {
             "title": "Vaihda suuntaa",
@@ -279,6 +281,8 @@
         "percent_brightness": "{opacity}% kirkkaus",
         "none": "Ei kohteita",
         "custom": "Mukautettu",
+        "custom_button": "Muokkaa omaa taustaa",
+        "custom_prompt": "Kirjoita tiilen verkko-osoitemallinne. Kelvollisia merkkejä ovat {z}, {x}, {y} Z/X/Y-skeemalle ja {u} quadtile-skeemalle.",
         "fix_misalignment": "Korjaa ilmakuvavirhe",
         "reset": "palauta"
     },
@@ -315,6 +319,7 @@
         "start": "Muokkaa heti"
     },
     "source_switch": {
+        "live": "suora lähetys",
         "lose_changes": "Kaikkia muutoksia ei ole tallennettu. Karttapalvelimen vaihtaminen hylkää nämä muutokset. Haluatko varmasti vaihtaa palvelinta?",
         "dev": "kehitys"
     },
@@ -329,6 +334,9 @@
         "untagged_area": "Alue, jolla ei ole tageja",
         "many_deletions": "Haluatko varmasti poistaa {n} kohdetta? Kohteet poistetaan kaikkien näkyviltä OpenStreetMap-palvelussa.",
         "tag_suggests_area": "Tagin {tag} mukaan viiva on alue, vaikka se ei sitä ole.",
+        "untagged_point_tooltip": "Valitse ominaisuustyyppi, joka kuvailee, mikä tämä piste on.",
+        "untagged_line_tooltip": "Valitse ominaisuustyyppi, joka kuvailee, mikä tämä viiva on.",
+        "untagged_area_tooltip": "Valitse ominaisuustyyppi, joka kuvailee, mikä tämä alue on.",
         "deprecated_tags": "Vanhentuneet tagit: {tags}"
     },
     "zoom": {
@@ -351,7 +359,8 @@
         "imagery": "# Ilmakuvat\n\nIlmakuvat ovat tärkeä kartoittamisen apuväline. Lentokuvien,\nsatelliittikuvien ja vapaasti koottujen materiaalien kokoelma on\nkäytettävissä Taustan asetukset -valikosta oikean reunan sivupalkista.\n\nOletuksena taustalla näytetään [Bing-karttojen](http://www.bing.com/maps/) satelliittikuvat,\nmutta karttaa lähentämällä vaihtoehtoja tulee lisää.\nJoissakin maissa, kuten Suomessa, Ranskassa ja Tanskassa\non saatavilla korkealaatuisia lentokoneesta kuvattuja ilmakuvia.\n\nIlmakuva voi näyttää virheelliseltä palveluntarjoajan sivuston\nvirheen vuoksi. Jos tiestön sijainti heittää ilmakuvasta, älä ala heti\nsiirtämään niitä vastaamaan taustakuvaa, vaan siirrä ilmakuvataustaa\nvastaamaan tiestöä asetuksella \"Korjaa ilmakuvavirhe\"\nTaustan asetusten alaosassa.\n",
         "addresses": "# Osoitteet\n\nOsoitteet ovat yksi tärkeimmistä kartalla olevasta tiedosta.\n\nSen lisäksi että osoitetiedot ovat myös katujen nimiä,\nOpenStreetMapissa ne ovat olennaisia myös rakennusten\nja muiden kadunvarsikohteiden tiedoissa.\n\nOsoitetietoja voi katujen lisäksilisätä rakennuksien ulkoreunille\nja paikkapisteille. Paras osoitetietojen lähde on jalkautuminen tai\noma paikallistuntemus - kuten kaikessa muussakin muokkaamisessa,\ntietojen kopioiminen kaupallisista lähteistä kuten Google Kartoista\non ehdottomasti kielletty.\n",
         "inspector": "# Kohdemuokkaimen käyttö\n\nKohdemuokkain on näytön vasemmassa reunassa oleva osio,\njolla muutetaan valitun kohteen ominaisuuksia.\n\n### Kohteen tyypin valitseminen\n\nPisteen, viivan tai alueen lisäämisen jälkeen tulee valita, millainen kohde\nse on - kuten kahvila, moottoritie, joki tai leikkipuisto. Kohdemuokkain\nnäyttää painikkeet yleisimmille kohteille. Jos kohde ei näy listalla, hae\npaikkaa hakusanalla ja valitse se sitten luettelosta. Haku ymmärtää myös\nsynonyymit ja englanninkieliset nimet, joten kokeile sitä rohkeasti.\n\nTarkastele kohdetyypin lisätietoja tarkemmin napsauttamalla i-kirjainta\nsen reunassa. Valitse kohdetyyppi muokattavalle kohteelle napsauttamalla.\n\n### Kohteen tagien muokkaaminen\n\nKun kohdetyyppi on valittu, kohdemuokkain näyttää tietokenttiä, joilla\nvoidaan kuvailla kohteen ominaisuuksia, kuten nimi ja osoite.\n\nKenttäjoukon alapuolella on rivi painikkeita, joilla voi avata lisäkenttiä,\nkuten [Wikipedia-sivun](http://fi.wikipedia.org/), esteettömyystiedot\nja paljon muuta.\n\nKohdemuokkaimen alaosassa on Kaikki tagit -kohta, jossa voi lisätä\nkohteelle mitä tahansa tageja eli ominaisuustietoja. [Taginfosta](http://taginfo.openstreetmap.org/)\nlöytää lisätietoja erilaisista tageista ja niiden käyttömahdollisuuksista.\n\nKohdemuokkaimella tehtävät muutokset päivittyvät muokkauskartalle.\nreaaliaikaisesti. Muutoksen voi kuitenkin aina perua napsauttamalla\nKumoa-painiketta.\n",
-        "buildings": "# Rakennukset\n\nOpenStreetMap sisältää maailman laajimman rakennustietokannan.\nVoit osallistua tämän tietokannan luomiseen ja kehittämiseen.\n\n### Valitseminen\n\nValitse rakennus napsauttamalla sen seinää. Rakennus korostuu,\nrakennuksen viereen tulee pikatoiminto palkki ja rakennuksen\nmuokkausnäkymä avautuu.\n\n### Muokkaaminen\n\nJoskus rakennukset ovat väärin sijoitettuja tai niiden tiedot ovat virheellisiä.\n\nSiirrä rakennusta valitsemalla se ja napsauttamalla Muokkaa. Liikuta\nrakennusta hiirellä ja aseta se uudelle paikalleen napsauttamalla.\n\nMuuta rakennuksen muotoa napsauttamalla ja vetämällä\nsen rajojen pisteitä oikeille kohdille.\n\n### Piirtäminen\n\nYksi yleisimmistä rakennusten piirtämiseen liittyvistä kysymyksistä on se,\nettä OpenStreetMapissa rakennus voidaan piirtää tai merkitä vain pisteellä.\nNyrkkisääntö on, että rakennusten ulkomuodot tulisi aina pyrkiä piirtämään\nmahdollisimman tarkasti ja sijoittaa mahdolliset sisällä toimivat yritykset paikkapisteinä sen sisään.\n\nAloita rakennuksen piirtäminen napsauttamalla yläpalkista Alue.\nPeruuta piirtäminen painamalla näppäimistön askelpalautinta.\nViimeistele rakennus sulkemalla se napsauttamalla lähtöpistettä uudelleen.\n\n### Poistaminen\n\nJos rakennus on täysin virheellinen - se esimerkiksi puuttuu satelliittikuvasta\nkokonaan tai se ei varmasti ole enää olemassa - se tulee poistaa\nkartalta. Mieti tarkkaan ennen karttakohteiden poistamispäätöstä -\nmuutos näkyy kartalla kaikille ja lisäksi satelliittikuvat ovat usein\nvanhentuneita, joten rakennus on jo voitu ehtiä rakentaa uudelleen.\n\nPoista rakennus valitsemalla se ja napsauttamalla sitten roskakorin\nkuvaketta tai napsauttamalla näppäimistön Delete-näppäintä.\n"
+        "buildings": "# Rakennukset\n\nOpenStreetMap sisältää maailman laajimman rakennustietokannan.\nVoit osallistua tämän tietokannan luomiseen ja kehittämiseen.\n\n### Valitseminen\n\nValitse rakennus napsauttamalla sen seinää. Rakennus korostuu,\nrakennuksen viereen tulee pikatoiminto palkki ja rakennuksen\nmuokkausnäkymä avautuu.\n\n### Muokkaaminen\n\nJoskus rakennukset ovat väärin sijoitettuja tai niiden tiedot ovat virheellisiä.\n\nSiirrä rakennusta valitsemalla se ja napsauttamalla Muokkaa. Liikuta\nrakennusta hiirellä ja aseta se uudelle paikalleen napsauttamalla.\n\nMuuta rakennuksen muotoa napsauttamalla ja vetämällä\nsen rajojen pisteitä oikeille kohdille.\n\n### Piirtäminen\n\nYksi yleisimmistä rakennusten piirtämiseen liittyvistä kysymyksistä on se,\nettä OpenStreetMapissa rakennus voidaan piirtää tai merkitä vain pisteellä.\nNyrkkisääntö on, että rakennusten ulkomuodot tulisi aina pyrkiä piirtämään\nmahdollisimman tarkasti ja sijoittaa mahdolliset sisällä toimivat yritykset paikkapisteinä sen sisään.\n\nAloita rakennuksen piirtäminen napsauttamalla yläpalkista Alue.\nPeruuta piirtäminen painamalla näppäimistön askelpalautinta.\nViimeistele rakennus sulkemalla se napsauttamalla lähtöpistettä uudelleen.\n\n### Poistaminen\n\nJos rakennus on täysin virheellinen - se esimerkiksi puuttuu satelliittikuvasta\nkokonaan tai se ei varmasti ole enää olemassa - se tulee poistaa\nkartalta. Mieti tarkkaan ennen karttakohteiden poistamispäätöstä -\nmuutos näkyy kartalla kaikille ja lisäksi satelliittikuvat ovat usein\nvanhentuneita, joten rakennus on jo voitu ehtiä rakentaa uudelleen.\n\nPoista rakennus valitsemalla se ja napsauttamalla sitten roskakorin\nkuvaketta tai napsauttamalla näppäimistön Delete-näppäintä.\n",
+        "relations": "# Suhteet\n\nSuhde on erityistyyppinen OpenStreetMap-ominaisuus, joka ryhmittää yhteen muita\nominaisuuksia. Esimerkiksi kaksi yleistä suhdetyyppiä ovat *route relations*,\njotka ryhmittävät yhteen tienosat, jotka kuuluvat tiettyyn moottoritiehen tai\npäätiehen, ja *multipolygons*, jotka ryhmittävät yhteen useita viivoja, jotka määrittävät\nmutkikkaita alueita (sellaisia, joissa on useita kappaleita tai reikiä, kuten donitsissa).\n\nOminaisryhmää suhteessa kutsutaan *members*. Sivupalkissa voit nähdä\nminkä suhteiden jäsenenä ominaisuus on, ja napsauttaa suhdetta siellä\nsen valitsemiseksi. Kun suhde on valittu, voit nähdä kaikki sen jäsenet\nlueteltuina sivupalkissa ja korostettuna kartalla.\n\nEnimmäkseen iD huolehtii suhteiden ylläpidosta automaattisesti muokkauksen\naikana. Tärkein seikka, josta sinun pitäisi olla tietoinen, on että jos poistat\ntienpätkän piirtääksesi sen tarkempaa, sinun pitäisi varmistua, että uusi pätkä on\nsaman suhteen jäsen kuin alkuperäinen.\n\n## Suhteiden muokkaus\n\nJos haluat muokata suhteita, tässä ovat perusasiat.\n\nOminaisuuden lisäämiseksi suhteeseen, valitse ominaisuus, napsauta ”+”-painiketta\nsivupalkin ”All relations”-kappaleessa, ja valitse tai kirjoita suhteen nimi.\n\nUuden suhteen luomisesksi valitse ensin ominaisuus, jonka pitäisi olla jäsen,\nnapsauta ”+”-painiketta ”All relations”-kappaleessa ja valitse ”New relation...”.\n\nOminaisuuden poistamiseksi suhteesta valitse ominaisuus ja napsauta\nroskakoripainiketta sen suhteen vieressä, josta haluat sen poistaa.\n\nVoit luoda monikulmioita rei'illä käyttäen ”Merge”-työkalua. Piirrä kaksi aluetta (sisempi\nja ulompi), pidä Vaihto-näppäin alhaalla ja napsauta niistä kumpaakin molempien\nvalitsemiseksi, ja napsauta sitten ”Merge” (+)-painiketta.\n"
     },
     "intro": {
         "navigation": {
@@ -476,8 +485,13 @@
             "address": {
                 "label": "Osoite",
                 "placeholders": {
+                    "housename": "Talon nimi",
+                    "housenumber": "123",
                     "street": "Kadunnimi",
-                    "city": "Paikkakunta"
+                    "city": "Paikkakunta",
+                    "postcode": "Postinumero",
+                    "state": "Osavaltio",
+                    "country": "Valtio"
                 }
             },
             "admin_level": {
@@ -725,13 +739,13 @@
             "oneway": {
                 "label": "Yksisuuntaisuus",
                 "options": {
-                    "undefined": "Oletettavasti Ei"
+                    "undefined": "Oletettavasti ei"
                 }
             },
             "oneway_yes": {
                 "label": "Yksisuuntaisuus",
                 "options": {
-                    "undefined": "Oletettavasti Kyllä"
+                    "undefined": "Oletettavasti kyllä"
                 }
             },
             "opening_hours": {
@@ -794,16 +808,7 @@
                 "label": "Tyyppi"
             },
             "religion": {
-                "label": "Uskonto",
-                "options": {
-                    "christian": "Kristinusko",
-                    "muslim": "Islam",
-                    "buddhist": "Buddhalaisuus",
-                    "jewish": "Juutalaisuus",
-                    "hindu": "Hindulaisuus",
-                    "shinto": "Šintolaisuus",
-                    "taoist": "Taolaisuus"
-                }
+                "label": "Uskonto"
             },
             "restriction": {
                 "label": "Tyyppi"
@@ -816,9 +821,6 @@
             },
             "route_master": {
                 "label": "Tyyppi"
-            },
-            "sac_scale": {
-                "label": "Haastavuus"
             },
             "service": {
                 "label": "Tyyppi"
@@ -868,9 +870,6 @@
             },
             "towertype": {
                 "label": "Tornin tyyppi"
-            },
-            "tracktype": {
-                "label": "Tyyppi"
             },
             "trail_visibility": {
                 "label": "Näkyvyys"
@@ -928,7 +927,7 @@
                 "name": "Sompahissi"
             },
             "aerialway/pylon": {
-                "name": "ilmaradan pylväs"
+                "name": "Ilmaradan pylväs"
             },
             "aerialway/rope_tow": {
                 "name": "Naruhissi"
@@ -1050,6 +1049,10 @@
             "amenity/college": {
                 "name": "Ammattiopisto",
                 "terms": "ammattiopisto, amis, ammattikoulu, koulu, koulutus, oppilaitos, toinen aste"
+            },
+            "amenity/compressed_air": {
+                "name": "Ilmanpainepiste",
+                "terms": "renkaat, auto, autoilu, rengas, täyttö, paineilma, ilmantäyttö, kompressori"
             },
             "amenity/courthouse": {
                 "name": "Käräjäoikeus",
@@ -1364,7 +1367,8 @@
                 "name": "Kirjasitomo"
             },
             "craft/brewery": {
-                "name": "panimo"
+                "name": "Olutpanimo",
+                "terms": "panimo, olut, viina, viini, alkoholi, alko"
             },
             "craft/carpenter": {
                 "name": "Puuseppä"
@@ -1388,7 +1392,7 @@
                 "name": "Sähköasentaja"
             },
             "craft/gardener": {
-                "name": "puutarhuri"
+                "name": "Puutarhuri"
             },
             "craft/glaziery": {
                 "name": "Lasinpuhallus"
@@ -1426,11 +1430,15 @@
             "craft/photographer": {
                 "name": "valokuvaaja"
             },
+            "craft/photographic_laboratory": {
+                "name": "Valokuvausliike",
+                "terms": "valokuva, valokuvaaminen, valokuvaus, kuvaaminen, kuvaus, kehittämö, kuvankehittämö, kuvankehitys, kuvakehitys"
+            },
             "craft/plasterer": {
                 "name": "Rappaaja"
             },
             "craft/plumber": {
-                "name": "putkiasentaja"
+                "name": "Putkimies"
             },
             "craft/pottery": {
                 "name": "savenvalimo"
@@ -1470,7 +1478,7 @@
                 "name": "Räätäli"
             },
             "craft/tiler": {
-                "name": "laatoittaja"
+                "name": "Laattaliike"
             },
             "craft/tinsmith": {
                 "name": "Peltiseppä"
@@ -1577,7 +1585,7 @@
                 "name": "Polku"
             },
             "highway/pedestrian": {
-                "name": "Jalankulku"
+                "name": "Kävelykatu"
             },
             "highway/primary": {
                 "name": "Kantatie"
@@ -1628,6 +1636,10 @@
             "highway/stop": {
                 "name": "Pakollinen pysähtyminen",
                 "terms": "stop, stop-merkki, stop merkki, liikennemerkki, kieltomerkki, kieltomerkit, pysähtyminen, pysähdys, liikennesääntö, liikennesäännöt, pakollisuus, pakollinen"
+            },
+            "highway/street_lamp": {
+                "name": "Katuvalaisin",
+                "terms": "valo, valaisin, valotolppa, valopylväs, valaisintolppa, valaisinpylväs, katupylväs, katuvalo, valaisintolppa"
             },
             "highway/tertiary": {
                 "name": "Yhdystie"
@@ -1757,6 +1769,10 @@
                 "name": "Puisto",
                 "terms": "Puisto, Viheralue, Puistikko"
             },
+            "leisure/picnic_table": {
+                "name": "Piknikpöytä",
+                "terms": "piknik, eväsretki, ulkoilu, ulkopöytä, pöytä, puupöytä, penkki, ruokailu, ulkoruokailu, ulkoruokailupöytä, ulkoruokapöytä"
+            },
             "leisure/pitch": {
                 "name": "Urheilukenttä"
             },
@@ -1791,6 +1807,10 @@
                 "name": "Veneramppi",
                 "terms": "veneramppi, vesillelaskupaikka, veneenlaskupaikka, vene, järveenlaskupaikka, järviramppi"
             },
+            "leisure/sports_center": {
+                "name": "Urheilukeskus/kuntosali",
+                "terms": "urheilu, urheilukenttä, kenttä, urheilusali, sali, kuntoilu, kunto, kuntosali, urheilukeskus, urheilualue, sisäpelihalli, sisähalli, sisäliikunta, halli"
+            },
             "leisure/stadium": {
                 "name": "Stadion"
             },
@@ -1817,7 +1837,7 @@
                 "terms": "pengerrys, tienreuna, meluvalli, äänivalli, äänimuuri, melumuuri"
             },
             "man_made/flagpole": {
-                "name": "Lipputank",
+                "name": "Lipputanko",
                 "terms": "lippu, liputus, salko, lippusalko, tanko, tolppa, lipputolppa, liputuspäivä, liputtaa"
             },
             "man_made/lighthouse": {

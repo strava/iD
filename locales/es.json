@@ -150,7 +150,8 @@
                 "area": "Área movida",
                 "multiple": "Múltiples objetos movidos."
             },
-            "incomplete_relation": "Este elemento del mapa no puede ser desplazado porque no se ha descargado completamente."
+            "incomplete_relation": "Este elemento del mapa no puede ser desplazado porque no se ha descargado completamente.",
+            "too_large": "Esto no puede ser movido porque no está completamente visible."
         },
         "rotate": {
             "title": "Rotar",
@@ -159,7 +160,8 @@
             "annotation": {
                 "line": "Línea rotada.",
                 "area": "Área rotada."
-            }
+            },
+            "too_large": "Esto no puede rotarse porque no está completamente visible."
         },
         "reverse": {
             "title": "Invertir",
@@ -481,6 +483,10 @@
                 }
             },
             "access_simple": {
+                "label": "Acceso",
+                "placeholder": "sí"
+            },
+            "access_toilets": {
                 "label": "Acceso"
             },
             "address": {
@@ -508,7 +514,12 @@
                 "label": "Tipo"
             },
             "aerialway/access": {
-                "label": "Acceso"
+                "label": "Acceso",
+                "options": {
+                    "entry": "Entrada",
+                    "exit": "Salida",
+                    "both": "Ambas"
+                }
             },
             "aerialway/bubble": {
                 "label": "Burbuja"
@@ -529,7 +540,12 @@
                 "placeholder": "2, 4, 8..."
             },
             "aerialway/summer/access": {
-                "label": "Acceso (verano)"
+                "label": "Acceso (verano)",
+                "options": {
+                    "entry": "Entrada",
+                    "exit": "Salida",
+                    "both": "Ambas"
+                }
             },
             "aeroway": {
                 "label": "Tipo"
@@ -569,7 +585,25 @@
                 "placeholder": "50, 100, 200..."
             },
             "cardinal_direction": {
-                "label": "Dirección"
+                "label": "Dirección",
+                "options": {
+                    "N": "Norte",
+                    "E": "Este",
+                    "S": "Sur",
+                    "W": "Oeste",
+                    "NE": "Noreste",
+                    "SE": "Sureste",
+                    "SW": "Suroeste",
+                    "NW": "Noroeste",
+                    "NNE": "Norte-Noreste",
+                    "ENE": "Este-Noreste",
+                    "ESE": "Este-Sureste",
+                    "SSE": "Sur-Sureste",
+                    "SSW": "Sur-Suroeste",
+                    "WSW": "Oeste-Sureste",
+                    "WNW": "Oeste-Noroeste",
+                    "NNW": "Norte-Noroeste"
+                }
             },
             "clock_direction": {
                 "label": "Dirección",
@@ -609,7 +643,11 @@
                 "label": "Descripción"
             },
             "electrified": {
-                "label": "Electrificación"
+                "label": "Electrificación",
+                "options": {
+                    "yes": "Sí (sin especificar)",
+                    "no": "No"
+                }
             },
             "elevation": {
                 "label": "Altitud"
@@ -711,10 +749,15 @@
             "internet_access": {
                 "label": "Acceso a Internet",
                 "options": {
+                    "yes": "Sí",
+                    "no": "No",
                     "wlan": "Wi-Fi",
                     "wired": "Por cable",
                     "terminal": "Terminal"
                 }
+            },
+            "lamp_type": {
+                "label": "Tipo"
             },
             "landuse": {
                 "label": "Tipo"
@@ -768,13 +811,17 @@
             "oneway": {
                 "label": "Sentido único",
                 "options": {
-                    "undefined": "Se asume que es No"
+                    "undefined": "Se asume que es No",
+                    "yes": "Sí",
+                    "no": "No"
                 }
             },
             "oneway_yes": {
                 "label": "Sentido único",
                 "options": {
-                    "undefined": "Se asume que es Sí"
+                    "undefined": "Se asume que es Sí",
+                    "yes": "Sí",
+                    "no": "No"
                 }
             },
             "opening_hours": {
@@ -819,7 +866,7 @@
                 "label": "Tipo"
             },
             "recycling/cans": {
-                "label": "Acepta latas"
+                "label": "Acepta envases"
             },
             "recycling/clothes": {
                 "label": "Acepta ropas"
@@ -837,16 +884,7 @@
                 "label": "Tipo"
             },
             "religion": {
-                "label": "Religión",
-                "options": {
-                    "christian": "Cristiana",
-                    "muslim": "Musulmana",
-                    "buddhist": "Budista",
-                    "jewish": "Judía",
-                    "hindu": "Hindú",
-                    "shinto": "Sintoísta",
-                    "taoist": "Taoísta"
-                }
+                "label": "Religión"
             },
             "restriction": {
                 "label": "Tipo"
@@ -859,9 +897,6 @@
             },
             "route_master": {
                 "label": "Tipo"
-            },
-            "sac_scale": {
-                "label": "Dificultad del sendero"
             },
             "seasonal": {
                 "label": "Estacional"
@@ -928,9 +963,6 @@
             },
             "towertype": {
                 "label": "Tipo de torre"
-            },
-            "tracktype": {
-                "label": "Tipo"
             },
             "trail_visibility": {
                 "label": "Visibilidad de la senda"
@@ -1864,6 +1896,9 @@
                 "name": "Señal de Stop",
                 "terms": "señal de detención, señal de parada, señal, stop, detención, parada"
             },
+            "highway/street_lamp": {
+                "name": "Lámpara de alumbrado público"
+            },
             "highway/tertiary": {
                 "name": "Carretera terciaria",
                 "terms": "calle, ronda, carril, ruta, arteria, rúa, trayecto, avenida, carretera, paseo, camino, vía, local, terciaria"
@@ -2061,7 +2096,7 @@
                 "terms": "Cancha de fútbol americano"
             },
             "leisure/pitch/baseball": {
-                "name": "Diamante de Béisbol",
+                "name": "Diamante de béisbol",
                 "terms": "Campo de Beisbol"
             },
             "leisure/pitch/basketball": {
@@ -2249,7 +2284,7 @@
             },
             "natural/water/pond": {
                 "name": "Estanque",
-                "terms": "Estanque"
+                "terms": "estanque, charca, pozo de agua, agua estancada"
             },
             "natural/water/reservoir": {
                 "name": "Embalse",
@@ -2358,7 +2393,7 @@
             },
             "place/island": {
                 "name": "Isla",
-                "terms": "Isla"
+                "terms": "isla"
             },
             "place/isolated_dwelling": {
                 "name": "Vivienda aislada",
@@ -2699,6 +2734,9 @@
             "shop/supermarket": {
                 "name": "Supermercado",
                 "terms": "supermercado, autoservicio, mercado, hipermercado, alimentación, víveres"
+            },
+            "shop/tailor": {
+                "name": "Sastre"
             },
             "shop/toys": {
                 "name": "Tienda de juguetes",

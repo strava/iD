@@ -253,10 +253,22 @@ g.vertex.shared .stroke {
 }
 
 g.midpoint .fill {
-    fill: #ddd;
-    stroke: black;
-    stroke-opacity: .5;
-    opacity: .5;
+    fill: #eee;
+    stroke: #444;
+    stroke-opacity: .6;
+    opacity: .7;
+}
+
+g.midpoint.tag-highway-pedestrian .fill,
+g.midpoint.tag-highway-steps .fill,
+g.midpoint.tag-highway-path .fill,
+g.midpoint.tag-highway-footway .fill,
+g.midpoint.tag-highway-cycleway .fill,
+g.midpoint.tag-highway-bridleway .fill {
+    fill: #fff;
+    stroke: #333;
+    stroke-opacity: .8;
+    opacity: .8;
 }
 
 g.vertex .shadow,
