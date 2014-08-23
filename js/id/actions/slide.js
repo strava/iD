@@ -92,10 +92,10 @@ iD.actions.Slide = function(options, projection) {
 
                 n = n.move(result.loc);
                 graph = graph.replace(n);
-                if (iD.geo.sphericalDistance(newNodes[result.index - 1].loc, result.loc) < 5) {
+                if (iD.geo.sphericalDistance(newNodes[result.index - 1].loc, result.loc) < 5 && !nodeInteresting(graph, newNodes[result.index - 1])) {
                     graph = iD.actions.DeleteNode(newNodes[result.index - 1].id)(graph);
                     newNodes[result.index - 1] = n;
-                } else if (iD.geo.sphericalDistance(newNodes[result.index].loc, result.loc) < 5) {
+                } else if (iD.geo.sphericalDistance(newNodes[result.index].loc, result.loc) < 5 && !nodeInteresting(graph, newNodes[result.index])) {
                     graph = iD.actions.DeleteNode(newNodes[result.index].id)(graph);
                     newNodes[result.index ] = n;
                 } else {
