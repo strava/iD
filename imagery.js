@@ -2,7 +2,7 @@ iD.data.imagery = [
     {
         "name": "Strava Global Heat",
         "type": "tms",
-        "template": "http://gometry.strava.com/tiles/both/color4/{zoom}/{x}/{y}.png",
+        "template": "http://globalheat.strava.com/tiles/both/color4/{zoom}/{x}/{y}.png",
         "overlay": true,
         "description": "Strava Global Heat",
         "scaleExtent": [
@@ -15,7 +15,7 @@ iD.data.imagery = [
     {
         "name": "Strava Cycling Heat",
         "type": "tms",
-        "template": "http://gometry.strava.com/tiles/cycling/color4/{zoom}/{x}/{y}.png",
+        "template": "http://globalheat.strava.com/tiles/cycling/color4/{zoom}/{x}/{y}.png",
         "overlay": true,
         "description": "Strava Global Cycling Heat",
         "scaleExtent": [
@@ -28,7 +28,7 @@ iD.data.imagery = [
     {
         "name": "Strava Running Heat",
         "type": "tms",
-        "template": "http://gometry.strava.com/tiles/running/color4/{zoom}/{x}/{y}.png",
+        "template": "http://globalheat.strava.com/tiles/running/color4/{zoom}/{x}/{y}.png",
         "overlay": true,
         "description": "Strava Global Running Heat",
         "scaleExtent": [

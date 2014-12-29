@@ -16193,6 +16193,16 @@ window.iD = function () {
         }
     };
 
+    /* Accessor for setting minimum zoom for editing features. */
+
+    var minEditableZoom = 16;
+    context.minEditableZoom = function(_) {
+        if (!arguments.length) return minEditableZoom;
+        minEditableZoom = _;
+        connection.tileZoom(_);
+        return context;
+    };
+
     var history = iD.History(context),
         dispatch = d3.dispatch('enter', 'exit'),
         mode,
@@ -16260,6 +16270,7 @@ window.iD = function () {
 
     context.flush = function() {
         connection.flush();
+        features.reset();
         history.reset();
         return context;
     };
@@ -16346,9 +16357,6 @@ window.iD = function () {
         });
     };
 
-    context.editable = function() {
-        return map.editable() && mode && mode.id !== 'save';
-    };
 
     /* Behaviors */
     context.install = function(behavior) {
@@ -16366,11 +16374,21 @@ window.iD = function () {
     var background = iD.Background(context);
     context.background = function() { return background; };
 
+    /* Features */
+    var features = iD.Features(context);
+    context.features = function() { return features; };
+    context.hasHiddenConnections = function(id) {
+        var graph = history.graph(),
+            entity = graph.entity(id);
+        return features.hasHiddenConnections(entity, graph);
+    };
+
     /* Map */
     var map = iD.Map(context);
     context.map = function() { return map; };
     context.layers = function() { return map.layers; };
     context.surface = function() { return map.surface; };
+    context.editable = function() { return map.editable(); };
     context.mouse = map.mouse;
     context.extent = map.extent;
     context.pan = map.pan;
@@ -17169,6 +17187,13 @@ iD.geo.Extent = function geoExtent(min, max) {
 iD.geo.Extent.prototype = new Array(2);
 
 _.extend(iD.geo.Extent.prototype, {
+    equals: function (obj) {
+        return this[0][0] === obj[0][0] &&
+            this[0][1] === obj[0][1] &&
+            this[1][0] === obj[1][0] &&
+            this[1][1] === obj[1][1];
+    },
+
     extend: function(obj) {
         if (!(obj instanceof iD.geo.Extent)) obj = new iD.geo.Extent(obj);
         return iD.geo.Extent([Math.min(obj[0][0], this[0][0]),
@@ -19811,7 +19836,7 @@ iD.behavior.DrawWay = function(context, wayId, index, mode, baseGraph) {
 iD.behavior.Edit = function(context) {
     function edit() {
         context.map()
-            .minzoom(16);
+            .minzoom(context.minEditableZoom());
     }
 
     edit.off = function() {
@@ -20532,7 +20557,9 @@ iD.modes.DragNode = function(context) {
     }
 
     function start(entity) {
-        cancelled = d3.event.sourceEvent.shiftKey;
+        cancelled = d3.event.sourceEvent.shiftKey ||
+            context.features().hasHiddenConnections(entity, context.graph());
+
         if (cancelled) return behavior.cancel();
 
         wasMidpoint = entity.type === 'midpoint';
@@ -21076,26 +21103,43 @@ iD.modes.Select = function(context, selectedIDs) {
     var wrap = context.container()
         .select('.inspector-wrap');
 
+
     function singular() {
         if (selectedIDs.length === 1) {
             return context.entity(selectedIDs[0]);
         }
     }
 
-    function positionMenu() {
-        var entity = singular();
+    function closeMenu() {
+        if (radialMenu) {
+            context.surface().call(radialMenu.close);
+        }
+    }
 
-        if (entity && entity.type === 'node') {
+    function positionMenu() {
+        if (suppressMenu || !radialMenu) { return; }
+
+        var entity = singular();
+        if (entity && context.geometry(entity.id) === 'relation') {
+            suppressMenu = true;
+        } else if (entity && entity.type === 'node') {
             radialMenu.center(context.projection(entity.loc));
         } else {
-            radialMenu.center(context.mouse());
+            var point = context.mouse(),
+                viewport = iD.geo.Extent(context.projection.clipExtent()).polygon();
+            if (iD.geo.pointInPolygon(point, viewport)) {
+                radialMenu.center(point);
+            } else {
+                suppressMenu = true;
+            }
         }
     }
 
     function showMenu() {
-        context.surface()
-            .call(radialMenu.close)
-            .call(radialMenu);
+        closeMenu();
+        if (!suppressMenu && radialMenu) {
+            context.surface().call(radialMenu);
+        }
     }
 
     mode.selectedIDs = function() {
@@ -21125,48 +21169,13 @@ iD.modes.Select = function(context, selectedIDs) {
     };
 
     mode.enter = function() {
-        behaviors.forEach(function(behavior) {
-            context.install(behavior);
-        });
-
-        var operations = _.without(d3.values(iD.operations), iD.operations.Delete)
-            .map(function(o) { return o(selectedIDs, context); })
-            .filter(function(o) { return o.available(); });
-        operations.unshift(iD.operations.Delete(selectedIDs, context));
-
-        keybinding.on('⎋', function() {
-            context.enter(iD.modes.Browse(context));
-        }, true);
-
-        operations.forEach(function(operation) {
-            operation.keys.forEach(function(key) {
-                keybinding.on(key, function() {
-                    if (!operation.disabled()) {
-                        operation();
-                    }
-                });
-            });
-        });
-
-        context.ui().sidebar
-            .select(singular() ? singular().id : null, newFeature);
-
-        context.history()
-            .on('undone.select', update)
-            .on('redone.select', update);
-
         function update() {
-            context.surface().call(radialMenu.close);
-
+            closeMenu();
             if (_.any(selectedIDs, function(id) { return !context.hasEntity(id); })) {
                 // Exit mode if selected entity gets undone
                 context.enter(iD.modes.Browse(context));
             }
         }
-
-        context.map().on('move.select', function() {
-            context.surface().call(radialMenu.close);
-        });
 
         function dblclick() {
             var target = d3.select(d3.event.target),
@@ -21188,19 +21197,69 @@ iD.modes.Select = function(context, selectedIDs) {
             }
         }
 
+        function selectElements(drawn) {
+            var entity = singular();
+            if (entity && context.geometry(entity.id) === 'relation') {
+                suppressMenu = true;
+                return;
+            }
+
+            var selection = context.surface()
+                    .selectAll(iD.util.entityOrMemberSelector(selectedIDs, context.graph()));
+
+            if (selection.empty()) {
+                if (drawn) {  // Exit mode if selected DOM elements have disappeared..
+                    context.enter(iD.modes.Browse(context));
+                }
+            } else {
+                selection
+                    .classed('selected', true);
+            }
+        }
+
+
+        behaviors.forEach(function(behavior) {
+            context.install(behavior);
+        });
+
+        var operations = _.without(d3.values(iD.operations), iD.operations.Delete)
+                .map(function(o) { return o(selectedIDs, context); })
+                .filter(function(o) { return o.available(); });
+
+        operations.unshift(iD.operations.Delete(selectedIDs, context));
+
+        keybinding.on('⎋', function() {
+            context.enter(iD.modes.Browse(context));
+        }, true);
+
+        operations.forEach(function(operation) {
+            operation.keys.forEach(function(key) {
+                keybinding.on(key, function() {
+                    if (!operation.disabled()) {
+                        operation();
+                    }
+                });
+            });
+        });
+
         d3.select(document)
             .call(keybinding);
 
-        function selectElements() {
-            context.surface()
-                .selectAll(iD.util.entityOrMemberSelector(selectedIDs, context.graph()))
-                .classed('selected', true);
-        }
+        radialMenu = iD.ui.RadialMenu(context, operations);
 
-        context.map().on('drawn.select', selectElements);
+        context.ui().sidebar
+            .select(singular() ? singular().id : null, newFeature);
+
+        context.history()
+            .on('undone.select', update)
+            .on('redone.select', update);
+
+        context.map()
+            .on('move.select', closeMenu)
+            .on('drawn.select', selectElements);
+
         selectElements();
 
-        radialMenu = iD.ui.RadialMenu(context, operations);
         var show = d3.event && !suppressMenu;
 
         if (show) {
@@ -21232,13 +21291,14 @@ iD.modes.Select = function(context, selectedIDs) {
         });
 
         keybinding.off();
+        closeMenu();
+        radialMenu = undefined;
 
         context.history()
             .on('undone.select', null)
             .on('redone.select', null);
 
         context.surface()
-            .call(radialMenu.close)
             .on('dblclick.select', null)
             .selectAll('.selected')
             .classed('selected', false);
@@ -21272,6 +21332,8 @@ iD.operations.Circularize = function(selectedIDs, context) {
         var reason;
         if (extent.percentContainedIn(context.extent()) < 0.8) {
             reason = 'too_large';
+        } else if (context.hasHiddenConnections(entityId)) {
+            reason = 'connected_to_hidden';
         }
         return action.disabled(context.graph()) || reason;
     };
@@ -21314,7 +21376,8 @@ iD.operations.Continue = function(selectedIDs, context) {
     };
 
     operation.available = function() {
-        return geometries.vertex.length === 1 && geometries.line.length <= 1;
+        return geometries.vertex.length === 1 && geometries.line.length <= 1 &&
+            !context.features().hasHiddenConnections(vertex, context.graph());
     };
 
     operation.disabled = function() {
@@ -21392,7 +21455,11 @@ iD.operations.Delete = function(selectedIDs, context) {
     };
 
     operation.disabled = function() {
-        return action.disabled(context.graph());
+        var reason;
+        if (_.any(selectedIDs, context.hasHiddenConnections)) {
+            reason = 'connected_to_hidden';
+        }
+        return action.disabled(context.graph()) || reason;
     };
 
     operation.tooltip = function() {
@@ -21429,7 +21496,11 @@ iD.operations.Disconnect = function(selectedIDs, context) {
     };
 
     operation.disabled = function() {
-        return action.disabled(context.graph());
+        var reason;
+        if (_.any(selectedIDs, context.hasHiddenConnections)) {
+            reason = 'connected_to_hidden';
+        }
+        return action.disabled(context.graph()) || reason;
     };
 
     operation.tooltip = function() {
@@ -21518,6 +21589,8 @@ iD.operations.Move = function(selectedIDs, context) {
         var reason;
         if (extent.area() && extent.percentContainedIn(context.extent()) < 0.8) {
             reason = 'too_large';
+        } else if (_.any(selectedIDs, context.hasHiddenConnections)) {
+            reason = 'connected_to_hidden';
         }
         return iD.actions.Move(selectedIDs).disabled(context.graph()) || reason;
     };
@@ -21558,6 +21631,8 @@ iD.operations.Orthogonalize = function(selectedIDs, context) {
         var reason;
         if (extent.percentContainedIn(context.extent()) < 0.8) {
             reason = 'too_large';
+        } else if (context.hasHiddenConnections(entityId)) {
+            reason = 'connected_to_hidden';
         }
         return action.disabled(context.graph()) || reason;
     };
@@ -21627,6 +21702,8 @@ iD.operations.Rotate = function(selectedIDs, context) {
     operation.disabled = function() {
         if (extent.percentContainedIn(context.extent()) < 0.8) {
             return 'too_large';
+        } else if (context.hasHiddenConnections(entityId)) {
+            return 'connected_to_hidden';
         } else {
             return false;
         }
@@ -21895,7 +21972,11 @@ iD.operations.Split = function(selectedIDs, context) {
     };
 
     operation.disabled = function() {
-        return action.disabled(context.graph());
+        var reason;
+        if (_.any(selectedIDs, context.hasHiddenConnections)) {
+            reason = 'connected_to_hidden';
+        }
+        return action.disabled(context.graph()) || reason;
     };
 
     operation.tooltip = function() {
@@ -21936,7 +22017,11 @@ iD.operations.Straighten = function(selectedIDs, context) {
     };
 
     operation.disabled = function() {
-        return action.disabled(context.graph());
+        var reason;
+        if (context.hasHiddenConnections(entityId)) {
+            reason = 'connected_to_hidden';
+        }
+        return action.disabled(context.graph()) || reason;
     };
 
     operation.tooltip = function() {
@@ -22716,7 +22801,15 @@ iD.Graph.prototype = {
     },
 
     parentWays: function(entity) {
-        return _.map(this._parentWays[entity.id], this.entity, this);
+        var parents = this._parentWays[entity.id],
+            result = [];
+
+        if (parents) {
+            for (var i = 0, imax = parents.length; i !== imax; i++) {
+                result.push(this.entity(parents[i]));
+            }
+        }
+        return result;
     },
 
     isPoi: function(entity) {
@@ -22730,7 +22823,15 @@ iD.Graph.prototype = {
     },
 
     parentRelations: function(entity) {
-        return _.map(this._parentRels[entity.id], this.entity, this);
+        var parents = this._parentRels[entity.id],
+            result = [];
+
+        if (parents) {
+            for (var i = 0, imax = parents.length; i !== imax; i++) {
+                result.push(this.entity(parents[i]));
+            }
+        }
+        return result;
     },
 
     childNodes: function(entity) {
@@ -22738,8 +22839,10 @@ iD.Graph.prototype = {
             return this._childNodes[entity.id];
 
         var nodes = [];
-        for (var i = 0, l = entity.nodes.length; i < l; i++) {
-            nodes[i] = this.entity(entity.nodes[i]);
+        if (entity.nodes) {
+            for (var i = 0, l = entity.nodes.length; i < l; i++) {
+                nodes[i] = this.entity(entity.nodes[i]);
+            }
         }
 
         if (iD.debug) Object.freeze(nodes);
@@ -23170,7 +23273,9 @@ iD.History = function(context) {
                     // this merges originals for changed entities into the base of
                     // the stack even if the current stack doesn't have them (for
                     // example when iD has been restarted in a different region)
-                    var baseEntities = h.baseEntities.map(iD.Entity);
+                    var baseEntities = h.baseEntities.map(function(entity) {
+                        return iD.Entity(entity);
+                    });
                     stack[0].graph.rebase(baseEntities, _.pluck(stack, 'graph'));
                     tree.rebase(baseEntities);
                 }
@@ -24008,19 +24113,11 @@ iD.Background = function(context) {
 
         base.call(baseLayer);
 
-        var gpx = selection.selectAll('.gpx-layer')
-            .data([0]);
-
-        gpx.enter().insert('div', '.layer-data')
-            .attr('class', 'layer-layer gpx-layer');
-
-        gpx.call(gpxLayer);
-
-        var overlays = selection.selectAll('.overlay-layer')
+        var overlays = selection.selectAll('.layer-overlay')
             .data(overlayLayers, function(d) { return d.source().name(); });
 
         overlays.enter().insert('div', '.layer-data')
-            .attr('class', 'layer-layer overlay-layer');
+            .attr('class', 'layer-layer layer-overlay');
 
         overlays.each(function(layer) {
             d3.select(this).call(layer);
@@ -24028,6 +24125,14 @@ iD.Background = function(context) {
 
         overlays.exit()
             .remove();
+
+        var gpx = selection.selectAll('.layer-gpx')
+            .data([0]);
+
+        gpx.enter().insert('div')
+            .attr('class', 'layer-layer layer-gpx');
+
+        gpx.call(gpxLayer);
 
         var mapillary = selection.selectAll('.layer-mapillary')
             .data([0]);
@@ -24357,6 +24462,409 @@ iD.BackgroundSource.Custom = function(template) {
 
     return source;
 };
+iD.Features = function(context) {
+    var major_roads = {
+        'motorway': true,
+        'motorway_link': true,
+        'trunk': true,
+        'trunk_link': true,
+        'primary': true,
+        'primary_link': true,
+        'secondary': true,
+        'secondary_link': true,
+        'tertiary': true,
+        'tertiary_link': true,
+        'residential': true
+    };
+
+    var minor_roads = {
+        'service': true,
+        'living_street': true,
+        'road': true,
+        'unclassified': true,
+        'track': true
+    };
+
+    var paths = {
+        'path': true,
+        'footway': true,
+        'cycleway': true,
+        'bridleway': true,
+        'steps': true,
+        'pedestrian': true
+    };
+
+    var past_futures = {
+        'proposed': true,
+        'construction': true,
+        'abandoned': true,
+        'dismantled': true,
+        'disused': true,
+        'razed': true,
+        'demolished': true,
+        'obliterated': true
+    };
+
+    var dispatch = d3.dispatch('change', 'redraw'),
+        _cullFactor = 1,
+        _cache = {},
+        _features = {},
+        _stats = {},
+        _keys = [],
+        _hidden = [];
+
+    function update() {
+        _hidden = features.hidden();
+        dispatch.change();
+        dispatch.redraw();
+    }
+
+    function defineFeature(k, filter, max) {
+        _keys.push(k);
+        _features[k] = {
+            filter: filter,
+            enabled: true,   // whether the user wants it enabled..
+            count: 0,
+            currentMax: (max || Infinity),
+            defaultMax: (max || Infinity),
+            enable: function() { this.enabled = true; this.currentMax = this.defaultMax; },
+            disable: function() { this.enabled = false; this.currentMax = 0; },
+            hidden: function() { return !context.editable() || this.count > this.currentMax * _cullFactor; },
+            autoHidden: function() { return this.hidden() && this.currentMax > 0; }
+        };
+    }
+
+
+    defineFeature('points', function isPoint(entity, resolver, geometry) {
+        return geometry === 'point';
+    }, 200);
+
+    defineFeature('major_roads', function isMajorRoad(entity) {
+        return major_roads[entity.tags.highway];
+    });
+
+    defineFeature('minor_roads', function isMinorRoad(entity) {
+        return minor_roads[entity.tags.highway];
+    });
+
+    defineFeature('paths', function isPath(entity) {
+        return paths[entity.tags.highway];
+    });
+
+    defineFeature('buildings', function isBuilding(entity) {
+        return (
+            !!entity.tags['building:part'] ||
+            (!!entity.tags.building && entity.tags.building !== 'no') ||
+            entity.tags.amenity === 'shelter' ||
+            entity.tags.parking === 'multi-storey' ||
+            entity.tags.parking === 'sheds' ||
+            entity.tags.parking === 'carports' ||
+            entity.tags.parking === 'garage_boxes'
+        );
+    }, 250);
+
+    defineFeature('landuse', function isLanduse(entity, resolver, geometry) {
+        return geometry === 'area' &&
+            !_features.buildings.filter(entity) &&
+            !_features.water.filter(entity);
+    });
+
+    defineFeature('boundaries', function isBoundary(entity) {
+        return !!entity.tags.boundary;
+    });
+
+    defineFeature('water', function isWater(entity) {
+        return (
+            !!entity.tags.waterway ||
+            entity.tags.natural === 'water' ||
+            entity.tags.natural === 'coastline' ||
+            entity.tags.natural === 'bay' ||
+            entity.tags.landuse === 'pond' ||
+            entity.tags.landuse === 'basin' ||
+            entity.tags.landuse === 'reservoir' ||
+            entity.tags.landuse === 'salt_pond'
+        );
+    });
+
+    defineFeature('rail', function isRail(entity) {
+        return (
+            !!entity.tags.railway ||
+            entity.tags.landuse === 'railway'
+        ) && !(
+            major_roads[entity.tags.highway] ||
+            minor_roads[entity.tags.highway] ||
+            paths[entity.tags.highway]
+        );
+    });
+
+    defineFeature('power', function isPower(entity) {
+        return !!entity.tags.power;
+    });
+
+    // contains a past/future tag, but not in active use as a road/path/cycleway/etc..
+    defineFeature('past_future', function isPastFuture(entity) {
+        if (
+            major_roads[entity.tags.highway] ||
+            minor_roads[entity.tags.highway] ||
+            paths[entity.tags.highway]
+        ) { return false; }
+
+        var strings = Object.keys(entity.tags);
+
+        for (var i = 0, imax = strings.length; i !== imax; i++) {
+            var s = strings[i];
+            if (past_futures[s] || past_futures[entity.tags[s]]) { return true; }
+        }
+        return false;
+    });
+
+    // lines or areas that don't match another feature filter.
+    defineFeature('others', function isOther(entity, resolver, geometry) {
+        return (geometry === 'line' || geometry === 'area') && !(
+            _features.major_roads.filter(entity, resolver, geometry) ||
+            _features.minor_roads.filter(entity, resolver, geometry) ||
+            _features.paths.filter(entity, resolver, geometry) ||
+            _features.buildings.filter(entity, resolver, geometry) ||
+            _features.landuse.filter(entity, resolver, geometry) ||
+            _features.boundaries.filter(entity, resolver, geometry) ||
+            _features.water.filter(entity, resolver, geometry) ||
+            _features.rail.filter(entity, resolver, geometry) ||
+            _features.power.filter(entity, resolver, geometry) ||
+            _features.past_future.filter(entity, resolver, geometry)
+        );
+    });
+
+
+    function features() {}
+
+    features.keys = function() {
+        return _keys;
+    };
+
+    features.enabled = function(k) {
+        if (!arguments.length) {
+            return _.filter(_keys, function(k) { return _features[k].enabled; });
+        }
+        return _features[k] && _features[k].enabled;
+    };
+
+    features.disabled = function(k) {
+        if (!arguments.length) {
+            return _.reject(_keys, function(k) { return _features[k].enabled; });
+        }
+        return _features[k] && !_features[k].enabled;
+    };
+
+    features.hidden = function(k) {
+        if (!arguments.length) {
+            return _.filter(_keys, function(k) { return _features[k].hidden(); });
+        }
+        return _features[k] && _features[k].hidden();
+    };
+
+    features.autoHidden = function(k) {
+        if (!arguments.length) {
+            return _.filter(_keys, function(k) { return _features[k].autoHidden(); });
+        }
+        return _features[k] && _features[k].autoHidden();
+    };
+
+    features.enable = function(k) {
+        if (_features[k] && !_features[k].enabled) {
+            _features[k].enable();
+            update();
+        }
+    };
+
+    features.disable = function(k) {
+        if (_features[k] && _features[k].enabled) {
+            _features[k].disable();
+            update();
+        }
+    };
+
+    features.toggle = function(k) {
+        if (_features[k]) {
+            (function(f) { return f.enabled ? f.disable() : f.enable(); }(_features[k]));
+            update();
+        }
+    };
+
+    features.resetStats = function() {
+        _.each(_features, function(f) { f.count = 0; });
+        dispatch.change();
+    };
+
+    features.gatherStats = function(d, resolver, dimensions) {
+        var needsRedraw = false,
+            currHidden, geometry, matches;
+
+        _.each(_features, function(f) { f.count = 0; });
+
+        // adjust the threshold for point/building culling based on viewport size..
+        // a _cullFactor of 1 corresponds to a 1000x1000px viewport..
+        _cullFactor = dimensions[0] * dimensions[1] / 1000000;
+
+        for (var i = 0, imax = d.length; i !== imax; i++) {
+            geometry = d[i].geometry(resolver);
+            if (!(geometry === 'vertex' || geometry === 'relation')) {
+                matches = Object.keys(features.getMatches(d[i], resolver, geometry));
+                for (var j = 0, jmax = matches.length; j !== jmax; j++) {
+                    _features[matches[j]].count++;
+                }
+            }
+        }
+
+        currHidden = features.hidden();
+        if (currHidden !== _hidden) {
+            _hidden = currHidden;
+            needsRedraw = true;
+            dispatch.change();
+        }
+
+        return needsRedraw;
+    };
+
+    features.stats = function() {
+        _.each(_keys, function(k) { _stats[k] = _features[k].count; });
+        return _stats;
+    };
+
+    features.clear = function(d) {
+        for (var i = 0, imax = d.length; i !== imax; i++) {
+            features.clearEntity(d[i]);
+        }
+    };
+
+    features.clearEntity = function(entity) {
+        delete _cache[iD.Entity.key(entity)];
+    };
+
+    features.reset = function() {
+        _cache = {};
+    };
+
+    features.getMatches = function(entity, resolver, geometry) {
+        var ent = iD.Entity.key(entity);
+
+        if (!_cache[ent]) {
+            _cache[ent] = {};
+        }
+        if (!_cache[ent].matches) {
+            var matches = {},
+                hasMatch = false;
+
+            if (!(geometry === 'vertex' || geometry === 'relation')) {
+                for (var i = 0, imax = _keys.length; i !== imax; i++) {
+                    if (hasMatch && _keys[i] === 'others') {
+                        continue;
+                    }
+                    if (_features[_keys[i]].filter(entity, resolver, geometry)) {
+                        matches[_keys[i]] = hasMatch = true;
+                    }
+                }
+            }
+            _cache[ent].matches = matches;
+        }
+        return _cache[ent].matches;
+    };
+
+    features.getParents = function(entity, resolver, geometry) {
+        var ent = iD.Entity.key(entity);
+
+        if (!_cache[ent]) {
+            _cache[ent] = {};
+        }
+        if (!_cache[ent].parents) {
+            var parents = [];
+
+            if (geometry !== 'point') {
+                if (geometry === 'vertex') {
+                    parents = resolver.parentWays(entity);
+                } else {   // 'line', 'area', 'relation'
+                    parents = resolver.parentRelations(entity);
+                }
+            }
+            _cache[ent].parents = parents;
+        }
+        return _cache[ent].parents;
+    };
+
+    features.isHiddenFeature = function(entity, resolver, geometry) {
+        if (!entity.version) return false;
+
+        var matches = features.getMatches(entity, resolver, geometry);
+
+        for (var i = 0, imax = _hidden.length; i !== imax; i++) {
+            if (matches[_hidden[i]]) { return true; }
+        }
+        return false;
+    };
+
+    features.isHiddenChild = function(entity, resolver, geometry) {
+        if (!entity.version || geometry === 'point') { return false; }
+
+        var parents = features.getParents(entity, resolver, geometry);
+
+        if (!parents.length) { return false; }
+
+        for (var i = 0, imax = parents.length; i !== imax; i++) {
+            if (!features.isHidden(parents[i], resolver, parents[i].geometry(resolver))) {
+                return false;
+            }
+        }
+        return true;
+    };
+
+    features.hasHiddenConnections = function(entity, resolver) {
+        var childNodes, connections;
+
+        if (entity.type === 'midpoint') {
+            childNodes = [resolver.entity(entity.edge[0]), resolver.entity(entity.edge[1])];
+            connections = [];
+        } else {
+            childNodes = resolver.childNodes(entity);
+            connections = features.getParents(entity, resolver, entity.geometry(resolver));
+        }
+
+        // gather ways connected to child nodes..
+        connections = _.reduce(childNodes, function(result, e) {
+            return resolver.isShared(e) ? _.union(result, resolver.parentWays(e)) : result;
+        }, connections);
+
+        return connections.length ? _.any(connections, function(e) {
+            return features.isHidden(e, resolver, e.geometry(resolver));
+        }) : false;
+    };
+
+    features.isHidden = function(entity, resolver, geometry) {
+        if (!entity.version) return false;
+
+        if (geometry === 'vertex')
+            return features.isHiddenChild(entity, resolver, geometry);
+        if (geometry === 'point')
+            return features.isHiddenFeature(entity, resolver, geometry);
+
+        return features.isHiddenFeature(entity, resolver, geometry) ||
+               features.isHiddenChild(entity, resolver, geometry);
+    };
+
+    features.filter = function(d, resolver) {
+        if (!_hidden.length)
+            return d;
+
+        var result = [];
+        for (var i = 0, imax = d.length; i !== imax; i++) {
+            var entity = d[i];
+            if (!features.isHidden(entity, resolver, entity.geometry(resolver))) {
+                result.push(entity);
+            }
+        }
+        return result;
+    };
+
+    return d3.rebind(features, dispatch, 'on');
+};
 iD.GpxLayer = function(context) {
     var projection,
         gj = {},
@@ -24487,6 +24995,8 @@ iD.Map = function(context) {
             .on('change.map', redraw);
         context.background()
             .on('change.map', redraw);
+        context.features()
+            .on('redraw.map', redraw);
 
         selection.call(zoom);
 
@@ -24537,6 +25047,8 @@ iD.Map = function(context) {
                 var all = context.intersects(map.extent()),
                     filter = d3.functor(true),
                     graph = context.graph();
+
+                all = context.features().filter(all, graph);
                 surface.call(vertices, graph, all, filter, map.extent(), map.zoom());
                 surface.call(midpoints, graph, all, filter, map.trimmedExtent());
                 dispatch.drawn({full: false});
@@ -24551,47 +25063,52 @@ iD.Map = function(context) {
     function pxCenter() { return [dimensions[0] / 2, dimensions[1] / 2]; }
 
     function drawVector(difference, extent) {
-        var filter, all,
-            graph = context.graph();
+        var graph = context.graph(),
+            features = context.features(),
+            all = context.intersects(map.extent()),
+            data, filter;
 
         if (difference) {
             var complete = difference.complete(map.extent());
-            all = _.compact(_.values(complete));
+            data = _.compact(_.values(complete));
             filter = function(d) { return d.id in complete; };
-
-        } else if (extent) {
-            all = context.intersects(map.extent().intersection(extent));
-            var set = d3.set(_.pluck(all, 'id'));
-            filter = function(d) { return set.has(d.id); };
+            features.clear(data);
 
         } else {
-            all = context.intersects(map.extent());
-            filter = d3.functor(true);
+            // force a full redraw if gatherStats detects that a feature
+            // should be auto-hidden (e.g. points or buildings)..
+            if (features.gatherStats(all, graph, dimensions)) {
+                extent = undefined;
+            }
+
+            if (extent) {
+                data = context.intersects(map.extent().intersection(extent));
+                var set = d3.set(_.pluck(data, 'id'));
+                filter = function(d) { return set.has(d.id); };
+
+            } else {
+                data = all;
+                filter = d3.functor(true);
+            }
         }
+
+        data = features.filter(data, graph);
 
         surface
-            .call(vertices, graph, all, filter, map.extent(), map.zoom())
-            .call(lines, graph, all, filter)
-            .call(areas, graph, all, filter)
-            .call(midpoints, graph, all, filter, map.trimmedExtent())
-            .call(labels, graph, all, filter, dimensions, !difference && !extent);
-
-        if (points.points(context.intersects(map.extent()), 100).length >= 100) {
-            surface.select('.layer-hit').selectAll('g.point').remove();
-        } else {
-            surface.call(points, points.points(all), filter);
-        }
+            .call(vertices, graph, data, filter, map.extent(), map.zoom())
+            .call(lines, graph, data, filter)
+            .call(areas, graph, data, filter)
+            .call(midpoints, graph, data, filter, map.trimmedExtent())
+            .call(labels, graph, data, filter, dimensions, !difference && !extent)
+            .call(points, data, filter);
 
         dispatch.drawn({full: true});
     }
 
     function editOff() {
-        var mode = context.mode();
+        context.features().resetStats();
         surface.selectAll('.layer *').remove();
         dispatch.drawn({full: true});
-        if (!(mode && mode.id === 'browse')) {
-            context.enter(iD.modes.Browse(context));
-        }
     }
 
     function zoomPan() {
@@ -24607,7 +25124,7 @@ iD.Map = function(context) {
             iD.ui.flash(context.container())
                 .select('.content')
                 .text(t('cannot_zoom'));
-            return setZoom(16, true);
+            return setZoom(context.minEditableZoom(), true);
         }
 
         projection
@@ -24787,7 +25304,7 @@ iD.Map = function(context) {
     map.zoomTo = function(entity, zoomLimits) {
         var extent = entity.extent(context.graph()),
             zoom = map.extentZoom(extent);
-        zoomLimits = zoomLimits || [16, 20];
+        zoomLimits = zoomLimits || [context.minEditableZoom(), 20];
         map.centerZoom(extent.center(), Math.min(Math.max(zoom, zoomLimits[0]), zoomLimits[1]));
     };
 
@@ -24851,7 +25368,7 @@ iD.Map = function(context) {
     };
 
     map.editable = function() {
-        return map.zoom() >= 16;
+        return map.zoom() >= context.minEditableZoom();
     };
 
     map.minzoom = function(_) {
@@ -25316,20 +25833,14 @@ iD.svg.Areas = function(projection) {
 
     var patternKeys = ['landuse', 'natural', 'amenity'];
 
-    var clipped = ['residential', 'commercial', 'retail', 'industrial'];
-
-    function clip(entity) {
-        return clipped.indexOf(entity.tags.landuse) !== -1;
-    }
-
     function setPattern(d) {
         for (var i = 0; i < patternKeys.length; i++) {
             if (patterns.hasOwnProperty(d.tags[patternKeys[i]])) {
-                this.style.fill = 'url("#pattern-' + patterns[d.tags[patternKeys[i]]] + '")';
+                this.style.fill = this.style.stroke = 'url("#pattern-' + patterns[d.tags[patternKeys[i]]] + '")';
                 return;
             }
         }
-        this.style.fill = '';
+        this.style.fill = this.style.stroke = '';
     }
 
     return function drawAreas(surface, graph, entities, filter) {
@@ -25364,7 +25875,7 @@ iD.svg.Areas = function(projection) {
         });
 
         var data = {
-            clip: areas.filter(clip),
+            clip: areas,
             shadow: strokes,
             stroke: strokes,
             fill: areas
@@ -25424,11 +25935,8 @@ iD.svg.Areas = function(projection) {
 
                 this.setAttribute('class', entity.type + ' area ' + layer + ' ' + entity.id);
 
-                if (layer === 'fill' && clip(entity)) {
-                    this.setAttribute('clip-path', 'url(#' + entity.id + '-clippath)');
-                }
-
                 if (layer === 'fill') {
+                    this.setAttribute('clip-path', 'url(#' + entity.id + '-clippath)');
                     setPattern.apply(this, arguments);
                 }
             })
@@ -26249,7 +26757,10 @@ iD.svg.Points = function(projection, context) {
         return b.loc[1] - a.loc[1];
     }
 
-    function drawPoints(surface, points, filter) {
+    return function drawPoints(surface, entities, filter) {
+        var graph = context.graph(),
+            points = _.filter(entities, function(e) { return e.geometry(graph) === 'point'; });
+
         points.sort(sortY);
 
         var groups = surface.select('.layer-hit').selectAll('g.point')
@@ -26287,24 +26798,7 @@ iD.svg.Points = function(projection, context) {
 
         groups.exit()
             .remove();
-    }
-
-    drawPoints.points = function(entities, limit) {
-        var graph = context.graph(),
-            points = [];
-
-        for (var i = 0; i < entities.length; i++) {
-            var entity = entities[i];
-            if (entity.geometry(graph) === 'point') {
-                points.push(entity);
-                if (limit && points.length >= limit) break;
-            }
-        }
-
-        return points;
     };
-
-    return drawPoints;
 };
 iD.svg.Surface = function() {
     return function (selection) {
@@ -26460,20 +26954,22 @@ iD.svg.Vertices = function(projection, context) {
         var vertices = {};
 
         function addChildVertices(entity) {
-            var i;
-            if (entity.type === 'way') {
-                for (i = 0; i < entity.nodes.length; i++) {
-                    addChildVertices(graph.entity(entity.nodes[i]));
-                }
-            } else if (entity.type === 'relation') {
-                for (i = 0; i < entity.members.length; i++) {
-                    var member = context.hasEntity(entity.members[i].id);
-                    if (member) {
-                        addChildVertices(member);
+            if (!context.features().isHiddenFeature(entity, graph, entity.geometry(graph))) {
+                var i;
+                if (entity.type === 'way') {
+                    for (i = 0; i < entity.nodes.length; i++) {
+                        addChildVertices(graph.entity(entity.nodes[i]));
                     }
+                } else if (entity.type === 'relation') {
+                    for (i = 0; i < entity.members.length; i++) {
+                        var member = context.hasEntity(entity.members[i].id);
+                        if (member) {
+                            addChildVertices(member);
+                        }
+                    }
+                } else if (entity.intersects(extent, graph)) {
+                    vertices[entity.id] = entity;
                 }
-            } else if (entity.intersects(extent, graph)) {
-                vertices[entity.id] = entity;
             }
         }
 
@@ -26678,13 +27174,6 @@ iD.ui = function(context) {
             .attr('class', 'spinner')
             .call(iD.ui.Spinner(context));
 
-        content
-            .call(iD.ui.Attribution(context));
-
-        content.append('div')
-            .style('display', 'none')
-            .attr('class', 'help-wrap map-overlay fillL col5 content');
-
         var controls = bar.append('div')
             .attr('class', 'map-controls');
 
@@ -26701,10 +27190,21 @@ iD.ui = function(context) {
             .call(iD.ui.Background(context));
 
         controls.append('div')
+            .attr('class', 'map-control map-data-control')
+            .call(iD.ui.MapData(context));
+
+        controls.append('div')
             .attr('class', 'map-control help-control')
             .call(iD.ui.Help(context));
 
-        var footer = content.append('div')
+        var about = content.append('div')
+            .attr('id', 'about');
+
+        about.append('div')
+            .attr('id', 'attrib')
+            .call(iD.ui.Attribution(context));
+
+        var footer = about.append('div')
             .attr('id', 'footer')
             .attr('class', 'fillD');
 
@@ -26712,24 +27212,23 @@ iD.ui = function(context) {
             .attr('id', 'scale-block')
             .call(iD.ui.Scale(context));
 
-        var linkList = footer.append('div')
+        var aboutList = footer.append('div')
             .attr('id', 'info-block')
             .append('ul')
-            .attr('id', 'about-list')
-            .attr('class', 'link-list');
+            .attr('id', 'about-list');
 
         if (!context.embed()) {
-            linkList.call(iD.ui.Account(context));
+            aboutList.call(iD.ui.Account(context));
         }
 
-        linkList.append('li')
+        aboutList.append('li')
             .append('a')
             .attr('target', '_blank')
             .attr('tabindex', -1)
             .attr('href', 'http://github.com/openstreetmap/iD')
             .text(iD.version);
 
-        var bugReport = linkList.append('li')
+        var bugReport = aboutList.append('li')
             .append('a')
             .attr('target', '_blank')
             .attr('tabindex', -1)
@@ -26743,7 +27242,12 @@ iD.ui = function(context) {
                 .placement('top')
             );
 
-        linkList.append('li')
+        aboutList.append('li')
+            .attr('class', 'feature-warning')
+            .attr('tabindex', -1)
+            .call(iD.ui.FeatureInfo(context));
+
+        aboutList.append('li')
             .attr('class', 'user-list')
             .attr('tabindex', -1)
             .call(iD.ui.Contributors(context));
@@ -26815,7 +27319,13 @@ iD.ui = function(context) {
 };
 
 iD.ui.tooltipHtml = function(text, key) {
-    return '<span>' + text + '</span>' + '<div class="keyhint-wrap">' + '<span> ' + (t('tooltip_keyhint')) + ' </span>' + '<span class="keyhint"> ' + key + '</span></div>';
+    var s = '<span>' + text + '</span>';
+    if (key) {
+        s += '<div class="keyhint-wrap">' +
+            '<span> ' + (t('tooltip_keyhint')) + ' </span>' +
+            '<span class="keyhint"> ' + key + '</span></div>';
+    }
+    return s;
 };
 iD.ui.Account = function(context) {
     var connection = context.connection();
@@ -26823,7 +27333,7 @@ iD.ui.Account = function(context) {
     function update(selection) {
         if (!connection.authenticated()) {
             selection.selectAll('#userLink, #logoutLink')
-                .style('display', 'none');
+                .classed('hide', true);
             return;
         }
 
@@ -26837,7 +27347,7 @@ iD.ui.Account = function(context) {
             if (err) return;
 
             selection.selectAll('#userLink, #logoutLink')
-                .style('display', 'list-item');
+                .classed('hide', false);
 
             // Link
             userLink.append('a')
@@ -26873,11 +27383,11 @@ iD.ui.Account = function(context) {
     return function(selection) {
         selection.append('li')
             .attr('id', 'logoutLink')
-            .style('display', 'none');
+            .classed('hide', true);
 
         selection.append('li')
             .attr('id', 'userLink')
-            .style('display', 'none');
+            .classed('hide', true);
 
         connection.on('auth.account', function() { update(selection); });
         update(selection);
@@ -26964,7 +27474,7 @@ iD.ui.Attribution = function(context) {
     };
 };
 iD.ui.Background = function(context) {
-    var key = 'b',
+    var key = 'B',
         opacities = [1, 0.75, 0.5, 0.25],
         directions = [
             ['left', [1, 0]],
@@ -27037,16 +27547,6 @@ iD.ui.Background = function(context) {
             selectLayer();
         }
 
-        function clickGpx() {
-            context.background().toggleGpxLayer();
-            update();
-        }
-
-        function clickMapillary() {
-            context.background().toggleMapillaryLayer();
-            update();
-        }
-
         function drawList(layerList, type, change, filter) {
             var sources = context.background()
                 .sources(context.map().extent())
@@ -27085,22 +27585,6 @@ iD.ui.Background = function(context) {
             backgroundList.call(drawList, 'radio', clickSetSource, function(d) { return !d.overlay; });
             overlayList.call(drawList, 'checkbox', clickSetOverlay, function(d) { return d.overlay; });
 
-            var hasGpx = context.background().hasGpxLayer(),
-                showsGpx = context.background().showsGpxLayer();
-
-            gpxLayerItem
-                .classed('active', showsGpx)
-                .selectAll('input')
-                .property('disabled', !hasGpx)
-                .property('checked', showsGpx);
-
-            var showsMapillary = context.background().showsMapillaryLayer();
-
-            mapillaryLayerItem
-                .classed('active', showsMapillary)
-                .selectAll('input')
-                .property('checked', showsMapillary);
-
             selectLayer();
 
             var source = context.background().baseLayerSource();
@@ -27129,13 +27613,6 @@ iD.ui.Background = function(context) {
                 resetButton.classed('disabled', offset[0] === 0 && offset[1] === 0);
             }
         }
-
-        var content = selection.append('div')
-                .attr('class', 'fillL map-overlay col3 content hide'),
-            tooltip = bootstrap.tooltip()
-                .placement('left')
-                .html(true)
-                .title(iD.ui.tooltipHtml(t('background.description'), key));
 
         function hide() { setVisible(false); }
 
@@ -27173,17 +27650,25 @@ iD.ui.Background = function(context) {
             }
         }
 
-        var button = selection.append('button')
+
+        var content = selection.append('div')
+                .attr('class', 'fillL map-overlay col3 content hide'),
+            tooltip = bootstrap.tooltip()
+                .placement('left')
+                .html(true)
+                .title(iD.ui.tooltipHtml(t('background.description'), key)),
+            button = selection.append('button')
                 .attr('tabindex', -1)
                 .on('click', toggle)
                 .call(tooltip),
-            opa = content
-                .append('div')
-                .attr('class', 'opacity-options-wrapper'),
             shown = false;
 
         button.append('span')
             .attr('class', 'icon layers light');
+
+
+        var opa = content.append('div')
+                .attr('class', 'opacity-options-wrapper');
 
         opa.append('h4')
             .text(t('background.title'));
@@ -27241,68 +27726,6 @@ iD.ui.Background = function(context) {
         var overlayList = content.append('ul')
             .attr('class', 'layer-list');
 
-        var mapillaryLayerItem = overlayList.append('li');
-
-        label = mapillaryLayerItem.append('label')
-            .call(bootstrap.tooltip()
-                .title(t('mapillary.tooltip'))
-                .placement('top'));
-
-        label.append('input')
-            .attr('type', 'checkbox')
-            .on('change', clickMapillary);
-
-        label.append('span')
-            .text(t('mapillary.title'));
-
-        var gpxLayerItem = content.append('ul')
-            .style('display', iD.detect().filedrop ? 'block' : 'none')
-            .attr('class', 'layer-list')
-            .append('li')
-            .classed('layer-toggle-gpx', true);
-
-        gpxLayerItem.append('button')
-            .attr('class', 'layer-extent')
-            .call(bootstrap.tooltip()
-                .title(t('gpx.zoom'))
-                .placement('left'))
-            .on('click', function() {
-                d3.event.preventDefault();
-                d3.event.stopPropagation();
-                context.background().zoomToGpxLayer();
-            })
-            .append('span')
-            .attr('class', 'icon geolocate');
-
-        gpxLayerItem.append('button')
-            .attr('class', 'layer-browse')
-            .call(bootstrap.tooltip()
-                .title(t('gpx.browse'))
-                .placement('left'))
-            .on('click', function() {
-                d3.select(document.createElement('input'))
-                    .attr('type', 'file')
-                    .on('change', function() {
-                        context.background().gpxLayerFiles(d3.event.target.files);
-                    })
-                    .node().click();
-            })
-            .append('span')
-            .attr('class', 'icon geocode');
-
-        label = gpxLayerItem.append('label')
-            .call(bootstrap.tooltip()
-                .title(t('gpx.drag_drop'))
-                .placement('top'));
-
-        label.append('input')
-            .attr('type', 'checkbox')
-            .property('disabled', true)
-            .on('change', clickGpx);
-
-        label.append('span')
-            .text(t('gpx.local_layer'));
-
         var adjustments = content.append('div')
             .attr('class', 'adjustments');
 
@@ -27347,11 +27770,10 @@ iD.ui.Background = function(context) {
         update();
         setOpacity(opacityDefault);
 
-        var keybinding = d3.keybinding('background');
-        keybinding.on(key, toggle);
-        keybinding.on('m', function() {
-            context.enter(iD.modes.SelectImage(context));
-        });
+        var keybinding = d3.keybinding('background')
+            .on(key, toggle)
+            .on('F', hide)
+            .on('H', hide);
 
         d3.select(document)
             .call(keybinding);
@@ -27925,6 +28347,52 @@ iD.ui.EntityEditor = function(context) {
 
     return d3.rebind(entityEditor, event, 'on');
 };
+iD.ui.FeatureInfo = function(context) {
+    function update(selection) {
+        var features = context.features(),
+            stats = features.stats(),
+            count = 0,
+            hiddenList = _.compact(_.map(features.hidden(), function(k) {
+                if (stats[k]) {
+                    count += stats[k];
+                    return String(stats[k]) + ' ' + t('feature.' + k + '.description');
+                }
+            }));
+
+        selection.html('');
+
+        if (hiddenList.length) {
+            var tooltip = bootstrap.tooltip()
+                    .placement('top')
+                    .html(true)
+                    .title(function() {
+                        return iD.ui.tooltipHtml(hiddenList.join('<br/>'));
+                    });
+
+            var warning = selection.append('a')
+                .attr('href', '#')
+                .attr('tabindex', -1)
+                .html(t('feature_info.hidden_warning', { count: count }))
+                .call(tooltip)
+                .on('click', function() {
+                    tooltip.hide(warning);
+                    // open map data panel?
+                    d3.event.preventDefault();
+                });
+        }
+
+        selection
+            .classed('hide', !hiddenList.length);
+    }
+
+    return function(selection) {
+        update(selection);
+
+        context.features().on('change.feature_info', function() {
+            update(selection);
+        });
+    };
+};
 iD.ui.FeatureList = function(context) {
     var geocodeResults;
 
@@ -28214,7 +28682,7 @@ iD.ui.Geolocate = function(map) {
     };
 };
 iD.ui.Help = function(context) {
-    var key = 'h';
+    var key = 'H';
 
     var docKeys = [
         'help.help',
@@ -28236,7 +28704,6 @@ iD.ui.Help = function(context) {
     });
 
     function help(selection) {
-        var shown = false;
 
         function hide() {
             setVisible(false);
@@ -28252,7 +28719,11 @@ iD.ui.Help = function(context) {
             if (show !== shown) {
                 button.classed('active', show);
                 shown = show;
+
                 if (show) {
+                    selection.on('mousedown.help-inside', function() {
+                        return d3.event.stopPropagation();
+                    });
                     pane.style('display', 'block')
                         .style('right', '-500px')
                         .transition()
@@ -28266,6 +28737,7 @@ iD.ui.Help = function(context) {
                         .each('end', function() {
                             d3.select(this).style('display', 'none');
                         });
+                    selection.on('mousedown.help-inside', null);
                 }
             }
         }
@@ -28307,21 +28779,22 @@ iD.ui.Help = function(context) {
             setVisible(false);
         }
 
-        var tooltip = bootstrap.tooltip()
-            .placement('left')
-            .html(true)
-            .title(iD.ui.tooltipHtml(t('help.title'), key));
 
-        var button = selection.append('button')
-            .attr('tabindex', -1)
-            .on('click', toggle)
-            .call(tooltip);
+        var pane = selection.append('div')
+                .attr('class', 'help-wrap map-overlay fillL col5 content hide'),
+            tooltip = bootstrap.tooltip()
+                .placement('left')
+                .html(true)
+                .title(iD.ui.tooltipHtml(t('help.title'), key)),
+            button = selection.append('button')
+                .attr('tabindex', -1)
+                .on('click', toggle)
+                .call(tooltip),
+            shown = false;
 
         button.append('span')
             .attr('class', 'icon help light');
 
-        var pane = context.container()
-            .select('.help-wrap');
 
         var toc = pane.append('ul')
             .attr('class', 'toc');
@@ -28355,18 +28828,15 @@ iD.ui.Help = function(context) {
         clickHelp(docs[0], 0);
 
         var keybinding = d3.keybinding('help')
-            .on(key, toggle);
+            .on(key, toggle)
+            .on('B', hide)
+            .on('F', hide);
 
         d3.select(document)
             .call(keybinding);
 
         context.surface().on('mousedown.help-outside', hide);
-        context.container().on('mousedown.b.help-outside', hide);
-
-        pane.on('mousedown.help-inside', function() {
-            return d3.event.stopPropagation();
-        });
-
+        context.container().on('mousedown.help-outside', hide);
     }
 
     return help;
@@ -28704,6 +29174,335 @@ iD.ui.Loading = function(context) {
 
     return loading;
 };
+iD.ui.MapData = function(context) {
+    var key = 'F',
+        features = context.features().keys(),
+        fills = ['wireframe', 'partial', 'full'],
+        fillDefault = context.storage('area-fill') || 'partial',
+        fillSelected = fillDefault;
+
+    function map_data(selection) {
+
+        function showsFeature(d) {
+            return autoHiddenFeature(d) ? null : context.features().enabled(d);
+        }
+
+        function autoHiddenFeature(d) {
+            return context.features().autoHidden(d);
+        }
+
+        function clickFeature(d) {
+            context.features().toggle(d);
+            update();
+        }
+
+        function showsFill(d) {
+            return fillSelected === d;
+        }
+
+        function setFill(d) {
+            _.each(fills, function(opt) {
+                context.surface().classed('fill-' + opt, Boolean(opt === d));
+            });
+
+            fillSelected = d;
+            if (d !== 'wireframe') {
+                fillDefault = d;
+                context.storage('area-fill', d);
+            }
+            update();
+        }
+
+        function clickGpx() {
+            context.background().toggleGpxLayer();
+            update();
+        }
+
+        function clickMapillary() {
+            context.background().toggleMapillaryLayer();
+            update();
+        }
+
+        function drawList(selection, data, type, name, change, active) {
+            var items = selection.selectAll('li')
+                .data(data);
+
+            //enter
+            var enter = items.enter()
+                .append('li')
+                .attr('class', 'layer')
+                .call(bootstrap.tooltip()
+                    .html(true)
+                    .title(function(d) {
+                        var tip = t(name + '.' + d + '.tooltip'),
+                            key = (d === 'wireframe' ? 'W' : null);
+
+                        if (name === 'feature' && autoHiddenFeature(d)) {
+                            tip += '<div>' + t('map_data.autohidden') + '</div>';
+                        }
+                        return iD.ui.tooltipHtml(tip, key);
+                    })
+                    .placement('top')
+                );
+
+            var label = enter.append('label');
+
+            label.append('input')
+                .attr('type', type)
+                .attr('name', name)
+                .on('change', change);
+
+            label.append('span')
+                .text(function(d) { return t(name + '.' + d + '.description'); });
+
+            //update
+            items
+                .classed('active', active)
+                .selectAll('input')
+                .property('checked', active);
+
+            if (name === 'feature') {
+                items
+                    .selectAll('input')
+                    .property('indeterminate', autoHiddenFeature);
+            }
+
+            //exit
+            items.exit()
+                .remove();
+        }
+
+        function update() {
+            featureList.call(drawList, features, 'checkbox', 'feature', clickFeature, showsFeature);
+            fillList.call(drawList, fills, 'radio', 'area_fill', setFill, showsFill);
+
+            var hasGpx = context.background().hasGpxLayer(),
+                showsGpx = context.background().showsGpxLayer(),
+                showsMapillary = context.background().showsMapillaryLayer();
+
+            gpxLayerItem
+                .classed('active', showsGpx)
+                .selectAll('input')
+                .property('disabled', !hasGpx)
+                .property('checked', showsGpx);
+
+            mapillaryLayerItem
+                .classed('active', showsMapillary)
+                .selectAll('input')
+                .property('checked', showsMapillary);
+        }
+
+        function hidePanel() { setVisible(false); }
+
+        function togglePanel() {
+            if (d3.event) d3.event.preventDefault();
+            tooltip.hide(button);
+            setVisible(!button.classed('active'));
+        }
+
+        function toggleWireframe() {
+            if (d3.event) {
+                d3.event.preventDefault();
+                d3.event.stopPropagation();
+            }
+            setFill((fillSelected === 'wireframe' ? fillDefault : 'wireframe'));
+        }
+
+        function setVisible(show) {
+            if (show !== shown) {
+                button.classed('active', show);
+                shown = show;
+
+                if (show) {
+                    selection.on('mousedown.map_data-inside', function() {
+                        return d3.event.stopPropagation();
+                    });
+                    content.style('display', 'block')
+                        .style('right', '-300px')
+                        .transition()
+                        .duration(200)
+                        .style('right', '0px');
+                } else {
+                    content.style('display', 'block')
+                        .style('right', '0px')
+                        .transition()
+                        .duration(200)
+                        .style('right', '-300px')
+                        .each('end', function() {
+                            d3.select(this).style('display', 'none');
+                        });
+                    selection.on('mousedown.map_data-inside', null);
+                }
+            }
+        }
+
+
+        var content = selection.append('div')
+                .attr('class', 'fillL map-overlay col3 content hide'),
+            tooltip = bootstrap.tooltip()
+                .placement('left')
+                .html(true)
+                .title(iD.ui.tooltipHtml(t('map_data.description'), key)),
+            button = selection.append('button')
+                .attr('tabindex', -1)
+                .on('click', togglePanel)
+                .call(tooltip),
+            shown = false;
+
+        button.append('span')
+            .attr('class', 'icon data light');
+
+        content.append('h4')
+            .text(t('map_data.title'));
+
+
+        // data layers
+        content.append('a')
+            .text(t('map_data.data_layers'))
+            .attr('href', '#')
+            .classed('hide-toggle', true)
+            .classed('expanded', true)
+            .on('click', function() {
+                var exp = d3.select(this).classed('expanded');
+                layerContainer.style('display', exp ? 'none' : 'block');
+                d3.select(this).classed('expanded', !exp);
+                d3.event.preventDefault();
+            });
+
+        var layerContainer = content.append('div')
+            .attr('class', 'filters')
+            .style('display', 'block');
+
+        // mapillary
+        var mapillaryLayerItem = layerContainer.append('ul')
+            .attr('class', 'layer-list')
+            .append('li');
+
+        var label = mapillaryLayerItem.append('label')
+            .call(bootstrap.tooltip()
+                .title(t('mapillary.tooltip'))
+                .placement('top'));
+
+        label.append('input')
+            .attr('type', 'checkbox')
+            .on('change', clickMapillary);
+
+        label.append('span')
+            .text(t('mapillary.title'));
+
+        // gpx
+        var gpxLayerItem = layerContainer.append('ul')
+            .style('display', iD.detect().filedrop ? 'block' : 'none')
+            .attr('class', 'layer-list')
+            .append('li')
+            .classed('layer-toggle-gpx', true);
+
+        gpxLayerItem.append('button')
+            .attr('class', 'layer-extent')
+            .call(bootstrap.tooltip()
+                .title(t('gpx.zoom'))
+                .placement('left'))
+            .on('click', function() {
+                d3.event.preventDefault();
+                d3.event.stopPropagation();
+                context.background().zoomToGpxLayer();
+            })
+            .append('span')
+            .attr('class', 'icon geolocate');
+
+        gpxLayerItem.append('button')
+            .attr('class', 'layer-browse')
+            .call(bootstrap.tooltip()
+                .title(t('gpx.browse'))
+                .placement('left'))
+            .on('click', function() {
+                d3.select(document.createElement('input'))
+                    .attr('type', 'file')
+                    .on('change', function() {
+                        context.background().gpxLayerFiles(d3.event.target.files);
+                    })
+                    .node().click();
+            })
+            .append('span')
+            .attr('class', 'icon geocode');
+
+        label = gpxLayerItem.append('label')
+            .call(bootstrap.tooltip()
+                .title(t('gpx.drag_drop'))
+                .placement('top'));
+
+        label.append('input')
+            .attr('type', 'checkbox')
+            .property('disabled', true)
+            .on('change', clickGpx);
+
+        label.append('span')
+            .text(t('gpx.local_layer'));
+
+
+        // area fills
+        content.append('a')
+            .text(t('map_data.fill_area'))
+            .attr('href', '#')
+            .classed('hide-toggle', true)
+            .classed('expanded', false)
+            .on('click', function() {
+                var exp = d3.select(this).classed('expanded');
+                fillContainer.style('display', exp ? 'none' : 'block');
+                d3.select(this).classed('expanded', !exp);
+                d3.event.preventDefault();
+            });
+
+        var fillContainer = content.append('div')
+            .attr('class', 'filters')
+            .style('display', 'none');
+
+        var fillList = fillContainer.append('ul')
+            .attr('class', 'layer-list');
+
+
+        // feature filters
+        content.append('a')
+            .text(t('map_data.map_features'))
+            .attr('href', '#')
+            .classed('hide-toggle', true)
+            .classed('expanded', false)
+            .on('click', function() {
+                var exp = d3.select(this).classed('expanded');
+                featureContainer.style('display', exp ? 'none' : 'block');
+                d3.select(this).classed('expanded', !exp);
+                d3.event.preventDefault();
+            });
+
+        var featureContainer = content.append('div')
+            .attr('class', 'filters')
+            .style('display', 'none');
+
+        var featureList = featureContainer.append('ul')
+            .attr('class', 'layer-list');
+
+
+        context.features()
+            .on('change.map_data-update', update);
+
+        update();
+        setFill(fillDefault);
+
+        var keybinding = d3.keybinding('features')
+            .on(key, togglePanel)
+            .on('W', toggleWireframe)
+            .on('B', hidePanel)
+            .on('H', hidePanel);
+
+        d3.select(document)
+            .call(keybinding);
+
+        context.surface().on('mousedown.map_data-outside', hidePanel);
+        context.container().on('mousedown.map_data-outside', hidePanel);
+    }
+
+    return map_data;
+};
 iD.ui.modal = function(selection, blocking) {
 
     var previous = selection.select('div.modal');
@@ -28776,6 +29575,10 @@ iD.ui.Modes = function(context) {
         iD.modes.AddLine(context),
         iD.modes.AddArea(context)];
 
+    function editable() {
+        return context.editable() && context.mode().id !== 'save';
+    }
+
     return function(selection) {
         var buttons = selection.selectAll('button.add-button')
             .data(modes);
@@ -28803,8 +29606,6 @@ iD.ui.Modes = function(context) {
         context
             .on('enter.modes', update);
 
-        update();
-
         buttons.append('span')
             .attr('class', function(mode) { return mode.id + ' icon icon-pre-text'; });
 
@@ -28826,14 +29627,14 @@ iD.ui.Modes = function(context) {
         var keybinding = d3.keybinding('mode-buttons');
 
         modes.forEach(function(m) {
-            keybinding.on(m.key, function() { if (context.editable()) context.enter(m); });
+            keybinding.on(m.key, function() { if (editable()) context.enter(m); });
         });
 
         d3.select(document)
             .call(keybinding);
 
         function update() {
-            buttons.property('disabled', !context.editable());
+            buttons.property('disabled', !editable());
         }
     };
 };
@@ -28844,7 +29645,7 @@ iD.ui.Notice = function(context) {
 
         var button = div.append('button')
             .attr('class', 'zoom-to notice')
-            .on('click', function() { context.map().zoom(16); });
+            .on('click', function() { context.map().zoom(context.minEditableZoom()); });
 
         button.append('span')
             .attr('class', 'icon zoom-in-invert');
@@ -28854,7 +29655,7 @@ iD.ui.Notice = function(context) {
             .text(t('zoom_in_edit'));
 
         function disableTooHigh() {
-            div.style('display', context.map().editable() ? 'none' : 'block');
+            div.style('display', context.editable() ? 'none' : 'block');
         }
 
         context.map()
@@ -28963,7 +29764,7 @@ iD.ui.preset = function(context) {
         // Enter
 
         var $enter = $fields.enter()
-            .insert('div', '.more-buttons')
+            .append('div')
             .attr('class', function(field) {
                 return 'form-field form-field-' + field.id;
             });
@@ -29021,30 +29822,49 @@ iD.ui.preset = function(context) {
         $fields.exit()
             .remove();
 
-        var $more = selection.selectAll('.more-buttons')
-            .data([0]);
+        notShown = notShown.map(function(field) {
+            return {
+                title: field.label(),
+                value: field.label(),
+                field: field
+            };
+        });
+
+        var $more = selection.selectAll('.more-fields')
+            .data((notShown.length > 0) ? [0] : []);
 
         $more.enter().append('div')
-            .attr('class', 'more-buttons inspector-inner');
+            .attr('class', 'more-fields')
+            .append('label')
+                .text(t('inspector.add_fields'));
 
-        var $buttons = $more.selectAll('.preset-add-field')
-            .data(notShown, fieldKey);
+        var $input = $more.selectAll('.value')
+            .data([0]);
 
-        $buttons.enter()
-            .append('button')
-            .attr('class', 'preset-add-field')
-            .call(bootstrap.tooltip()
-                .placement('top')
-                .title(function(d) { return d.label(); }))
-            .append('span')
-            .attr('class', function(d) { return 'icon ' + d.icon; });
+        $input.enter().append('input')
+            .attr('class', 'value')
+            .attr('type', 'text');
 
-        $buttons.on('click', show);
+        $input.value('')
+            .attr('placeholder', function() {
+                var placeholder = [];
+                for (var field in notShown) {
+                    placeholder.push(notShown[field].title);
+                }
+                return placeholder.slice(0,3).join(', ') + ((placeholder.length > 3) ? '…' : '');
+            })
+            .call(d3.combobox().data(notShown)
+                .minItems(1)
+                .on('accept', show));
 
-        $buttons.exit()
+        $more.exit()
+            .remove();
+
+        $input.exit()
             .remove();
 
         function show(field) {
+            field = field.field;
             field.show = true;
             presets(selection);
             field.input.focus();
@@ -31223,6 +32043,8 @@ iD.ui.preset.address = function(field, context) {
     }
 
     function address(selection) {
+        isInitialized = false;
+        
         selection.selectAll('.preset-input-wrap')
             .remove();
 
@@ -31331,7 +32153,8 @@ iD.ui.preset.address = function(field, context) {
     };
 
     address.focus = function() {
-        wrap.selectAll('input').node().focus();
+        var node = wrap.selectAll('input').node();
+        if (node) node.focus();
     };
 
     return d3.rebind(address, event, 'on');
@@ -32873,6 +33696,8 @@ iD.presets = function() {
         var areaKeys = {};
 
         all.collection.forEach(function(d) {
+            if (d.suggestion) return;
+
             for (var key in d.tags) break;
             if (!key) return;
             var value = d.tags[key];
@@ -47056,7 +47881,8 @@ iD.introGraph = '{"n185954700":{"id":"n185954700","loc":[-85.642244,41.939081],"
                     "area": "Made an area circular."
                 },
                 "not_closed": "This can't be made circular because it's not a loop.",
-                "too_large": "This can't be made circular because not enough of it is currently visible."
+                "too_large": "This can't be made circular because not enough of it is currently visible.",
+                "connected_to_hidden": "This can't be made circular because it is connected to a hidden feature."
             },
             "orthogonalize": {
                 "title": "Square",
@@ -47070,7 +47896,8 @@ iD.introGraph = '{"n185954700":{"id":"n185954700","loc":[-85.642244,41.939081],"
                     "area": "Squared the corners of an area."
                 },
                 "not_squarish": "This can't be made square because it is not squarish.",
-                "too_large": "This can't be made square because not enough of it is currently visible."
+                "too_large": "This can't be made square because not enough of it is currently visible.",
+                "connected_to_hidden": "This can't be made square because it is connected to a hidden feature."
             },
             "slide": {
                 "title": "Slide",
@@ -47084,7 +47911,8 @@ iD.introGraph = '{"n185954700":{"id":"n185954700","loc":[-85.642244,41.939081],"
                 "description": "Straighten this line.",
                 "key": "S",
                 "annotation": "Straightened a line.",
-                "too_bendy": "This can't be straightened because it bends too much."
+                "too_bendy": "This can't be straightened because it bends too much.",
+                "connected_to_hidden": "This line can't be straightened because it is connected to a hidden feature."
             },
             "delete": {
                 "title": "Delete",
@@ -47097,7 +47925,8 @@ iD.introGraph = '{"n185954700":{"id":"n185954700","loc":[-85.642244,41.939081],"
                     "relation": "Deleted a relation.",
                     "multiple": "Deleted {n} objects."
                 },
-                "incomplete_relation": "This feature can't be deleted because it hasn't been fully downloaded."
+                "incomplete_relation": "This feature can't be deleted because it hasn't been fully downloaded.",
+                "connected_to_hidden": "This can't be deleted because it is connected to a hidden feature."
             },
             "add_member": {
                 "annotation": "Added a member to a relation."
@@ -47118,7 +47947,8 @@ iD.introGraph = '{"n185954700":{"id":"n185954700","loc":[-85.642244,41.939081],"
                 "description": "Disconnect these lines/areas from each other.",
                 "key": "D",
                 "annotation": "Disconnected lines/areas.",
-                "not_connected": "There aren't enough lines/areas here to disconnect."
+                "not_connected": "There aren't enough lines/areas here to disconnect.",
+                "connected_to_hidden": "This can't be disconnected because it is connected to a hidden feature."
             },
             "merge": {
                 "title": "Merge",
@@ -47142,7 +47972,8 @@ iD.introGraph = '{"n185954700":{"id":"n185954700","loc":[-85.642244,41.939081],"
                     "multiple": "Moved multiple objects."
                 },
                 "incomplete_relation": "This feature can't be moved because it hasn't been fully downloaded.",
-                "too_large": "This can't be moved because not enough of it is currently visible."
+                "too_large": "This can't be moved because not enough of it is currently visible.",
+                "connected_to_hidden": "This can't be moved because it is connected to a hidden feature."
             },
             "rotate": {
                 "title": "Rotate",
@@ -47152,7 +47983,8 @@ iD.introGraph = '{"n185954700":{"id":"n185954700","loc":[-85.642244,41.939081],"
                     "line": "Rotated a line.",
                     "area": "Rotated an area."
                 },
-                "too_large": "This can't be rotated because not enough of it is currently visible."
+                "too_large": "This can't be rotated because not enough of it is currently visible.",
+                "connected_to_hidden": "This can't be rotated because it is connected to a hidden feature."
             },
             "reverse": {
                 "title": "Reverse",
@@ -47174,7 +48006,8 @@ iD.introGraph = '{"n185954700":{"id":"n185954700","loc":[-85.642244,41.939081],"
                     "multiple": "Split {n} lines/area boundaries."
                 },
                 "not_eligible": "Lines can't be split at their beginning or end.",
-                "multiple_ways": "There are too many lines here to split."
+                "multiple_ways": "There are too many lines here to split.",
+                "connected_to_hidden": "This can't be split because it is connected to a hidden feature."
             },
             "restriction": {
                 "help": {
@@ -47209,6 +48042,10 @@ iD.introGraph = '{"n185954700":{"id":"n185954700","loc":[-85.642244,41.939081],"
         "logout": "logout",
         "loading_auth": "Connecting to OpenStreetMap...",
         "report_a_bug": "report a bug",
+        "feature_info": {
+            "hidden_warning": "{count} hidden features",
+            "hidden_details": "These features are currently hidden: {details}"
+        },
         "status": {
             "error": "Unable to connect to API.",
             "offline": "The API is offline. Please try editing later.",
@@ -47269,7 +48106,8 @@ iD.introGraph = '{"n185954700":{"id":"n185954700","loc":[-85.642244,41.939081],"
             "node": "Node",
             "way": "Way",
             "relation": "Relation",
-            "location": "Location"
+            "location": "Location",
+            "add_fields": "Add field:"
         },
         "background": {
             "title": "Background",
@@ -47281,6 +48119,78 @@ iD.introGraph = '{"n185954700":{"id":"n185954700","loc":[-85.642244,41.939081],"
             "custom_prompt": "Enter a tile URL template. Valid tokens are {z}, {x}, {y} for Z/X/Y scheme and {u} for quadtile scheme.",
             "fix_misalignment": "Fix alignment",
             "reset": "reset"
+        },
+        "map_data": {
+            "title": "Map Data",
+            "description": "Map Data",
+            "data_layers": "Data Layers",
+            "fill_area": "Fill Areas",
+            "map_features": "Map Features",
+            "autohidden": "These features have been automatically hidden because too many would be shown on the screen.  You can zoom in to edit them."
+        },
+        "feature": {
+            "points": {
+                "description": "Points",
+                "tooltip": "Points of Interest"
+            },
+            "major_roads": {
+                "description": "Major Roads",
+                "tooltip": "Highways, Streets, etc."
+            },
+            "minor_roads": {
+                "description": "Minor Roads",
+                "tooltip": "Service Roads, Parking Aisles, Tracks, etc."
+            },
+            "paths": {
+                "description": "Paths",
+                "tooltip": "Sidewalks, Foot Paths, Cycle Paths, etc."
+            },
+            "buildings": {
+                "description": "Buildings",
+                "tooltip": "Buildings, Shelters, Garages, etc."
+            },
+            "landuse": {
+                "description": "Landuse Features",
+                "tooltip": "Forests, Farmland, Parks, Residential, Commercial, etc."
+            },
+            "boundaries": {
+                "description": "Boundaries",
+                "tooltip": "Administrative Boundaries"
+            },
+            "water": {
+                "description": "Water Features",
+                "tooltip": "Rivers, Lakes, Ponds, Basins, etc."
+            },
+            "rail": {
+                "description": "Rail Features",
+                "tooltip": "Railways"
+            },
+            "power": {
+                "description": "Power Features",
+                "tooltip": "Power Lines, Power Plants, Substations, etc."
+            },
+            "past_future": {
+                "description": "Past/Future",
+                "tooltip": "Proposed, Construction, Abandoned, Demolished, etc."
+            },
+            "others": {
+                "description": "Others",
+                "tooltip": "Everything Else"
+            }
+        },
+        "area_fill": {
+            "wireframe": {
+                "description": "No Fill (Wireframe)",
+                "tooltip": "Enabling wireframe mode makes it easy to see the background imagery."
+            },
+            "partial": {
+                "description": "Partial Fill",
+                "tooltip": "Areas are drawn with fill only around their inner edges. (Recommended for beginner mappers)"
+            },
+            "full": {
+                "description": "Full Fill",
+                "tooltip": "Areas are drawn fully filled."
+            }
         },
         "restore": {
             "heading": "You have unsaved changes",
@@ -47357,7 +48267,7 @@ iD.introGraph = '{"n185954700":{"id":"n185954700","loc":[-85.642244,41.939081],"
             "help": "# Help\n\nThis is an editor for [OpenStreetMap](http://www.openstreetmap.org/), the\nfree and editable map of the world. You can use it to add and update\ndata in your area, making an open-source and open-data map of the world\nbetter for everyone.\n\nEdits that you make on this map will be visible to everyone who uses\nOpenStreetMap. In order to make an edit, you'll need a\n[free OpenStreetMap account](https://www.openstreetmap.org/user/new).\n\nThe [iD editor](http://ideditor.com/) is a collaborative project with [source\ncode available on GitHub](https://github.com/openstreetmap/iD).\n",
             "editing_saving": "# Editing & Saving\n\nThis editor is designed to work primarily online, and you're accessing\nit through a website right now.\n\n### Selecting Features\n\nTo select a map feature, like a road or point of interest, click\non it on the map. This will highlight the selected feature, open a panel with\ndetails about it, and show a menu of things you can do with the feature.\n\nTo select multiple features, hold down the 'Shift' key. Then either click\non the features you want to select, or drag on the map to draw a rectangle.\nThis will draw a box and select all the points within it.\n\n### Saving Edits\n\nWhen you make changes like editing roads, buildings, and places, these are\nstored locally until you save them to the server. Don't worry if you make\na mistake - you can undo changes by clicking the undo button, and redo\nchanges by clicking the redo button.\n\nClick 'Save' to finish a group of edits - for instance, if you've completed\nan area of town and would like to start on a new area. You'll have a chance\nto review what you've done, and the editor supplies helpful suggestions\nand warnings if something doesn't seem right about the changes.\n\nIf everything looks good, you can enter a short comment explaining the change\nyou made, and click 'Save' again to post the changes\nto [OpenStreetMap.org](http://www.openstreetmap.org/), where they are visible\nto all other users and available for others to build and improve upon.\n\nIf you can't finish your edits in one sitting, you can leave the editor\nwindow and come back (on the same browser and computer), and the\neditor application will offer to restore your work.\n",
             "roads": "# Roads\n\nYou can create, fix, and delete roads with this editor. Roads can be all\nkinds: paths, highways, trails, cycleways, and more - any often-crossed\nsegment should be mappable.\n\n### Selecting\n\nClick on a road to select it. An outline should become visible, along\nwith a small tools menu on the map and a sidebar showing more information\nabout the road.\n\n### Modifying\n\nOften you'll see roads that aren't aligned to the imagery behind them\nor to a GPS track. You can adjust these roads so they are in the correct\nplace.\n\nFirst click on the road you want to change. This will highlight it and show\ncontrol points along it that you can drag to better locations. If\nyou want to add new control points for more detail, double-click a part\nof the road without a node, and one will be added.\n\nIf the road connects to another road, but doesn't properly connect on\nthe map, you can drag one of its control points onto the other road in\norder to join them. Having roads connect is important for the map\nand essential for providing driving directions.\n\nYou can also click the 'Move' tool or press the `M` shortcut key to move the entire road at\none time, and then click again to save that movement.\n\n### Deleting\n\nIf a road is entirely incorrect - you can see that it doesn't exist in satellite\nimagery and ideally have confirmed locally that it's not present - you can delete\nit, which removes it from the map. Be cautious when deleting features -\nlike any other edit, the results are seen by everyone and satellite imagery\nis often out of date, so the road could simply be newly built.\n\nYou can delete a road by clicking on it to select it, then clicking the\ntrash can icon or pressing the 'Delete' key.\n\n### Creating\n\nFound somewhere there should be a road but there isn't? Click the 'Line'\nicon in the top-left of the editor or press the shortcut key `2` to start drawing\na line.\n\nClick on the start of the road on the map to start drawing. If the road\nbranches off from an existing road, start by clicking on the place where they connect.\n\nThen click on points along the road so that it follows the right path, according\nto satellite imagery or GPS. If the road you are drawing crosses another road, connect\nit by clicking on the intersection point. When you're done drawing, double-click\nor press 'Return' or 'Enter' on your keyboard.\n",
-            "gps": "# GPS\n\nGPS data is the most trusted source of data for OpenStreetMap. This editor\nsupports local traces - `.gpx` files on your local computer. You can collect\nthis kind of GPS trace with a number of smartphone applications as well as\npersonal GPS hardware.\n\nFor information on how to perform a GPS survey, read\n[Surveying with a GPS](http://learnosm.org/en/beginner/using-gps/).\n\nTo use a GPX track for mapping, drag and drop the GPX file onto the map\neditor. If it's recognized, it will be added to the map as a bright green\nline. Click on the 'Background Settings' menu on the right side to enable,\ndisable, or zoom to this new GPX-powered layer.\n\nThe GPX track isn't directly uploaded to OpenStreetMap - the best way to\nuse it is to draw on the map, using it as a guide for the new features that\nyou add, and also to [upload it to OpenStreetMap](http://www.openstreetmap.org/trace/create)\nfor other users to use.\n",
+            "gps": "# GPS\n\nGPS data is the most trusted source of data for OpenStreetMap. This editor\nsupports local traces - `.gpx` files on your local computer. You can collect\nthis kind of GPS trace with a number of smartphone applications as well as\npersonal GPS hardware.\n\nFor information on how to perform a GPS survey, read\n[Surveying with a GPS](http://learnosm.org/en/beginner/using-gps/).\n\nTo use a GPX track for mapping, drag and drop the GPX file onto the map\neditor. If it's recognized, it will be added to the map as a bright purple\nline. Click on the 'Map Data' menu on the right side to enable,\ndisable, or zoom to this new GPX-powered layer.\n\nThe GPX track isn't directly uploaded to OpenStreetMap - the best way to\nuse it is to draw on the map, using it as a guide for the new features that\nyou add, and also to [upload it to OpenStreetMap](http://www.openstreetmap.org/trace/create)\nfor other users to use.\n",
             "imagery": "# Imagery\n\nAerial imagery is an important resource for mapping. A combination of\nairplane flyovers, satellite views, and freely-compiled sources are available\nin the editor under the 'Background Settings' menu on the right.\n\nBy default a [Bing Maps](http://www.bing.com/maps/) satellite layer is\npresented in the editor, but as you pan and zoom the map to new geographical\nareas, new sources will become available. Some countries, like the United\nStates, France, and Denmark have very high-quality imagery available for some areas.\n\nImagery is sometimes offset from the map data because of a mistake on the\nimagery provider's side. If you see a lot of roads shifted from the background,\ndon't immediately move them all to match the background. Instead you can adjust\nthe imagery so that it matches the existing data by clicking 'Fix alignment' at\nthe bottom of the Background Settings UI.\n",
             "addresses": "# Addresses\n\nAddresses are some of the most useful information for the map.\n\nAlthough addresses are often represented as parts of streets, in OpenStreetMap\nthey're recorded as attributes of buildings and places along streets.\n\nYou can add address information to places mapped as building outlines\nas well as those mapped as single points. The optimal source of address\ndata is from an on-the-ground survey or personal knowledge - as with any\nother feature, copying from commercial sources like Google Maps is strictly\nforbidden.\n",
             "inspector": "# Using the Inspector\n\nThe inspector is the section on the left side of the page that allows you to\nedit the details of the selected feature.\n\n### Selecting a Feature Type\n\nAfter you add a point, line, or area, you can choose what type of feature it\nis, like whether it's a highway or residential road, supermarket or cafe.\nThe inspector will display buttons for common feature types, and you can\nfind others by typing what you're looking for in the search box.\n\nClick the 'i' in the bottom-right-hand corner of a feature type button to\nlearn more about it. Click a button to choose that type.\n\n### Using Forms and Editing Tags\n\nAfter you choose a feature type, or when you select a feature that already\nhas a type assigned, the inspector will display fields with details about\nthe feature like its name and address.\n\nBelow the fields you see, you can click icons to add other details,\nlike [Wikipedia](http://www.wikipedia.org/) information, wheelchair\naccess, and more.\n\nAt the bottom of the inspector, click 'Additional tags' to add arbitrary\nother tags to the element. [Taginfo](http://taginfo.openstreetmap.org/) is a\ngreat resource for learn more about popular tag combinations.\n\nChanges you make in the inspector are automatically applied to the map.\nYou can undo them at any time by clicking the 'Undo' button.\n",
@@ -47570,6 +48480,9 @@ iD.introGraph = '{"n185954700":{"id":"n185954700","loc":[-85.642244,41.939081],"
                 "barrier": {
                     "label": "Type"
                 },
+                "bench": {
+                    "label": "Bench"
+                },
                 "bicycle_parking": {
                     "label": "Type"
                 },
@@ -47637,6 +48550,9 @@ iD.introGraph = '{"n185954700":{"id":"n185954700","loc":[-85.642244,41.939081],"
                 },
                 "cuisine": {
                     "label": "Cuisine"
+                },
+                "delivery": {
+                    "label": "Delivery"
                 },
                 "denomination": {
                     "label": "Denomination"
@@ -48072,6 +48988,9 @@ iD.introGraph = '{"n185954700":{"id":"n185954700","loc":[-85.642244,41.939081],"
                 "studio_type": {
                     "label": "Type"
                 },
+                "substation": {
+                    "label": "Type"
+                },
                 "supervised": {
                     "label": "Supervised"
                 },
@@ -48080,6 +48999,15 @@ iD.introGraph = '{"n185954700":{"id":"n185954700","loc":[-85.642244,41.939081],"
                 },
                 "tactile_paving": {
                     "label": "Tactile Paving"
+                },
+                "takeaway": {
+                    "label": "Takeaway",
+                    "placeholder": "Yes, No, Takeaway Only...",
+                    "options": {
+                        "yes": "Yes",
+                        "no": "No",
+                        "only": "Takeaway Only"
+                    }
                 },
                 "toilets/disposal": {
                     "label": "Disposal",
@@ -48454,6 +49382,10 @@ iD.introGraph = '{"n185954700":{"id":"n185954700","loc":[-85.642244,41.939081],"
                     "name": "Recycling",
                     "terms": "can,bottle,garbage,scrap,trash"
                 },
+                "amenity/register_office": {
+                    "name": "Register Office",
+                    "terms": ""
+                },
                 "amenity/restaurant": {
                     "name": "Restaurant",
                     "terms": "bar,breakfast,cafe,café,canteen,coffee,dine,dining,dinner,drive-in,eat,grill,lunch,table"
@@ -48786,8 +49718,8 @@ iD.introGraph = '{"n185954700":{"id":"n185954700","loc":[-85.642244,41.939081],"
                     "name": "Clockmaker",
                     "terms": ""
                 },
-                "craft/confectionary": {
-                    "name": "Confectionary",
+                "craft/confectionery": {
+                    "name": "Confectionery",
                     "terms": "sweets,candy"
                 },
                 "craft/dressmaker": {
@@ -49194,6 +50126,10 @@ iD.introGraph = '{"n185954700":{"id":"n185954700","loc":[-85.642244,41.939081],"
                     "name": "Wayside Shrine",
                     "terms": ""
                 },
+                "junction": {
+                    "name": "Junction",
+                    "terms": ""
+                },
                 "landuse": {
                     "name": "Landuse",
                     "terms": ""
@@ -49227,8 +50163,8 @@ iD.introGraph = '{"n185954700":{"id":"n185954700","loc":[-85.642244,41.939081],"
                     "terms": ""
                 },
                 "landuse/farmland": {
-                    "name": "Farmland",
-                    "terms": ""
+                    "name": "Farm",
+                    "terms": "farmland"
                 },
                 "landuse/farmyard": {
                     "name": "Farmyard",
@@ -49236,6 +50172,10 @@ iD.introGraph = '{"n185954700":{"id":"n185954700","loc":[-85.642244,41.939081],"
                 },
                 "landuse/forest": {
                     "name": "Forest",
+                    "terms": ""
+                },
+                "landuse/garages": {
+                    "name": "Garages",
                     "terms": ""
                 },
                 "landuse/grass": {
@@ -49468,6 +50408,10 @@ iD.introGraph = '{"n185954700":{"id":"n185954700","loc":[-85.642244,41.939081],"
                 },
                 "natural/beach": {
                     "name": "Beach",
+                    "terms": ""
+                },
+                "natural/cave_entrance": {
+                    "name": "Cave Entrance",
                     "terms": ""
                 },
                 "natural/cliff": {

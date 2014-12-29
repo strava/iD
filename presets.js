@@ -874,6 +874,8 @@ iD.data.presets = {
                 "address",
                 "building_area",
                 "opening_hours",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "geometry": [
@@ -1414,6 +1416,24 @@ iD.data.presets = {
             },
             "name": "Recycling"
         },
+        "amenity/register_office": {
+            "icon": "town-hall",
+            "fields": [
+                "address",
+                "building_area",
+                "opening_hours",
+                "operator"
+            ],
+            "geometry": [
+                "point",
+                "area"
+            ],
+            "terms": [],
+            "tags": {
+                "amenity": "register_office"
+            },
+            "name": "Register Office"
+        },
         "amenity/restaurant": {
             "icon": "restaurant",
             "fields": [
@@ -1422,6 +1442,8 @@ iD.data.presets = {
                 "building_area",
                 "opening_hours",
                 "capacity",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "geometry": [
@@ -2157,6 +2179,7 @@ iD.data.presets = {
             "icon": "commercial",
             "fields": [
                 "address",
+                "levels",
                 "smoking"
             ],
             "geometry": [
@@ -2750,7 +2773,7 @@ iD.data.presets = {
             },
             "name": "Clockmaker"
         },
-        "craft/confectionary": {
+        "craft/confectionery": {
             "icon": "bakery",
             "fields": [
                 "operator",
@@ -2767,9 +2790,9 @@ iD.data.presets = {
                 "candy"
             ],
             "tags": {
-                "craft": "confectionary"
+                "craft": "confectionery"
             },
-            "name": "Confectionary"
+            "name": "Confectionery"
         },
         "craft/dressmaker": {
             "icon": "clothing-store",
@@ -3698,7 +3721,9 @@ iD.data.presets = {
             "icon": "bus",
             "fields": [
                 "operator",
-                "shelter"
+                "bench",
+                "shelter",
+                "covered"
             ],
             "geometry": [
                 "point",
@@ -4510,6 +4535,16 @@ iD.data.presets = {
             },
             "name": "Wayside Shrine"
         },
+        "junction": {
+            "geometry": [
+                "vertex",
+                "area"
+            ],
+            "tags": {
+                "junction": "yes"
+            },
+            "name": "Junction"
+        },
         "landuse": {
             "fields": [
                 "landuse"
@@ -4617,7 +4652,8 @@ iD.data.presets = {
             },
             "terms": [],
             "name": "Farm",
-            "icon": "farm"
+            "icon": "farm",
+            "searchable": false
         },
         "landuse/farmland": {
             "fields": [
@@ -4630,10 +4666,11 @@ iD.data.presets = {
             "tags": {
                 "landuse": "farmland"
             },
-            "terms": [],
-            "name": "Farmland",
-            "icon": "farm",
-            "searchable": false
+            "terms": [
+                "farmland"
+            ],
+            "name": "Farm",
+            "icon": "farm"
         },
         "landuse/farmyard": {
             "fields": [
@@ -4664,6 +4701,16 @@ iD.data.presets = {
             },
             "terms": [],
             "name": "Forest"
+        },
+        "landuse/garages": {
+            "geometry": [
+                "area"
+            ],
+            "tags": {
+                "landuse": "garages"
+            },
+            "terms": [],
+            "name": "Garages"
         },
         "landuse/grass": {
             "geometry": [
@@ -5493,6 +5540,21 @@ iD.data.presets = {
                 "natural": "beach"
             },
             "name": "Beach"
+        },
+        "natural/cave_entrance": {
+            "geometry": [
+                "point",
+                "area"
+            ],
+            "fields": [
+                "fee",
+                "access_simple"
+            ],
+            "terms": [],
+            "tags": {
+                "natural": "cave_entrance"
+            },
+            "name": "Cave Entrance"
         },
         "natural/cliff": {
             "geometry": [
@@ -6359,6 +6421,7 @@ iD.data.presets = {
         },
         "power/sub_station": {
             "fields": [
+                "substation",
                 "operator",
                 "building"
             ],
@@ -6374,6 +6437,7 @@ iD.data.presets = {
         },
         "power/substation": {
             "fields": [
+                "substation",
                 "operator",
                 "building"
             ],
@@ -13656,6 +13720,8 @@ iD.data.presets = {
                 "address",
                 "building_area",
                 "opening_hours",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -13678,6 +13744,8 @@ iD.data.presets = {
                 "address",
                 "building_area",
                 "opening_hours",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -13700,6 +13768,8 @@ iD.data.presets = {
                 "address",
                 "building_area",
                 "opening_hours",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -13722,6 +13792,8 @@ iD.data.presets = {
                 "address",
                 "building_area",
                 "opening_hours",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -13743,6 +13815,8 @@ iD.data.presets = {
                 "address",
                 "building_area",
                 "opening_hours",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -13765,6 +13839,8 @@ iD.data.presets = {
                 "address",
                 "building_area",
                 "opening_hours",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -13786,6 +13862,8 @@ iD.data.presets = {
                 "address",
                 "building_area",
                 "opening_hours",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -13808,6 +13886,8 @@ iD.data.presets = {
                 "address",
                 "building_area",
                 "opening_hours",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -13830,6 +13910,8 @@ iD.data.presets = {
                 "address",
                 "building_area",
                 "opening_hours",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -13851,6 +13933,8 @@ iD.data.presets = {
                 "address",
                 "building_area",
                 "opening_hours",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -13872,6 +13956,8 @@ iD.data.presets = {
                 "address",
                 "building_area",
                 "opening_hours",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -13893,6 +13979,8 @@ iD.data.presets = {
                 "address",
                 "building_area",
                 "opening_hours",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -13914,6 +14002,8 @@ iD.data.presets = {
                 "address",
                 "building_area",
                 "opening_hours",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -13936,6 +14026,8 @@ iD.data.presets = {
                 "address",
                 "building_area",
                 "opening_hours",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -13957,6 +14049,8 @@ iD.data.presets = {
                 "address",
                 "building_area",
                 "opening_hours",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -13978,6 +14072,8 @@ iD.data.presets = {
                 "address",
                 "building_area",
                 "opening_hours",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -14000,6 +14096,8 @@ iD.data.presets = {
                 "address",
                 "building_area",
                 "opening_hours",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -14021,6 +14119,8 @@ iD.data.presets = {
                 "address",
                 "building_area",
                 "opening_hours",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -14042,6 +14142,8 @@ iD.data.presets = {
                 "address",
                 "building_area",
                 "opening_hours",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -14063,6 +14165,8 @@ iD.data.presets = {
                 "address",
                 "building_area",
                 "opening_hours",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -14084,6 +14188,8 @@ iD.data.presets = {
                 "address",
                 "building_area",
                 "opening_hours",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -14105,6 +14211,8 @@ iD.data.presets = {
                 "address",
                 "building_area",
                 "opening_hours",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -14126,6 +14234,8 @@ iD.data.presets = {
                 "address",
                 "building_area",
                 "opening_hours",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -14147,6 +14257,8 @@ iD.data.presets = {
                 "address",
                 "building_area",
                 "opening_hours",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -14168,6 +14280,8 @@ iD.data.presets = {
                 "address",
                 "building_area",
                 "opening_hours",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -14189,6 +14303,8 @@ iD.data.presets = {
                 "address",
                 "building_area",
                 "opening_hours",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -14211,6 +14327,8 @@ iD.data.presets = {
                 "address",
                 "building_area",
                 "opening_hours",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -14232,6 +14350,8 @@ iD.data.presets = {
                 "address",
                 "building_area",
                 "opening_hours",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -14253,6 +14373,8 @@ iD.data.presets = {
                 "address",
                 "building_area",
                 "opening_hours",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -14274,6 +14396,8 @@ iD.data.presets = {
                 "address",
                 "building_area",
                 "opening_hours",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -14295,6 +14419,8 @@ iD.data.presets = {
                 "address",
                 "building_area",
                 "opening_hours",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -14316,6 +14442,8 @@ iD.data.presets = {
                 "address",
                 "building_area",
                 "opening_hours",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -14338,6 +14466,8 @@ iD.data.presets = {
                 "address",
                 "building_area",
                 "opening_hours",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -14360,6 +14490,8 @@ iD.data.presets = {
                 "address",
                 "building_area",
                 "opening_hours",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -14381,6 +14513,8 @@ iD.data.presets = {
                 "address",
                 "building_area",
                 "opening_hours",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -14403,6 +14537,8 @@ iD.data.presets = {
                 "address",
                 "building_area",
                 "opening_hours",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -14424,6 +14560,8 @@ iD.data.presets = {
                 "address",
                 "building_area",
                 "opening_hours",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -14445,6 +14583,8 @@ iD.data.presets = {
                 "address",
                 "building_area",
                 "opening_hours",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -14467,6 +14607,8 @@ iD.data.presets = {
                 "address",
                 "building_area",
                 "opening_hours",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -14488,6 +14630,8 @@ iD.data.presets = {
                 "address",
                 "building_area",
                 "opening_hours",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -14509,6 +14653,8 @@ iD.data.presets = {
                 "address",
                 "building_area",
                 "opening_hours",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -14530,6 +14676,8 @@ iD.data.presets = {
                 "address",
                 "building_area",
                 "opening_hours",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -14552,6 +14700,8 @@ iD.data.presets = {
                 "address",
                 "building_area",
                 "opening_hours",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -14573,6 +14723,8 @@ iD.data.presets = {
                 "address",
                 "building_area",
                 "opening_hours",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -14594,6 +14746,8 @@ iD.data.presets = {
                 "address",
                 "building_area",
                 "opening_hours",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -14616,6 +14770,8 @@ iD.data.presets = {
                 "address",
                 "building_area",
                 "opening_hours",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -14639,6 +14795,8 @@ iD.data.presets = {
                 "address",
                 "building_area",
                 "opening_hours",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -14660,6 +14818,8 @@ iD.data.presets = {
                 "address",
                 "building_area",
                 "opening_hours",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -14681,6 +14841,8 @@ iD.data.presets = {
                 "address",
                 "building_area",
                 "opening_hours",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -14702,6 +14864,8 @@ iD.data.presets = {
                 "address",
                 "building_area",
                 "opening_hours",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -14723,6 +14887,8 @@ iD.data.presets = {
                 "address",
                 "building_area",
                 "opening_hours",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -14744,6 +14910,8 @@ iD.data.presets = {
                 "address",
                 "building_area",
                 "opening_hours",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -14767,6 +14935,8 @@ iD.data.presets = {
                 "address",
                 "building_area",
                 "opening_hours",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -14788,6 +14958,8 @@ iD.data.presets = {
                 "address",
                 "building_area",
                 "opening_hours",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -14809,6 +14981,8 @@ iD.data.presets = {
                 "address",
                 "building_area",
                 "opening_hours",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -14831,6 +15005,8 @@ iD.data.presets = {
                 "address",
                 "building_area",
                 "opening_hours",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -14852,6 +15028,8 @@ iD.data.presets = {
                 "address",
                 "building_area",
                 "opening_hours",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -14873,6 +15051,8 @@ iD.data.presets = {
                 "address",
                 "building_area",
                 "opening_hours",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -14894,6 +15074,8 @@ iD.data.presets = {
                 "address",
                 "building_area",
                 "opening_hours",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -14915,6 +15097,8 @@ iD.data.presets = {
                 "address",
                 "building_area",
                 "opening_hours",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -14936,6 +15120,8 @@ iD.data.presets = {
                 "address",
                 "building_area",
                 "opening_hours",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -14958,6 +15144,8 @@ iD.data.presets = {
                 "address",
                 "building_area",
                 "opening_hours",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -14979,6 +15167,8 @@ iD.data.presets = {
                 "address",
                 "building_area",
                 "opening_hours",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -15000,6 +15190,8 @@ iD.data.presets = {
                 "address",
                 "building_area",
                 "opening_hours",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -15021,6 +15213,8 @@ iD.data.presets = {
                 "address",
                 "building_area",
                 "opening_hours",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -15042,6 +15236,8 @@ iD.data.presets = {
                 "address",
                 "building_area",
                 "opening_hours",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -15063,6 +15259,8 @@ iD.data.presets = {
                 "address",
                 "building_area",
                 "opening_hours",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -15084,6 +15282,8 @@ iD.data.presets = {
                 "address",
                 "building_area",
                 "opening_hours",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -15105,6 +15305,8 @@ iD.data.presets = {
                 "address",
                 "building_area",
                 "opening_hours",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -15127,6 +15329,8 @@ iD.data.presets = {
                 "address",
                 "building_area",
                 "opening_hours",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -15148,6 +15352,8 @@ iD.data.presets = {
                 "address",
                 "building_area",
                 "opening_hours",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -15169,6 +15375,8 @@ iD.data.presets = {
                 "address",
                 "building_area",
                 "opening_hours",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -15190,6 +15398,8 @@ iD.data.presets = {
                 "address",
                 "building_area",
                 "opening_hours",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -15212,6 +15422,8 @@ iD.data.presets = {
                 "address",
                 "building_area",
                 "opening_hours",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -15234,6 +15446,8 @@ iD.data.presets = {
                 "address",
                 "building_area",
                 "opening_hours",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -15255,6 +15469,8 @@ iD.data.presets = {
                 "address",
                 "building_area",
                 "opening_hours",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -15276,6 +15492,8 @@ iD.data.presets = {
                 "address",
                 "building_area",
                 "opening_hours",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -15297,6 +15515,8 @@ iD.data.presets = {
                 "building_area",
                 "opening_hours",
                 "capacity",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -15318,6 +15538,8 @@ iD.data.presets = {
                 "building_area",
                 "opening_hours",
                 "capacity",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -15339,6 +15561,8 @@ iD.data.presets = {
                 "building_area",
                 "opening_hours",
                 "capacity",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -15360,6 +15584,8 @@ iD.data.presets = {
                 "building_area",
                 "opening_hours",
                 "capacity",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -15381,6 +15607,8 @@ iD.data.presets = {
                 "building_area",
                 "opening_hours",
                 "capacity",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -15402,6 +15630,8 @@ iD.data.presets = {
                 "building_area",
                 "opening_hours",
                 "capacity",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -15423,6 +15653,8 @@ iD.data.presets = {
                 "building_area",
                 "opening_hours",
                 "capacity",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -15444,6 +15676,8 @@ iD.data.presets = {
                 "building_area",
                 "opening_hours",
                 "capacity",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -15465,6 +15699,8 @@ iD.data.presets = {
                 "building_area",
                 "opening_hours",
                 "capacity",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -15486,6 +15722,8 @@ iD.data.presets = {
                 "building_area",
                 "opening_hours",
                 "capacity",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -15507,6 +15745,8 @@ iD.data.presets = {
                 "building_area",
                 "opening_hours",
                 "capacity",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -15528,6 +15768,8 @@ iD.data.presets = {
                 "building_area",
                 "opening_hours",
                 "capacity",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -15549,6 +15791,8 @@ iD.data.presets = {
                 "building_area",
                 "opening_hours",
                 "capacity",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -15570,6 +15814,8 @@ iD.data.presets = {
                 "building_area",
                 "opening_hours",
                 "capacity",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -15591,6 +15837,8 @@ iD.data.presets = {
                 "building_area",
                 "opening_hours",
                 "capacity",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -15612,6 +15860,8 @@ iD.data.presets = {
                 "building_area",
                 "opening_hours",
                 "capacity",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -15633,6 +15883,8 @@ iD.data.presets = {
                 "building_area",
                 "opening_hours",
                 "capacity",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -15654,6 +15906,8 @@ iD.data.presets = {
                 "building_area",
                 "opening_hours",
                 "capacity",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -15675,6 +15929,8 @@ iD.data.presets = {
                 "building_area",
                 "opening_hours",
                 "capacity",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -15696,6 +15952,8 @@ iD.data.presets = {
                 "building_area",
                 "opening_hours",
                 "capacity",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -15717,6 +15975,8 @@ iD.data.presets = {
                 "building_area",
                 "opening_hours",
                 "capacity",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -15738,6 +15998,8 @@ iD.data.presets = {
                 "building_area",
                 "opening_hours",
                 "capacity",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -15759,6 +16021,8 @@ iD.data.presets = {
                 "building_area",
                 "opening_hours",
                 "capacity",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -15780,6 +16044,8 @@ iD.data.presets = {
                 "building_area",
                 "opening_hours",
                 "capacity",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -15801,6 +16067,8 @@ iD.data.presets = {
                 "building_area",
                 "opening_hours",
                 "capacity",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -15822,6 +16090,8 @@ iD.data.presets = {
                 "building_area",
                 "opening_hours",
                 "capacity",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -15843,6 +16113,8 @@ iD.data.presets = {
                 "building_area",
                 "opening_hours",
                 "capacity",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -15864,6 +16136,8 @@ iD.data.presets = {
                 "building_area",
                 "opening_hours",
                 "capacity",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -15885,6 +16159,8 @@ iD.data.presets = {
                 "building_area",
                 "opening_hours",
                 "capacity",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -15906,6 +16182,8 @@ iD.data.presets = {
                 "building_area",
                 "opening_hours",
                 "capacity",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -15927,6 +16205,8 @@ iD.data.presets = {
                 "building_area",
                 "opening_hours",
                 "capacity",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -15948,6 +16228,8 @@ iD.data.presets = {
                 "building_area",
                 "opening_hours",
                 "capacity",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -15969,6 +16251,8 @@ iD.data.presets = {
                 "building_area",
                 "opening_hours",
                 "capacity",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -15990,6 +16274,8 @@ iD.data.presets = {
                 "building_area",
                 "opening_hours",
                 "capacity",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -16011,6 +16297,8 @@ iD.data.presets = {
                 "building_area",
                 "opening_hours",
                 "capacity",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -16032,6 +16320,8 @@ iD.data.presets = {
                 "building_area",
                 "opening_hours",
                 "capacity",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -16053,6 +16343,8 @@ iD.data.presets = {
                 "building_area",
                 "opening_hours",
                 "capacity",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -16074,6 +16366,8 @@ iD.data.presets = {
                 "building_area",
                 "opening_hours",
                 "capacity",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -16095,6 +16389,8 @@ iD.data.presets = {
                 "building_area",
                 "opening_hours",
                 "capacity",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -16116,6 +16412,8 @@ iD.data.presets = {
                 "building_area",
                 "opening_hours",
                 "capacity",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -16137,6 +16435,8 @@ iD.data.presets = {
                 "building_area",
                 "opening_hours",
                 "capacity",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -16158,6 +16458,8 @@ iD.data.presets = {
                 "building_area",
                 "opening_hours",
                 "capacity",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -16179,6 +16481,8 @@ iD.data.presets = {
                 "building_area",
                 "opening_hours",
                 "capacity",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -16200,6 +16504,8 @@ iD.data.presets = {
                 "building_area",
                 "opening_hours",
                 "capacity",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -16221,6 +16527,8 @@ iD.data.presets = {
                 "building_area",
                 "opening_hours",
                 "capacity",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -16242,6 +16550,8 @@ iD.data.presets = {
                 "building_area",
                 "opening_hours",
                 "capacity",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -16263,6 +16573,8 @@ iD.data.presets = {
                 "building_area",
                 "opening_hours",
                 "capacity",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -16284,6 +16596,8 @@ iD.data.presets = {
                 "building_area",
                 "opening_hours",
                 "capacity",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -16305,6 +16619,8 @@ iD.data.presets = {
                 "building_area",
                 "opening_hours",
                 "capacity",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -16326,6 +16642,8 @@ iD.data.presets = {
                 "building_area",
                 "opening_hours",
                 "capacity",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -16347,6 +16665,8 @@ iD.data.presets = {
                 "building_area",
                 "opening_hours",
                 "capacity",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -16368,6 +16688,8 @@ iD.data.presets = {
                 "building_area",
                 "opening_hours",
                 "capacity",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -16389,6 +16711,8 @@ iD.data.presets = {
                 "building_area",
                 "opening_hours",
                 "capacity",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -16410,6 +16734,8 @@ iD.data.presets = {
                 "building_area",
                 "opening_hours",
                 "capacity",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -16431,6 +16757,8 @@ iD.data.presets = {
                 "building_area",
                 "opening_hours",
                 "capacity",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -16452,6 +16780,8 @@ iD.data.presets = {
                 "building_area",
                 "opening_hours",
                 "capacity",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -16473,6 +16803,8 @@ iD.data.presets = {
                 "building_area",
                 "opening_hours",
                 "capacity",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -16494,6 +16826,8 @@ iD.data.presets = {
                 "building_area",
                 "opening_hours",
                 "capacity",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -16515,6 +16849,8 @@ iD.data.presets = {
                 "building_area",
                 "opening_hours",
                 "capacity",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -16536,6 +16872,8 @@ iD.data.presets = {
                 "building_area",
                 "opening_hours",
                 "capacity",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -16557,6 +16895,8 @@ iD.data.presets = {
                 "building_area",
                 "opening_hours",
                 "capacity",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -16578,6 +16918,8 @@ iD.data.presets = {
                 "building_area",
                 "opening_hours",
                 "capacity",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -16599,6 +16941,8 @@ iD.data.presets = {
                 "building_area",
                 "opening_hours",
                 "capacity",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -16620,6 +16964,8 @@ iD.data.presets = {
                 "building_area",
                 "opening_hours",
                 "capacity",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -16641,6 +16987,8 @@ iD.data.presets = {
                 "building_area",
                 "opening_hours",
                 "capacity",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -16662,6 +17010,8 @@ iD.data.presets = {
                 "building_area",
                 "opening_hours",
                 "capacity",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -16683,6 +17033,8 @@ iD.data.presets = {
                 "building_area",
                 "opening_hours",
                 "capacity",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -16704,6 +17056,8 @@ iD.data.presets = {
                 "building_area",
                 "opening_hours",
                 "capacity",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -16725,6 +17079,8 @@ iD.data.presets = {
                 "building_area",
                 "opening_hours",
                 "capacity",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -16746,6 +17102,8 @@ iD.data.presets = {
                 "building_area",
                 "opening_hours",
                 "capacity",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -16767,6 +17125,8 @@ iD.data.presets = {
                 "building_area",
                 "opening_hours",
                 "capacity",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -16788,6 +17148,8 @@ iD.data.presets = {
                 "building_area",
                 "opening_hours",
                 "capacity",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -16809,6 +17171,8 @@ iD.data.presets = {
                 "building_area",
                 "opening_hours",
                 "capacity",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -16830,6 +17194,8 @@ iD.data.presets = {
                 "building_area",
                 "opening_hours",
                 "capacity",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -16851,6 +17217,8 @@ iD.data.presets = {
                 "building_area",
                 "opening_hours",
                 "capacity",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -16872,6 +17240,8 @@ iD.data.presets = {
                 "building_area",
                 "opening_hours",
                 "capacity",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -16893,6 +17263,8 @@ iD.data.presets = {
                 "building_area",
                 "opening_hours",
                 "capacity",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -16914,6 +17286,8 @@ iD.data.presets = {
                 "building_area",
                 "opening_hours",
                 "capacity",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -16935,6 +17309,8 @@ iD.data.presets = {
                 "building_area",
                 "opening_hours",
                 "capacity",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -16956,6 +17332,8 @@ iD.data.presets = {
                 "building_area",
                 "opening_hours",
                 "capacity",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -16977,6 +17355,8 @@ iD.data.presets = {
                 "building_area",
                 "opening_hours",
                 "capacity",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -16998,6 +17378,8 @@ iD.data.presets = {
                 "building_area",
                 "opening_hours",
                 "capacity",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -17019,6 +17401,8 @@ iD.data.presets = {
                 "building_area",
                 "opening_hours",
                 "capacity",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -17040,6 +17424,8 @@ iD.data.presets = {
                 "building_area",
                 "opening_hours",
                 "capacity",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -17061,6 +17447,8 @@ iD.data.presets = {
                 "building_area",
                 "opening_hours",
                 "capacity",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -17082,6 +17470,8 @@ iD.data.presets = {
                 "building_area",
                 "opening_hours",
                 "capacity",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -17103,6 +17493,8 @@ iD.data.presets = {
                 "building_area",
                 "opening_hours",
                 "capacity",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -17124,6 +17516,8 @@ iD.data.presets = {
                 "building_area",
                 "opening_hours",
                 "capacity",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -17145,6 +17539,8 @@ iD.data.presets = {
                 "building_area",
                 "opening_hours",
                 "capacity",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -17166,6 +17562,8 @@ iD.data.presets = {
                 "building_area",
                 "opening_hours",
                 "capacity",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -17187,6 +17585,8 @@ iD.data.presets = {
                 "building_area",
                 "opening_hours",
                 "capacity",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -17208,6 +17608,8 @@ iD.data.presets = {
                 "building_area",
                 "opening_hours",
                 "capacity",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -17229,6 +17631,8 @@ iD.data.presets = {
                 "building_area",
                 "opening_hours",
                 "capacity",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -17250,6 +17654,8 @@ iD.data.presets = {
                 "building_area",
                 "opening_hours",
                 "capacity",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -17271,6 +17677,8 @@ iD.data.presets = {
                 "building_area",
                 "opening_hours",
                 "capacity",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -17292,6 +17700,8 @@ iD.data.presets = {
                 "building_area",
                 "opening_hours",
                 "capacity",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -17313,6 +17723,8 @@ iD.data.presets = {
                 "building_area",
                 "opening_hours",
                 "capacity",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -17334,6 +17746,8 @@ iD.data.presets = {
                 "building_area",
                 "opening_hours",
                 "capacity",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -17355,6 +17769,8 @@ iD.data.presets = {
                 "building_area",
                 "opening_hours",
                 "capacity",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -17376,6 +17792,8 @@ iD.data.presets = {
                 "building_area",
                 "opening_hours",
                 "capacity",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -17397,6 +17815,8 @@ iD.data.presets = {
                 "building_area",
                 "opening_hours",
                 "capacity",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -17418,6 +17838,8 @@ iD.data.presets = {
                 "building_area",
                 "opening_hours",
                 "capacity",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -17439,6 +17861,8 @@ iD.data.presets = {
                 "building_area",
                 "opening_hours",
                 "capacity",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -17461,6 +17885,8 @@ iD.data.presets = {
                 "building_area",
                 "opening_hours",
                 "capacity",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -17482,6 +17908,8 @@ iD.data.presets = {
                 "building_area",
                 "opening_hours",
                 "capacity",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -17503,6 +17931,8 @@ iD.data.presets = {
                 "building_area",
                 "opening_hours",
                 "capacity",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -17524,6 +17954,8 @@ iD.data.presets = {
                 "building_area",
                 "opening_hours",
                 "capacity",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -17545,6 +17977,8 @@ iD.data.presets = {
                 "building_area",
                 "opening_hours",
                 "capacity",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -17566,6 +18000,8 @@ iD.data.presets = {
                 "building_area",
                 "opening_hours",
                 "capacity",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -17587,6 +18023,8 @@ iD.data.presets = {
                 "building_area",
                 "opening_hours",
                 "capacity",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -17608,6 +18046,8 @@ iD.data.presets = {
                 "building_area",
                 "opening_hours",
                 "capacity",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -17629,6 +18069,8 @@ iD.data.presets = {
                 "building_area",
                 "opening_hours",
                 "capacity",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -17650,6 +18092,8 @@ iD.data.presets = {
                 "building_area",
                 "opening_hours",
                 "capacity",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -17671,6 +18115,8 @@ iD.data.presets = {
                 "building_area",
                 "opening_hours",
                 "capacity",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -17692,6 +18138,8 @@ iD.data.presets = {
                 "building_area",
                 "opening_hours",
                 "capacity",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -17713,6 +18161,8 @@ iD.data.presets = {
                 "building_area",
                 "opening_hours",
                 "capacity",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -17734,6 +18184,8 @@ iD.data.presets = {
                 "building_area",
                 "opening_hours",
                 "capacity",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -17755,6 +18207,8 @@ iD.data.presets = {
                 "building_area",
                 "opening_hours",
                 "capacity",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -17776,6 +18230,8 @@ iD.data.presets = {
                 "building_area",
                 "opening_hours",
                 "capacity",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -17797,6 +18253,8 @@ iD.data.presets = {
                 "building_area",
                 "opening_hours",
                 "capacity",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -17818,6 +18276,8 @@ iD.data.presets = {
                 "building_area",
                 "opening_hours",
                 "capacity",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -17839,6 +18299,8 @@ iD.data.presets = {
                 "building_area",
                 "opening_hours",
                 "capacity",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -17860,6 +18322,8 @@ iD.data.presets = {
                 "building_area",
                 "opening_hours",
                 "capacity",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -17881,6 +18345,8 @@ iD.data.presets = {
                 "building_area",
                 "opening_hours",
                 "capacity",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -17902,6 +18368,8 @@ iD.data.presets = {
                 "building_area",
                 "opening_hours",
                 "capacity",
+                "takeaway",
+                "delivery",
                 "smoking"
             ],
             "suggestion": true
@@ -37884,6 +38352,7 @@ iD.data.presets = {
             "amenity/place_of_worship",
             "amenity/cafe",
             "amenity/restaurant",
+            "amenity/fast_food",
             "amenity/bar",
             "amenity/bank",
             "shop/supermarket",
@@ -38261,6 +38730,11 @@ iD.data.presets = {
             "type": "typeCombo",
             "label": "Type"
         },
+        "bench": {
+            "key": "bench",
+            "type": "check",
+            "label": "Bench"
+        },
         "bicycle_parking": {
             "key": "bicycle_parking",
             "type": "combo",
@@ -38364,6 +38838,11 @@ iD.data.presets = {
             "key": "cuisine",
             "type": "combo",
             "label": "Cuisine"
+        },
+        "delivery": {
+            "key": "delivery",
+            "type": "check",
+            "label": "Delivery"
         },
         "denomination": {
             "key": "denomination",
@@ -39086,6 +39565,11 @@ iD.data.presets = {
                 "video"
             ]
         },
+        "substation": {
+            "key": "substation",
+            "type": "typeCombo",
+            "label": "Type"
+        },
         "supervised": {
             "key": "supervised",
             "type": "check",
@@ -39100,6 +39584,19 @@ iD.data.presets = {
             "key": "tactile_paving",
             "type": "check",
             "label": "Tactile Paving"
+        },
+        "takeaway": {
+            "key": "takeaway",
+            "type": "combo",
+            "label": "Takeaway",
+            "placeholder": "Yes, No, Takeaway Only...",
+            "strings": {
+                "options": {
+                    "yes": "Yes",
+                    "no": "No",
+                    "only": "Takeaway Only"
+                }
+            }
         },
         "toilets/disposal": {
             "key": "toilets:disposal",
