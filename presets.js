@@ -500,6 +500,29 @@ iD.data.presets = {
             },
             "name": "Bicycle Rental"
         },
+        "amenity/bicycle_repair_station": {
+            "icon": "bicycle",
+            "fields": [
+                "operator",
+                "brand",
+                "opening_hours",
+                "fee",
+                "service/bicycle/chaintool",
+                "service/bicycle/pump"
+            ],
+            "geometry": [
+                "point",
+                "vertex",
+                "area"
+            ],
+            "terms": [
+                "bike"
+            ],
+            "tags": {
+                "amenity": "bicycle_repair_station"
+            },
+            "name": "Bicycle Repair Station"
+        },
         "amenity/boat_rental": {
             "fields": [
                 "operator"
@@ -958,6 +981,23 @@ iD.data.presets = {
             },
             "name": "Graveyard"
         },
+        "amenity/grit_bin": {
+            "fields": [
+                "access_simple"
+            ],
+            "geometry": [
+                "point",
+                "vertex"
+            ],
+            "tags": {
+                "amenity": "grit_bin"
+            },
+            "terms": [
+                "salt",
+                "sand"
+            ],
+            "name": "Grit Bin"
+        },
         "amenity/hospital": {
             "icon": "hospital",
             "fields": [
@@ -1365,6 +1405,27 @@ iD.data.presets = {
             ],
             "name": "Pub"
         },
+        "amenity/public_bookcase": {
+            "icon": "library",
+            "fields": [
+                "name",
+                "operator",
+                "capacity",
+                "website"
+            ],
+            "geometry": [
+                "point",
+                "area"
+            ],
+            "terms": [
+                "library",
+                "bookcrossing"
+            ],
+            "tags": {
+                "amenity": "public_bookcase"
+            },
+            "name": "Public Bookcase"
+        },
         "amenity/ranger_station": {
             "fields": [
                 "operator",
@@ -1570,7 +1631,7 @@ iD.data.presets = {
             "tags": {
                 "amenity": "social_facility",
                 "social_facility": "group_home",
-                "social_facility_for": "senior"
+                "social_facility:for": "senior"
             },
             "name": "Elderly Group Home"
         },
@@ -1694,7 +1755,8 @@ iD.data.presets = {
                 "toilets/disposal",
                 "operator",
                 "building_area",
-                "access_toilets"
+                "access_toilets",
+                "gender"
             ],
             "geometry": [
                 "point",
@@ -4550,8 +4612,6 @@ iD.data.presets = {
                 "landuse"
             ],
             "geometry": [
-                "point",
-                "vertex",
                 "area"
             ],
             "tags": {
@@ -4561,7 +4621,6 @@ iD.data.presets = {
         },
         "landuse/allotments": {
             "geometry": [
-                "point",
                 "area"
             ],
             "tags": {
@@ -4572,7 +4631,6 @@ iD.data.presets = {
         },
         "landuse/basin": {
             "geometry": [
-                "point",
                 "area"
             ],
             "tags": {
@@ -4588,8 +4646,6 @@ iD.data.presets = {
                 "denomination"
             ],
             "geometry": [
-                "point",
-                "vertex",
                 "area"
             ],
             "tags": {
@@ -4615,14 +4671,13 @@ iD.data.presets = {
         "landuse/commercial": {
             "icon": "commercial",
             "geometry": [
-                "point",
                 "area"
             ],
             "tags": {
                 "landuse": "commercial"
             },
             "terms": [],
-            "name": "Commercial"
+            "name": "Commercial Area"
         },
         "landuse/construction": {
             "fields": [
@@ -4630,7 +4685,6 @@ iD.data.presets = {
                 "operator"
             ],
             "geometry": [
-                "point",
                 "area"
             ],
             "tags": {
@@ -4640,6 +4694,7 @@ iD.data.presets = {
             "name": "Construction"
         },
         "landuse/farm": {
+            "icon": "farm",
             "fields": [
                 "crop"
             ],
@@ -4651,55 +4706,52 @@ iD.data.presets = {
                 "landuse": "farm"
             },
             "terms": [],
-            "name": "Farm",
-            "icon": "farm",
+            "name": "Farmland",
             "searchable": false
         },
         "landuse/farmland": {
+            "icon": "farm",
             "fields": [
                 "crop"
             ],
             "geometry": [
-                "point",
                 "area"
             ],
             "tags": {
                 "landuse": "farmland"
             },
-            "terms": [
-                "farmland"
-            ],
-            "name": "Farm",
-            "icon": "farm"
+            "terms": [],
+            "name": "Farmland"
         },
         "landuse/farmyard": {
+            "icon": "farm",
             "fields": [
                 "crop"
             ],
             "geometry": [
-                "point",
                 "area"
             ],
             "tags": {
                 "landuse": "farmyard"
             },
             "terms": [],
-            "name": "Farmyard",
-            "icon": "farm"
+            "name": "Farmyard"
         },
         "landuse/forest": {
-            "fields": [
-                "wood"
-            ],
             "icon": "park2",
+            "fields": [
+                "leaf_type",
+                "leaf_cycle"
+            ],
             "geometry": [
-                "point",
                 "area"
             ],
             "tags": {
                 "landuse": "forest"
             },
-            "terms": [],
+            "terms": [
+                "tree"
+            ],
             "name": "Forest"
         },
         "landuse/garages": {
@@ -4714,7 +4766,6 @@ iD.data.presets = {
         },
         "landuse/grass": {
             "geometry": [
-                "point",
                 "area"
             ],
             "tags": {
@@ -4726,14 +4777,13 @@ iD.data.presets = {
         "landuse/industrial": {
             "icon": "industrial",
             "geometry": [
-                "point",
                 "area"
             ],
             "tags": {
                 "landuse": "industrial"
             },
             "terms": [],
-            "name": "Industrial"
+            "name": "Industrial Area"
         },
         "landuse/landfill": {
             "geometry": [
@@ -4749,7 +4799,6 @@ iD.data.presets = {
         },
         "landuse/meadow": {
             "geometry": [
-                "point",
                 "area"
             ],
             "tags": {
@@ -4766,26 +4815,24 @@ iD.data.presets = {
                 "landuse": "military"
             },
             "terms": [],
-            "name": "Military"
+            "name": "Military Area"
         },
         "landuse/orchard": {
+            "icon": "park2",
             "fields": [
                 "trees"
             ],
             "geometry": [
-                "point",
                 "area"
             ],
             "tags": {
                 "landuse": "orchard"
             },
             "terms": [],
-            "name": "Orchard",
-            "icon": "park2"
+            "name": "Orchard"
         },
         "landuse/quarry": {
             "geometry": [
-                "point",
                 "area"
             ],
             "tags": {
@@ -4797,29 +4844,26 @@ iD.data.presets = {
         "landuse/residential": {
             "icon": "building",
             "geometry": [
-                "point",
                 "area"
             ],
             "tags": {
                 "landuse": "residential"
             },
             "terms": [],
-            "name": "Residential"
+            "name": "Residential Area"
         },
         "landuse/retail": {
             "icon": "shop",
             "geometry": [
-                "point",
                 "area"
             ],
             "tags": {
                 "landuse": "retail"
             },
-            "name": "Retail"
+            "name": "Retail Area"
         },
         "landuse/vineyard": {
             "geometry": [
-                "point",
                 "area"
             ],
             "tags": {
@@ -4950,6 +4994,21 @@ iD.data.presets = {
                 "leisure": "marina"
             },
             "name": "Marina"
+        },
+        "leisure/nature_reserve": {
+            "icon": "park",
+            "geometry": [
+                "point",
+                "area"
+            ],
+            "tags": {
+                "leisure": "nature_reserve"
+            },
+            "terms": [
+                "protected",
+                "wildlife"
+            ],
+            "name": "Nature Reserve"
         },
         "leisure/park": {
             "icon": "park",
@@ -5686,7 +5745,8 @@ iD.data.presets = {
         },
         "natural/tree": {
             "fields": [
-                "tree_type",
+                "leaf_type",
+                "leaf_cycle",
                 "denotation"
             ],
             "icon": "park",
@@ -5774,10 +5834,11 @@ iD.data.presets = {
             "name": "Wetland"
         },
         "natural/wood": {
-            "fields": [
-                "wood"
-            ],
             "icon": "park2",
+            "fields": [
+                "leaf_type",
+                "leaf_cycle"
+            ],
             "geometry": [
                 "point",
                 "area"
@@ -5785,7 +5846,9 @@ iD.data.presets = {
             "tags": {
                 "natural": "wood"
             },
-            "terms": [],
+            "terms": [
+                "tree"
+            ],
             "name": "Wood"
         },
         "office": {
@@ -7816,6 +7879,27 @@ iD.data.presets = {
                 "shop": "hifi"
             },
             "name": "Hifi Store"
+        },
+        "shop/houseware": {
+            "icon": "shop",
+            "fields": [
+                "operator",
+                "address",
+                "building_area",
+                "opening_hours"
+            ],
+            "geometry": [
+                "point",
+                "area"
+            ],
+            "terms": [
+                "home",
+                "household"
+            ],
+            "tags": {
+                "shop": "houseware"
+            },
+            "name": "Houseware Store"
         },
         "shop/interior_decoration": {
             "icon": "shop",
@@ -38412,7 +38496,7 @@ iD.data.presets = {
                 "landuse/industrial",
                 "landuse/commercial",
                 "landuse/retail",
-                "landuse/farm",
+                "landuse/farmland",
                 "landuse/farmyard",
                 "landuse/forest",
                 "landuse/meadow",
@@ -38745,6 +38829,11 @@ iD.data.presets = {
             "type": "combo",
             "label": "Type"
         },
+        "brand": {
+            "key": "brand",
+            "type": "text",
+            "label": "Brand"
+        },
         "building": {
             "key": "building",
             "type": "typeCombo",
@@ -38979,6 +39068,23 @@ iD.data.presets = {
             "type": "combo",
             "label": "Gauge"
         },
+        "gender": {
+            "type": "radio",
+            "keys": [
+                "male",
+                "female",
+                "unisex"
+            ],
+            "label": "Gender",
+            "placeholder": "Unknown",
+            "strings": {
+                "options": {
+                    "male": "Male",
+                    "female": "Female",
+                    "unisex": "Unisex"
+                }
+            }
+        },
         "generator/method": {
             "key": "generator:method",
             "type": "combo",
@@ -39076,6 +39182,33 @@ iD.data.presets = {
             "key": "layer",
             "type": "combo",
             "label": "Layer"
+        },
+        "leaf_cycle": {
+            "key": "leaf_cycle",
+            "type": "combo",
+            "label": "Leaf Cycle",
+            "strings": {
+                "options": {
+                    "evergreen": "Evergreen",
+                    "deciduous": "Deciduous",
+                    "semi_evergreen": "Semi-Evergreen",
+                    "semi_deciduous": "Semi-Deciduous",
+                    "mixed": "Mixed"
+                }
+            }
+        },
+        "leaf_type": {
+            "key": "leaf_type",
+            "type": "combo",
+            "label": "Leaf Type",
+            "strings": {
+                "options": {
+                    "broadleaved": "Broadleaved",
+                    "needleleaved": "Needleleaved",
+                    "mixed": "Mixed",
+                    "leafless": "Leafless"
+                }
+            }
         },
         "leisure": {
             "key": "leisure",
@@ -39421,6 +39554,30 @@ iD.data.presets = {
                 "drive-through"
             ]
         },
+        "service/bicycle/chaintool": {
+            "key": "service:bicycle:chaintool",
+            "type": "check",
+            "label": "Chain Tool",
+            "strings": {
+                "options": {
+                    "undefined": "Assumed to be No",
+                    "yes": "Yes",
+                    "no": "No"
+                }
+            }
+        },
+        "service/bicycle/pump": {
+            "key": "service:bicycle:pump",
+            "type": "check",
+            "label": "Air Pump",
+            "strings": {
+                "options": {
+                    "undefined": "Assumed to be No",
+                    "yes": "Yes",
+                    "no": "No"
+                }
+            }
+        },
         "shelter": {
             "key": "shelter",
             "type": "check",
@@ -39471,7 +39628,7 @@ iD.data.presets = {
                     "very_bad": "High Clearance: light duty off-road vehicle",
                     "horrible": "Off-Road: heavy duty off-road vehicle",
                     "very_horrible": "Specialized off-road: tractor, ATV",
-                    "impassible": "Impassible / No wheeled vehicle"
+                    "impassable": "Impassable / No wheeled vehicle"
                 }
             }
         },
@@ -39652,16 +39809,6 @@ iD.data.presets = {
                 }
             }
         },
-        "tree_type": {
-            "key": "type",
-            "type": "combo",
-            "label": "Type",
-            "options": [
-                "broad_leaved",
-                "conifer",
-                "palm"
-            ]
-        },
         "trees": {
             "key": "trees",
             "type": "combo",
@@ -39723,11 +39870,6 @@ iD.data.presets = {
             "icon": "wikipedia",
             "universal": true,
             "label": "Wikipedia"
-        },
-        "wood": {
-            "key": "wood",
-            "type": "combo",
-            "label": "Type"
         }
     }
 };

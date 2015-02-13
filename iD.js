@@ -16367,6 +16367,14 @@ window.iD = function () {
         context.surface().call(behavior.off);
     };
 
+    /* Copy/Paste */
+    var copiedIDs = [];
+    context.copiedIDs = function(_) {
+        if (!arguments.length) return copiedIDs;
+        copiedIDs = _;
+        return context;
+    };
+
     /* Projection */
     context.projection = iD.geo.RawMercator();
 
@@ -16461,7 +16469,7 @@ window.iD = function () {
     return d3.rebind(context, dispatch, 'on');
 };
 
-iD.version = '1.6.2-slide';
+iD.version = '1.7.0-slide';
 
 (function() {
     var detected = {};
@@ -17916,6 +17924,25 @@ iD.actions.Connect = function(nodeIds) {
         return graph;
     };
 };
+iD.actions.CopyEntity = function(entity, deep) {
+    var newEntities = [];
+
+    var action = function(graph) {
+        newEntities = entity.copy(deep, graph);
+
+        for (var i = 0; i < newEntities.length; i++) {
+            graph = graph.replace(newEntities[i]);
+        }
+
+        return graph;
+    };
+
+    action.newEntities = function() {
+        return newEntities;
+    };
+
+    return action;
+};
 iD.actions.DeleteMember = function(relationId, memberIndex) {
     return function(graph) {
         var relation = graph.entity(relationId)
@@ -18063,8 +18090,18 @@ iD.actions.DeleteWay = function(wayId) {
         return graph.remove(way);
     };
 
-    action.disabled = function() {
-        return false;
+    action.disabled = function(graph) {
+        var disabled = false;
+
+        graph.parentRelations(graph.entity(wayId)).forEach(function(parent) {
+            var type = parent.tags.type,
+                role = parent.memberById(wayId).role || 'outer';
+            if (type === 'route' || type === 'boundary' || (type === 'multipolygon' && role === 'outer')) {
+                disabled = 'part_of_relation';
+            }
+        });
+
+        return disabled;
     };
 
     return action;
@@ -19290,6 +19327,84 @@ iD.behavior.AddWay = function(context) {
 
     return d3.rebind(addWay, event, 'on');
 };
+iD.behavior.Copy = function(context) {
+    var keybinding = d3.keybinding('copy');
+
+    function groupEntities(ids, graph) {
+        var entities = ids.map(function (id) { return graph.entity(id); });
+        return _.extend({relation: [], way: [], node: []},
+            _.groupBy(entities, function(entity) { return entity.type; }));
+    }
+
+    function getDescendants(id, graph, descendants) {
+        var entity = graph.entity(id),
+            i, children;
+
+        descendants = descendants || {};
+
+        if (entity.type === 'relation') {
+            children = _.pluck(entity.members, 'id');
+        } else if (entity.type === 'way') {
+            children = entity.nodes;
+        } else {
+            children = [];
+        }
+
+        for (i = 0; i < children.length; i++) {
+            if (!descendants[children[i]]) {
+                descendants[children[i]] = true;
+                descendants = getDescendants(children[i], graph, descendants);
+            }
+        }
+
+        return descendants;
+    }
+
+    function doCopy() {
+        d3.event.preventDefault();
+
+        var graph = context.graph(),
+            selected = groupEntities(context.selectedIDs(), graph),
+            canCopy = [],
+            skip = {},
+            i, entity;
+
+        for (i = 0; i < selected.relation.length; i++) {
+            entity = selected.relation[i];
+            if (!skip[entity.id] && entity.isComplete(graph)) {
+                canCopy.push(entity.id);
+                skip = getDescendants(entity.id, graph, skip);
+            }
+        }
+        for (i = 0; i < selected.way.length; i++) {
+            entity = selected.way[i];
+            if (!skip[entity.id]) {
+                canCopy.push(entity.id);
+                skip = getDescendants(entity.id, graph, skip);
+            }
+        }
+        for (i = 0; i < selected.node.length; i++) {
+            entity = selected.node[i];
+            if (!skip[entity.id]) {
+                canCopy.push(entity.id);
+            }
+        }
+
+        context.copiedIDs(canCopy);
+    }
+
+    function copy() {
+        keybinding.on(iD.ui.cmd('⌘C'), doCopy);
+        d3.select(document).call(keybinding);
+        return copy;
+    }
+
+    copy.off = function() {
+        d3.select(document).call(keybinding.off);
+    };
+
+    return copy;
+};
 /*
     `iD.behavior.drag` is like `d3.behavior.drag`, with the following differences:
 
@@ -20131,6 +20246,81 @@ iD.behavior.Lasso = function(context) {
 
     return behavior;
 };
+iD.behavior.Paste = function(context) {
+    var keybinding = d3.keybinding('paste');
+
+    function omitTag(v, k) {
+        return (
+            k === 'phone' ||
+            k === 'fax' ||
+            k === 'email' ||
+            k === 'website' ||
+            k === 'url' ||
+            k === 'note' ||
+            k === 'description' ||
+            k.indexOf('name') !== -1 ||
+            k.indexOf('wiki') === 0 ||
+            k.indexOf('addr:') === 0 ||
+            k.indexOf('contact:') === 0
+        );
+    }
+
+    function doPaste() {
+        d3.event.preventDefault();
+
+        var mouse = context.mouse(),
+            projection = context.projection,
+            viewport = iD.geo.Extent(projection.clipExtent()).polygon();
+
+        if (!iD.geo.pointInPolygon(mouse, viewport)) return;
+
+        var graph = context.graph(),
+            extent = iD.geo.Extent(),
+            oldIDs = context.copiedIDs(),
+            newIDs = [],
+            i, j;
+
+        for (i = 0; i < oldIDs.length; i++) {
+            var oldEntity = graph.entity(oldIDs[i]),
+                action = iD.actions.CopyEntity(oldEntity, true),
+                newEntities;
+
+            extent._extend(oldEntity.extent(graph));
+            context.perform(action);
+
+            // First element in `newEntities` contains the copied Entity,
+            // Subsequent array elements contain any descendants..
+            newEntities = action.newEntities();
+            newIDs.push(newEntities[0].id);
+
+            for (j = 0; j < newEntities.length; j++) {
+                var newEntity = newEntities[j],
+                    tags = _.omit(newEntity.tags, omitTag);
+
+                context.perform(iD.actions.ChangeTags(newEntity.id, tags));
+            }
+        }
+
+        // Put pasted objects where mouse pointer is..
+        var center = projection(extent.center()),
+            delta = [ mouse[0] - center[0], mouse[1] - center[1] ];
+
+        context.perform(iD.actions.Move(newIDs, delta, projection));
+        context.enter(iD.modes.Move(context, newIDs));
+    }
+
+    function paste() {
+        keybinding.on(iD.ui.cmd('⌘V'), doPaste);
+        d3.select(document).call(keybinding);
+        return paste;
+    }
+
+    paste.off = function() {
+        d3.select(document).call(keybinding.off);
+    };
+
+    return paste;
+};
 iD.behavior.Select = function(context) {
     function keydown() {
         if (d3.event && d3.event.shiftKey) {
@@ -20466,6 +20656,7 @@ iD.modes.Browse = function(context) {
     }, sidebar;
 
     var behaviors = [
+        iD.behavior.Paste(context),
         iD.behavior.Hover(context)
             .on('hover', context.ui().sidebar.hover),
         iD.behavior.Select(context),
@@ -21089,6 +21280,8 @@ iD.modes.Select = function(context, selectedIDs) {
     var keybinding = d3.keybinding('select'),
         timeout = null,
         behaviors = [
+            iD.behavior.Copy(context),
+            iD.behavior.Paste(context),
             iD.behavior.Hover(context),
             iD.behavior.Select(context),
             iD.behavior.Lasso(context),
@@ -22660,7 +22853,11 @@ iD.Entity.prototype = {
             var source = sources[i];
             for (var prop in source) {
                 if (Object.prototype.hasOwnProperty.call(source, prop)) {
-                    this[prop] = source[prop];
+                    if (source[prop] === undefined) {
+                        delete this[prop];
+                    } else {
+                        this[prop] = source[prop];
+                    }
                 }
             }
         }
@@ -22679,6 +22876,12 @@ iD.Entity.prototype = {
         }
 
         return this;
+    },
+
+    copy: function() {
+        // Returns an array so that we can support deep copying ways and relations.
+        // The first array element will contain this.copy, followed by any descendants.
+        return [iD.Entity(this, {id: undefined, user: undefined, version: undefined})];
     },
 
     osmId: function() {
@@ -23484,6 +23687,34 @@ _.extend(iD.Relation.prototype, {
     type: 'relation',
     members: [],
 
+    copy: function(deep, resolver, replacements) {
+        var copy = iD.Entity.prototype.copy.call(this);
+        if (!deep || !resolver || !this.isComplete(resolver)) {
+            return copy;
+        }
+
+        var members = [],
+            i, oldmember, oldid, newid, children;
+
+        replacements = replacements || {};
+        replacements[this.id] = copy[0].id;
+
+        for (i = 0; i < this.members.length; i++) {
+            oldmember = this.members[i];
+            oldid = oldmember.id;
+            newid = replacements[oldid];
+            if (!newid) {
+                children = resolver.entity(oldid).copy(true, resolver, replacements);
+                newid = replacements[oldid] = children[0].id;
+                copy = copy.concat(children);
+            }
+            members.push({id: newid, type: oldmember.type, role: oldmember.role});
+        }
+
+        copy[0] = copy[0].update({members: members});
+        return copy;
+    },
+
     extent: function(resolver, memo) {
         return resolver.transient(this, 'extent', function() {
             if (memo && memo[this.id]) return iD.geo.Extent();
@@ -23818,6 +24049,32 @@ iD.Way.prototype = Object.create(iD.Entity.prototype);
 _.extend(iD.Way.prototype, {
     type: 'way',
     nodes: [],
+
+    copy: function(deep, resolver) {
+        var copy = iD.Entity.prototype.copy.call(this);
+
+        if (!deep || !resolver) {
+            return copy;
+        }
+
+        var nodes = [],
+            replacements = {},
+            i, oldid, newid, child;
+
+        for (i = 0; i < this.nodes.length; i++) {
+            oldid = this.nodes[i];
+            newid = replacements[oldid];
+            if (!newid) {
+                child = resolver.entity(oldid).copy();
+                newid = replacements[oldid] = child[0].id;
+                copy = copy.concat(child);
+            }
+            nodes.push(newid);
+        }
+
+        copy[0] = copy[0].update({nodes: nodes});
+        return copy;
+    },
 
     extent: function(resolver) {
         return resolver.transient(this, 'extent', function() {
@@ -25294,6 +25551,13 @@ iD.Map = function(context) {
             return Math.max(Math.log(projection.scale() * 2 * Math.PI) / Math.LN2 - 8, 0);
         }
 
+        if (z < minzoom) {
+            iD.ui.flash(context.container())
+                .select('.content')
+                .text(t('cannot_zoom'));
+            z = context.minEditableZoom();
+        }
+
         if (setZoom(z)) {
             dispatch.move(map);
         }
@@ -25483,9 +25747,9 @@ iD.MapillaryLayer = function (context) {
         if (request)
             request.abort();
 
-        request = d3.json('https://mapillary-read-api.herokuapp.com/v1/s/search?min-lat=' +
-            extent[0][1] + '&max-lat=' + extent[1][1] + '&min-lon=' +
-            extent[0][0] + '&max-lon=' + extent[1][0] + '&max-results=100&geojson=true',
+        request = d3.json('https://a.mapillary.com/v2/search/s/geojson?client_id=NzNRM2otQkR2SHJzaXJmNmdQWVQ0dzoxNjQ3MDY4ZTUxY2QzNGI2&min_lat=' +
+            extent[0][1] + '&max_lat=' + extent[1][1] + '&min_lon=' +
+            extent[0][0] + '&max_lon=' + extent[1][0] + '&max_results=100&geojson=true',
             function (error, data) {
                 if (error) return;
 
@@ -30864,6 +31128,7 @@ iD.ui.RawTagEditor = function(context) {
             var tag = {};
             tag[d.key] = undefined;
             event.change(tag);
+            d3.select(this.parentNode).remove();
         }
 
         function addTag() {
@@ -47764,6 +48029,7 @@ iD.introGraph = '{"n185954700":{"id":"n185954700","loc":[-85.642244,41.939081],"
         "cs",
         "da",
         "nl",
+        "en-DE",
         "en-GB",
         "eo",
         "et",
@@ -47771,7 +48037,9 @@ iD.introGraph = '{"n185954700":{"id":"n185954700","loc":[-85.642244,41.939081],"
         "fr",
         "gl",
         "de",
+        "de-DE",
         "el",
+        "hi-IN",
         "hu",
         "is",
         "id",
@@ -47792,6 +48060,7 @@ iD.introGraph = '{"n185954700":{"id":"n185954700","loc":[-85.642244,41.939081],"
         "pt-BR",
         "ro-RO",
         "ru",
+        "ru-RU",
         "sc",
         "sr",
         "sr-RS",
@@ -47926,6 +48195,7 @@ iD.introGraph = '{"n185954700":{"id":"n185954700","loc":[-85.642244,41.939081],"
                     "multiple": "Deleted {n} objects."
                 },
                 "incomplete_relation": "This feature can't be deleted because it hasn't been fully downloaded.",
+                "part_of_relation": "This feature can't be deleted because it's part of a larger relation. You must remove it from the relation first.",
                 "connected_to_hidden": "This can't be deleted because it is connected to a hidden feature."
             },
             "add_member": {
@@ -48489,6 +48759,9 @@ iD.introGraph = '{"n185954700":{"id":"n185954700","loc":[-85.642244,41.939081],"
                 "boundary": {
                     "label": "Type"
                 },
+                "brand": {
+                    "label": "Brand"
+                },
                 "building": {
                     "label": "Building"
                 },
@@ -48637,6 +48910,15 @@ iD.introGraph = '{"n185954700":{"id":"n185954700","loc":[-85.642244,41.939081],"
                 "gauge": {
                     "label": "Gauge"
                 },
+                "gender": {
+                    "label": "Gender",
+                    "placeholder": "Unknown",
+                    "options": {
+                        "male": "Male",
+                        "female": "Female",
+                        "unisex": "Unisex"
+                    }
+                },
                 "generator/method": {
                     "label": "Method"
                 },
@@ -48698,6 +48980,25 @@ iD.introGraph = '{"n185954700":{"id":"n185954700","loc":[-85.642244,41.939081],"
                 },
                 "layer": {
                     "label": "Layer"
+                },
+                "leaf_cycle": {
+                    "label": "Leaf Cycle",
+                    "options": {
+                        "evergreen": "Evergreen",
+                        "deciduous": "Deciduous",
+                        "semi_evergreen": "Semi-Evergreen",
+                        "semi_deciduous": "Semi-Deciduous",
+                        "mixed": "Mixed"
+                    }
+                },
+                "leaf_type": {
+                    "label": "Leaf Type",
+                    "options": {
+                        "broadleaved": "Broadleaved",
+                        "needleleaved": "Needleleaved",
+                        "mixed": "Mixed",
+                        "leafless": "Leafless"
+                    }
                 },
                 "leisure": {
                     "label": "Type"
@@ -48920,6 +49221,22 @@ iD.introGraph = '{"n185954700":{"id":"n185954700","loc":[-85.642244,41.939081],"
                 "service": {
                     "label": "Type"
                 },
+                "service/bicycle/chaintool": {
+                    "label": "Chain Tool",
+                    "options": {
+                        "undefined": "Assumed to be No",
+                        "yes": "Yes",
+                        "no": "No"
+                    }
+                },
+                "service/bicycle/pump": {
+                    "label": "Air Pump",
+                    "options": {
+                        "undefined": "Assumed to be No",
+                        "yes": "Yes",
+                        "no": "No"
+                    }
+                },
                 "shelter": {
                     "label": "Shelter"
                 },
@@ -48955,7 +49272,7 @@ iD.introGraph = '{"n185954700":{"id":"n185954700","loc":[-85.642244,41.939081],"
                         "very_bad": "High Clearance: light duty off-road vehicle",
                         "horrible": "Off-Road: heavy duty off-road vehicle",
                         "very_horrible": "Specialized off-road: tractor, ATV",
-                        "impassible": "Impassible / No wheeled vehicle"
+                        "impassable": "Impassable / No wheeled vehicle"
                     }
                 },
                 "social_facility_for": {
@@ -49047,9 +49364,6 @@ iD.introGraph = '{"n185954700":{"id":"n185954700","loc":[-85.642244,41.939081],"
                         "no": "No: pathless, excellent orientation skills required"
                     }
                 },
-                "tree_type": {
-                    "label": "Type"
-                },
                 "trees": {
                     "label": "Trees"
                 },
@@ -49080,9 +49394,6 @@ iD.introGraph = '{"n185954700":{"id":"n185954700","loc":[-85.642244,41.939081],"
                 },
                 "wikipedia": {
                     "label": "Wikipedia"
-                },
-                "wood": {
-                    "label": "Type"
                 }
             },
             "presets": {
@@ -49202,6 +49513,10 @@ iD.introGraph = '{"n185954700":{"id":"n185954700","loc":[-85.642244,41.939081],"
                     "name": "Bicycle Rental",
                     "terms": "bike"
                 },
+                "amenity/bicycle_repair_station": {
+                    "name": "Bicycle Repair Station",
+                    "terms": "bike"
+                },
                 "amenity/boat_rental": {
                     "name": "Boat Rental",
                     "terms": ""
@@ -49306,6 +49621,10 @@ iD.introGraph = '{"n185954700":{"id":"n185954700","loc":[-85.642244,41.939081],"
                     "name": "Graveyard",
                     "terms": ""
                 },
+                "amenity/grit_bin": {
+                    "name": "Grit Bin",
+                    "terms": "salt,sand"
+                },
                 "amenity/hospital": {
                     "name": "Hospital Grounds",
                     "terms": "clinic,doctor,emergency room,health service,hospice,infirmary,institution,nursing home,sanatorium,sanitarium,sick,surgery,ward"
@@ -49373,6 +49692,10 @@ iD.introGraph = '{"n185954700":{"id":"n185954700","loc":[-85.642244,41.939081],"
                 "amenity/pub": {
                     "name": "Pub",
                     "terms": "dive,beer,bier,booze"
+                },
+                "amenity/public_bookcase": {
+                    "name": "Public Bookcase",
+                    "terms": "library,bookcrossing"
                 },
                 "amenity/ranger_station": {
                     "name": "Ranger Station",
@@ -50151,7 +50474,7 @@ iD.introGraph = '{"n185954700":{"id":"n185954700","loc":[-85.642244,41.939081],"
                     "terms": ""
                 },
                 "landuse/commercial": {
-                    "name": "Commercial",
+                    "name": "Commercial Area",
                     "terms": ""
                 },
                 "landuse/construction": {
@@ -50159,12 +50482,12 @@ iD.introGraph = '{"n185954700":{"id":"n185954700","loc":[-85.642244,41.939081],"
                     "terms": ""
                 },
                 "landuse/farm": {
-                    "name": "Farm",
+                    "name": "Farmland",
                     "terms": ""
                 },
                 "landuse/farmland": {
-                    "name": "Farm",
-                    "terms": "farmland"
+                    "name": "Farmland",
+                    "terms": ""
                 },
                 "landuse/farmyard": {
                     "name": "Farmyard",
@@ -50172,7 +50495,7 @@ iD.introGraph = '{"n185954700":{"id":"n185954700","loc":[-85.642244,41.939081],"
                 },
                 "landuse/forest": {
                     "name": "Forest",
-                    "terms": ""
+                    "terms": "tree"
                 },
                 "landuse/garages": {
                     "name": "Garages",
@@ -50183,7 +50506,7 @@ iD.introGraph = '{"n185954700":{"id":"n185954700","loc":[-85.642244,41.939081],"
                     "terms": ""
                 },
                 "landuse/industrial": {
-                    "name": "Industrial",
+                    "name": "Industrial Area",
                     "terms": ""
                 },
                 "landuse/landfill": {
@@ -50195,7 +50518,7 @@ iD.introGraph = '{"n185954700":{"id":"n185954700","loc":[-85.642244,41.939081],"
                     "terms": ""
                 },
                 "landuse/military": {
-                    "name": "Military",
+                    "name": "Military Area",
                     "terms": ""
                 },
                 "landuse/orchard": {
@@ -50207,11 +50530,11 @@ iD.introGraph = '{"n185954700":{"id":"n185954700","loc":[-85.642244,41.939081],"
                     "terms": ""
                 },
                 "landuse/residential": {
-                    "name": "Residential",
+                    "name": "Residential Area",
                     "terms": ""
                 },
                 "landuse/retail": {
-                    "name": "Retail",
+                    "name": "Retail Area",
                     "terms": ""
                 },
                 "landuse/vineyard": {
@@ -50249,6 +50572,10 @@ iD.introGraph = '{"n185954700":{"id":"n185954700","loc":[-85.642244,41.939081],"
                 "leisure/marina": {
                     "name": "Marina",
                     "terms": "boat"
+                },
+                "leisure/nature_reserve": {
+                    "name": "Nature Reserve",
+                    "terms": "protected,wildlife"
                 },
                 "leisure/park": {
                     "name": "Park",
@@ -50480,7 +50807,7 @@ iD.introGraph = '{"n185954700":{"id":"n185954700","loc":[-85.642244,41.939081],"
                 },
                 "natural/wood": {
                     "name": "Wood",
-                    "terms": ""
+                    "terms": "tree"
                 },
                 "office": {
                     "name": "Office",
@@ -50949,6 +51276,10 @@ iD.introGraph = '{"n185954700":{"id":"n185954700","loc":[-85.642244,41.939081],"
                 "shop/hifi": {
                     "name": "Hifi Store",
                     "terms": "stereo,video"
+                },
+                "shop/houseware": {
+                    "name": "Houseware Store",
+                    "terms": "home,household"
                 },
                 "shop/interior_decoration": {
                     "name": "Interior Decoration Store",
