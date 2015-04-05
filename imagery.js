@@ -39,6 +39,19 @@ iD.data.imagery = [
         "default": "no"
     },
     {
+        "name": "Strava Heat masked by OSM",
+        "type": "tms",
+        "template": "http://gometry.strava.com/osm_mask/tiles/both/color2/{zoom}/{x}/{y}.png",
+        "overlay": true,
+        "description": "Strava Heat masked by OSM (experimental layer)",
+        "scaleExtent": [
+            15,
+            17
+        ],
+        "sourcetag": "Strava Heat OSM Mask",
+        "default": "no"
+    },
+    {
         "name": "7th Series (OS7)",
         "type": "tms",
         "template": "http://ooc.openstreetmap.org/os7/{zoom}/{x}/{y}.jpg",
