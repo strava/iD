@@ -10567,6 +10567,7 @@ iD.data.imagery = [
             0,
             16
         ],
+        "overzoom": false,
         "terms_url": "http://www.mapbox.com/about/maps/",
         "terms_text": "Terms & Feedback",
         "default": true,
@@ -31725,7 +31726,7 @@ iD.data.imagery = [
         "name": "basemap.at",
         "type": "tms",
         "description": "Basemap of Austria, based on goverment data.",
-        "template": "http://maps.wien.gv.at/basemap/geolandbasemap/normal/google3857/{zoom}/{y}/{x}.jpeg",
+        "template": "http://maps.wien.gv.at/basemap/geolandbasemap/normal/google3857/{zoom}/{y}/{x}.png",
         "polygon": [
             [
                 [

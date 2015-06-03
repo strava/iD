@@ -355,7 +355,8 @@ iD.data.presets = {
         "amenity/atm": {
             "icon": "bank",
             "fields": [
-                "operator"
+                "operator",
+                "drive_through"
             ],
             "geometry": [
                 "point",
@@ -378,7 +379,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "geometry": [
                 "point",
@@ -507,7 +509,7 @@ iD.data.presets = {
                 "brand",
                 "opening_hours",
                 "fee",
-                "service/bicycle/chaintool",
+                "service/bicycle/chain_tool",
                 "service/bicycle/pump"
             ],
             "geometry": [
@@ -522,6 +524,28 @@ iD.data.presets = {
                 "amenity": "bicycle_repair_station"
             },
             "name": "Bicycle Repair Station"
+        },
+        "amenity/biergarten": {
+            "icon": "beer",
+            "fields": [
+                "address",
+                "building_area",
+                "opening_hours",
+                "smoking"
+            ],
+            "geometry": [
+                "point",
+                "area"
+            ],
+            "tags": {
+                "amenity": "biergarten"
+            },
+            "terms": [
+                "beer",
+                "bier",
+                "booze"
+            ],
+            "name": "Beer Garden"
         },
         "amenity/boat_rental": {
             "fields": [
@@ -899,6 +923,7 @@ iD.data.presets = {
                 "opening_hours",
                 "takeaway",
                 "delivery",
+                "drive_through",
                 "smoking"
             ],
             "geometry": [
@@ -1151,7 +1176,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "geometry": [
                 "point",
@@ -1346,7 +1372,8 @@ iD.data.presets = {
             "icon": "post",
             "fields": [
                 "operator",
-                "collection_times"
+                "collection_times",
+                "drive_through"
             ],
             "geometry": [
                 "point",
@@ -1531,6 +1558,33 @@ iD.data.presets = {
                 "amenity": "restaurant"
             },
             "name": "Restaurant"
+        },
+        "amenity/sanitary_dump_station": {
+            "fields": [
+                "operator",
+                "access_toilets",
+                "fee",
+                "water_point"
+            ],
+            "geometry": [
+                "point",
+                "vertex",
+                "area"
+            ],
+            "terms": [
+                "Motor Home",
+                "Camper",
+                "Sanitary",
+                "Dump Station",
+                "Elsan",
+                "CDP",
+                "CTDP",
+                "Chemical Toilet"
+            ],
+            "tags": {
+                "amenity": "sanitary_dump_station"
+            },
+            "name": "RV Toilet Disposal"
         },
         "amenity/school": {
             "icon": "school",
@@ -3782,6 +3836,7 @@ iD.data.presets = {
         "highway/bus_stop": {
             "icon": "bus",
             "fields": [
+                "network",
                 "operator",
                 "bench",
                 "shelter",
@@ -3952,6 +4007,14 @@ iD.data.presets = {
             ],
             "tags": {
                 "highway": "motorway_link"
+            },
+            "addTags": {
+                "highway": "motorway_link",
+                "oneway": "yes"
+            },
+            "removeTags": {
+                "highway": "motorway_link",
+                "oneway": "yes"
             },
             "terms": [
                 "ramp",
@@ -4290,6 +4353,7 @@ iD.data.presets = {
                 "surface",
                 "lit",
                 "width",
+                "incline_steps",
                 "access"
             ],
             "icon": "highway-steps",
@@ -4982,6 +5046,15 @@ iD.data.presets = {
         },
         "leisure/marina": {
             "icon": "harbor",
+            "fields": [
+                "operator",
+                "address",
+                "capacity",
+                "fee",
+                "sanitary_dump_station",
+                "power_supply",
+                "internet_access"
+            ],
             "geometry": [
                 "point",
                 "vertex",
@@ -5375,6 +5448,9 @@ iD.data.presets = {
         },
         "man_made/lighthouse": {
             "icon": "lighthouse",
+            "fields": [
+                "building_area"
+            ],
             "geometry": [
                 "point",
                 "area"
@@ -5383,6 +5459,27 @@ iD.data.presets = {
                 "man_made": "lighthouse"
             },
             "name": "Lighthouse"
+        },
+        "man_made/mast": {
+            "geometry": [
+                "point"
+            ],
+            "terms": [
+                "broadcast tower",
+                "cell phone tower",
+                "cell tower",
+                "guyed tower",
+                "mobile phone tower",
+                "radio tower",
+                "television tower",
+                "transmission mast",
+                "transmission tower",
+                "tv tower"
+            ],
+            "tags": {
+                "man_made": "mast"
+            },
+            "name": "Radio Mast"
         },
         "man_made/observation": {
             "geometry": [
@@ -5398,6 +5495,25 @@ iD.data.presets = {
                 "tower:type": "observation"
             },
             "name": "Observation Tower"
+        },
+        "man_made/petroleum_well": {
+            "geometry": [
+                "point"
+            ],
+            "terms": [
+                "drilling rig",
+                "oil derrick",
+                "oil drill",
+                "oil horse",
+                "oil rig",
+                "oil pump",
+                "petroleum well",
+                "pumpjack"
+            ],
+            "tags": {
+                "man_made": "petroleum_well"
+            },
+            "name": "Oil Well"
         },
         "man_made/pier": {
             "geometry": [
@@ -5422,6 +5538,45 @@ iD.data.presets = {
                 "man_made": "pipeline"
             },
             "name": "Pipeline"
+        },
+        "man_made/silo": {
+            "fields": [
+                "building_area",
+                "crop"
+            ],
+            "geometry": [
+                "point",
+                "area"
+            ],
+            "terms": [
+                "grain",
+                "corn",
+                "wheat"
+            ],
+            "tags": {
+                "man_made": "silo"
+            },
+            "name": "Silo"
+        },
+        "man_made/storage_tank": {
+            "fields": [
+                "building_area",
+                "content"
+            ],
+            "geometry": [
+                "point",
+                "area"
+            ],
+            "terms": [
+                "water",
+                "oil",
+                "gas",
+                "petrol"
+            ],
+            "tags": {
+                "man_made": "storage_tank"
+            },
+            "name": "Storage Tank"
         },
         "man_made/survey_point": {
             "icon": "monument",
@@ -6292,6 +6447,17 @@ iD.data.presets = {
             },
             "name": "City"
         },
+        "place/farm": {
+            "icon": "farm",
+            "geometry": [
+                "point",
+                "area"
+            ],
+            "tags": {
+                "place": "farm"
+            },
+            "name": "Farm"
+        },
         "place/hamlet": {
             "icon": "triangle-stroked",
             "fields": [
@@ -6536,8 +6702,8 @@ iD.data.presets = {
         "public_transport/platform": {
             "fields": [
                 "ref",
-                "operator",
                 "network",
+                "operator",
                 "shelter"
             ],
             "geometry": [
@@ -6555,8 +6721,8 @@ iD.data.presets = {
             "icon": "bus",
             "fields": [
                 "ref",
-                "operator",
-                "network"
+                "network",
+                "operator"
             ],
             "geometry": [
                 "vertex"
@@ -6590,7 +6756,8 @@ iD.data.presets = {
                 "railway": "abandoned"
             },
             "fields": [
-                "structure"
+                "structure",
+                "service_rail"
             ],
             "terms": [],
             "name": "Abandoned Railway"
@@ -6604,7 +6771,8 @@ iD.data.presets = {
                 "railway": "disused"
             },
             "fields": [
-                "structure"
+                "structure",
+                "service_rail"
             ],
             "terms": [],
             "name": "Disused Railway"
@@ -6622,7 +6790,8 @@ iD.data.presets = {
             ],
             "fields": [
                 "structure",
-                "gauge"
+                "gauge",
+                "service_rail"
             ],
             "tags": {
                 "railway": "funicular"
@@ -6676,7 +6845,8 @@ iD.data.presets = {
             },
             "fields": [
                 "structure",
-                "electrified"
+                "electrified",
+                "service_rail"
             ],
             "terms": [],
             "name": "Monorail"
@@ -6692,7 +6862,8 @@ iD.data.presets = {
             "fields": [
                 "structure",
                 "gauge",
-                "electrified"
+                "electrified",
+                "service_rail"
             ],
             "terms": [
                 "narrow gauge railway",
@@ -6723,7 +6894,8 @@ iD.data.presets = {
             "fields": [
                 "structure",
                 "gauge",
-                "electrified"
+                "electrified",
+                "service_rail"
             ],
             "terms": [],
             "name": "Rail"
@@ -6731,6 +6903,7 @@ iD.data.presets = {
         "railway/station": {
             "icon": "rail",
             "fields": [
+                "network",
                 "operator",
                 "address",
                 "building_area"
@@ -6751,17 +6924,18 @@ iD.data.presets = {
         },
         "railway/subway": {
             "icon": "railway-subway",
-            "fields": [
-                "structure",
-                "gauge",
-                "electrified"
-            ],
             "geometry": [
                 "line"
             ],
             "tags": {
                 "railway": "subway"
             },
+            "fields": [
+                "structure",
+                "gauge",
+                "electrified",
+                "service_rail"
+            ],
             "terms": [],
             "name": "Subway"
         },
@@ -6787,7 +6961,8 @@ iD.data.presets = {
             "fields": [
                 "structure",
                 "gauge",
-                "electrified"
+                "electrified",
+                "service_rail"
             ],
             "terms": [
                 "streetcar"
@@ -6804,6 +6979,17 @@ iD.data.presets = {
             "fields": [
                 "relation"
             ]
+        },
+        "roundabout": {
+            "geometry": [
+                "vertex",
+                "line"
+            ],
+            "tags": {
+                "junction": "roundabout"
+            },
+            "name": "Roundabout",
+            "searchable": false
         },
         "route/ferry": {
             "icon": "ferry",
@@ -6840,7 +7026,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "geometry": [
                 "point",
@@ -8904,12 +9091,17 @@ iD.data.presets = {
             "icon": "campsite",
             "fields": [
                 "operator",
-                "address"
+                "address",
+                "capacity",
+                "fee"
             ],
             "geometry": [
                 "point",
                 "vertex",
                 "area"
+            ],
+            "terms": [
+                "Tent"
             ],
             "tags": {
                 "tourism": "camp_site"
@@ -8917,15 +9109,24 @@ iD.data.presets = {
             "name": "Camp Site"
         },
         "tourism/caravan_site": {
+            "icon": "bus",
             "fields": [
                 "operator",
                 "address",
-                "smoking"
+                "capacity",
+                "fee",
+                "sanitary_dump_station",
+                "power_supply",
+                "internet_access"
             ],
             "geometry": [
                 "point",
                 "vertex",
                 "area"
+            ],
+            "terms": [
+                "Motor Home",
+                "Camper"
             ],
             "tags": {
                 "tourism": "caravan_site"
@@ -9610,6 +9811,29 @@ iD.data.presets = {
             },
             "name": "Drain"
         },
+        "waterway/fuel": {
+            "icon": "fuel",
+            "fields": [
+                "operator",
+                "address",
+                "building_area",
+                "opening_hours"
+            ],
+            "geometry": [
+                "point",
+                "area"
+            ],
+            "terms": [
+                "petrol",
+                "gas",
+                "diesel",
+                "boat"
+            ],
+            "tags": {
+                "waterway": "fuel"
+            },
+            "name": "Marine Fuel Station"
+        },
         "waterway/river": {
             "icon": "waterway-river",
             "fields": [
@@ -9648,6 +9872,35 @@ iD.data.presets = {
                 "waterway": "riverbank"
             },
             "name": "Riverbank"
+        },
+        "waterway/sanitary_dump_station": {
+            "fields": [
+                "operator",
+                "access_toilets",
+                "fee",
+                "water_point"
+            ],
+            "geometry": [
+                "point",
+                "vertex",
+                "area"
+            ],
+            "terms": [
+                "Boat",
+                "Watercraft",
+                "Sanitary",
+                "Dump Station",
+                "Pumpout",
+                "Pump out",
+                "Elsan",
+                "CDP",
+                "CTDP",
+                "Chemical Toilet"
+            ],
+            "tags": {
+                "waterway": "sanitary_dump_station"
+            },
+            "name": "Marine Toilet Disposal"
         },
         "waterway/stream": {
             "icon": "waterway-stream",
@@ -13806,6 +14059,7 @@ iD.data.presets = {
                 "opening_hours",
                 "takeaway",
                 "delivery",
+                "drive_through",
                 "smoking"
             ],
             "suggestion": true
@@ -13830,6 +14084,7 @@ iD.data.presets = {
                 "opening_hours",
                 "takeaway",
                 "delivery",
+                "drive_through",
                 "smoking"
             ],
             "suggestion": true
@@ -13854,6 +14109,7 @@ iD.data.presets = {
                 "opening_hours",
                 "takeaway",
                 "delivery",
+                "drive_through",
                 "smoking"
             ],
             "suggestion": true
@@ -13878,6 +14134,7 @@ iD.data.presets = {
                 "opening_hours",
                 "takeaway",
                 "delivery",
+                "drive_through",
                 "smoking"
             ],
             "suggestion": true
@@ -13901,6 +14158,7 @@ iD.data.presets = {
                 "opening_hours",
                 "takeaway",
                 "delivery",
+                "drive_through",
                 "smoking"
             ],
             "suggestion": true
@@ -13925,6 +14183,7 @@ iD.data.presets = {
                 "opening_hours",
                 "takeaway",
                 "delivery",
+                "drive_through",
                 "smoking"
             ],
             "suggestion": true
@@ -13948,6 +14207,7 @@ iD.data.presets = {
                 "opening_hours",
                 "takeaway",
                 "delivery",
+                "drive_through",
                 "smoking"
             ],
             "suggestion": true
@@ -13972,6 +14232,7 @@ iD.data.presets = {
                 "opening_hours",
                 "takeaway",
                 "delivery",
+                "drive_through",
                 "smoking"
             ],
             "suggestion": true
@@ -13996,6 +14257,7 @@ iD.data.presets = {
                 "opening_hours",
                 "takeaway",
                 "delivery",
+                "drive_through",
                 "smoking"
             ],
             "suggestion": true
@@ -14019,6 +14281,7 @@ iD.data.presets = {
                 "opening_hours",
                 "takeaway",
                 "delivery",
+                "drive_through",
                 "smoking"
             ],
             "suggestion": true
@@ -14042,6 +14305,7 @@ iD.data.presets = {
                 "opening_hours",
                 "takeaway",
                 "delivery",
+                "drive_through",
                 "smoking"
             ],
             "suggestion": true
@@ -14065,6 +14329,7 @@ iD.data.presets = {
                 "opening_hours",
                 "takeaway",
                 "delivery",
+                "drive_through",
                 "smoking"
             ],
             "suggestion": true
@@ -14088,6 +14353,7 @@ iD.data.presets = {
                 "opening_hours",
                 "takeaway",
                 "delivery",
+                "drive_through",
                 "smoking"
             ],
             "suggestion": true
@@ -14112,6 +14378,7 @@ iD.data.presets = {
                 "opening_hours",
                 "takeaway",
                 "delivery",
+                "drive_through",
                 "smoking"
             ],
             "suggestion": true
@@ -14135,6 +14402,7 @@ iD.data.presets = {
                 "opening_hours",
                 "takeaway",
                 "delivery",
+                "drive_through",
                 "smoking"
             ],
             "suggestion": true
@@ -14158,6 +14426,7 @@ iD.data.presets = {
                 "opening_hours",
                 "takeaway",
                 "delivery",
+                "drive_through",
                 "smoking"
             ],
             "suggestion": true
@@ -14182,6 +14451,7 @@ iD.data.presets = {
                 "opening_hours",
                 "takeaway",
                 "delivery",
+                "drive_through",
                 "smoking"
             ],
             "suggestion": true
@@ -14205,6 +14475,7 @@ iD.data.presets = {
                 "opening_hours",
                 "takeaway",
                 "delivery",
+                "drive_through",
                 "smoking"
             ],
             "suggestion": true
@@ -14228,6 +14499,7 @@ iD.data.presets = {
                 "opening_hours",
                 "takeaway",
                 "delivery",
+                "drive_through",
                 "smoking"
             ],
             "suggestion": true
@@ -14251,6 +14523,7 @@ iD.data.presets = {
                 "opening_hours",
                 "takeaway",
                 "delivery",
+                "drive_through",
                 "smoking"
             ],
             "suggestion": true
@@ -14274,6 +14547,7 @@ iD.data.presets = {
                 "opening_hours",
                 "takeaway",
                 "delivery",
+                "drive_through",
                 "smoking"
             ],
             "suggestion": true
@@ -14297,6 +14571,7 @@ iD.data.presets = {
                 "opening_hours",
                 "takeaway",
                 "delivery",
+                "drive_through",
                 "smoking"
             ],
             "suggestion": true
@@ -14320,6 +14595,7 @@ iD.data.presets = {
                 "opening_hours",
                 "takeaway",
                 "delivery",
+                "drive_through",
                 "smoking"
             ],
             "suggestion": true
@@ -14343,6 +14619,7 @@ iD.data.presets = {
                 "opening_hours",
                 "takeaway",
                 "delivery",
+                "drive_through",
                 "smoking"
             ],
             "suggestion": true
@@ -14366,6 +14643,7 @@ iD.data.presets = {
                 "opening_hours",
                 "takeaway",
                 "delivery",
+                "drive_through",
                 "smoking"
             ],
             "suggestion": true
@@ -14389,6 +14667,7 @@ iD.data.presets = {
                 "opening_hours",
                 "takeaway",
                 "delivery",
+                "drive_through",
                 "smoking"
             ],
             "suggestion": true
@@ -14413,6 +14692,7 @@ iD.data.presets = {
                 "opening_hours",
                 "takeaway",
                 "delivery",
+                "drive_through",
                 "smoking"
             ],
             "suggestion": true
@@ -14436,6 +14716,7 @@ iD.data.presets = {
                 "opening_hours",
                 "takeaway",
                 "delivery",
+                "drive_through",
                 "smoking"
             ],
             "suggestion": true
@@ -14459,6 +14740,7 @@ iD.data.presets = {
                 "opening_hours",
                 "takeaway",
                 "delivery",
+                "drive_through",
                 "smoking"
             ],
             "suggestion": true
@@ -14482,6 +14764,7 @@ iD.data.presets = {
                 "opening_hours",
                 "takeaway",
                 "delivery",
+                "drive_through",
                 "smoking"
             ],
             "suggestion": true
@@ -14505,6 +14788,7 @@ iD.data.presets = {
                 "opening_hours",
                 "takeaway",
                 "delivery",
+                "drive_through",
                 "smoking"
             ],
             "suggestion": true
@@ -14528,6 +14812,7 @@ iD.data.presets = {
                 "opening_hours",
                 "takeaway",
                 "delivery",
+                "drive_through",
                 "smoking"
             ],
             "suggestion": true
@@ -14552,6 +14837,7 @@ iD.data.presets = {
                 "opening_hours",
                 "takeaway",
                 "delivery",
+                "drive_through",
                 "smoking"
             ],
             "suggestion": true
@@ -14576,6 +14862,7 @@ iD.data.presets = {
                 "opening_hours",
                 "takeaway",
                 "delivery",
+                "drive_through",
                 "smoking"
             ],
             "suggestion": true
@@ -14599,6 +14886,7 @@ iD.data.presets = {
                 "opening_hours",
                 "takeaway",
                 "delivery",
+                "drive_through",
                 "smoking"
             ],
             "suggestion": true
@@ -14623,6 +14911,7 @@ iD.data.presets = {
                 "opening_hours",
                 "takeaway",
                 "delivery",
+                "drive_through",
                 "smoking"
             ],
             "suggestion": true
@@ -14646,6 +14935,7 @@ iD.data.presets = {
                 "opening_hours",
                 "takeaway",
                 "delivery",
+                "drive_through",
                 "smoking"
             ],
             "suggestion": true
@@ -14669,6 +14959,7 @@ iD.data.presets = {
                 "opening_hours",
                 "takeaway",
                 "delivery",
+                "drive_through",
                 "smoking"
             ],
             "suggestion": true
@@ -14693,6 +14984,7 @@ iD.data.presets = {
                 "opening_hours",
                 "takeaway",
                 "delivery",
+                "drive_through",
                 "smoking"
             ],
             "suggestion": true
@@ -14716,6 +15008,7 @@ iD.data.presets = {
                 "opening_hours",
                 "takeaway",
                 "delivery",
+                "drive_through",
                 "smoking"
             ],
             "suggestion": true
@@ -14739,6 +15032,7 @@ iD.data.presets = {
                 "opening_hours",
                 "takeaway",
                 "delivery",
+                "drive_through",
                 "smoking"
             ],
             "suggestion": true
@@ -14762,6 +15056,7 @@ iD.data.presets = {
                 "opening_hours",
                 "takeaway",
                 "delivery",
+                "drive_through",
                 "smoking"
             ],
             "suggestion": true
@@ -14786,6 +15081,7 @@ iD.data.presets = {
                 "opening_hours",
                 "takeaway",
                 "delivery",
+                "drive_through",
                 "smoking"
             ],
             "suggestion": true
@@ -14809,6 +15105,7 @@ iD.data.presets = {
                 "opening_hours",
                 "takeaway",
                 "delivery",
+                "drive_through",
                 "smoking"
             ],
             "suggestion": true
@@ -14832,6 +15129,7 @@ iD.data.presets = {
                 "opening_hours",
                 "takeaway",
                 "delivery",
+                "drive_through",
                 "smoking"
             ],
             "suggestion": true
@@ -14856,6 +15154,7 @@ iD.data.presets = {
                 "opening_hours",
                 "takeaway",
                 "delivery",
+                "drive_through",
                 "smoking"
             ],
             "suggestion": true
@@ -14881,6 +15180,7 @@ iD.data.presets = {
                 "opening_hours",
                 "takeaway",
                 "delivery",
+                "drive_through",
                 "smoking"
             ],
             "suggestion": true
@@ -14904,6 +15204,7 @@ iD.data.presets = {
                 "opening_hours",
                 "takeaway",
                 "delivery",
+                "drive_through",
                 "smoking"
             ],
             "suggestion": true
@@ -14927,6 +15228,7 @@ iD.data.presets = {
                 "opening_hours",
                 "takeaway",
                 "delivery",
+                "drive_through",
                 "smoking"
             ],
             "suggestion": true
@@ -14950,6 +15252,7 @@ iD.data.presets = {
                 "opening_hours",
                 "takeaway",
                 "delivery",
+                "drive_through",
                 "smoking"
             ],
             "suggestion": true
@@ -14973,6 +15276,7 @@ iD.data.presets = {
                 "opening_hours",
                 "takeaway",
                 "delivery",
+                "drive_through",
                 "smoking"
             ],
             "suggestion": true
@@ -14996,6 +15300,7 @@ iD.data.presets = {
                 "opening_hours",
                 "takeaway",
                 "delivery",
+                "drive_through",
                 "smoking"
             ],
             "suggestion": true
@@ -15021,6 +15326,7 @@ iD.data.presets = {
                 "opening_hours",
                 "takeaway",
                 "delivery",
+                "drive_through",
                 "smoking"
             ],
             "suggestion": true
@@ -15044,6 +15350,7 @@ iD.data.presets = {
                 "opening_hours",
                 "takeaway",
                 "delivery",
+                "drive_through",
                 "smoking"
             ],
             "suggestion": true
@@ -15067,6 +15374,7 @@ iD.data.presets = {
                 "opening_hours",
                 "takeaway",
                 "delivery",
+                "drive_through",
                 "smoking"
             ],
             "suggestion": true
@@ -15091,6 +15399,7 @@ iD.data.presets = {
                 "opening_hours",
                 "takeaway",
                 "delivery",
+                "drive_through",
                 "smoking"
             ],
             "suggestion": true
@@ -15114,6 +15423,7 @@ iD.data.presets = {
                 "opening_hours",
                 "takeaway",
                 "delivery",
+                "drive_through",
                 "smoking"
             ],
             "suggestion": true
@@ -15137,6 +15447,7 @@ iD.data.presets = {
                 "opening_hours",
                 "takeaway",
                 "delivery",
+                "drive_through",
                 "smoking"
             ],
             "suggestion": true
@@ -15160,6 +15471,7 @@ iD.data.presets = {
                 "opening_hours",
                 "takeaway",
                 "delivery",
+                "drive_through",
                 "smoking"
             ],
             "suggestion": true
@@ -15183,6 +15495,7 @@ iD.data.presets = {
                 "opening_hours",
                 "takeaway",
                 "delivery",
+                "drive_through",
                 "smoking"
             ],
             "suggestion": true
@@ -15206,6 +15519,7 @@ iD.data.presets = {
                 "opening_hours",
                 "takeaway",
                 "delivery",
+                "drive_through",
                 "smoking"
             ],
             "suggestion": true
@@ -15230,6 +15544,7 @@ iD.data.presets = {
                 "opening_hours",
                 "takeaway",
                 "delivery",
+                "drive_through",
                 "smoking"
             ],
             "suggestion": true
@@ -15253,6 +15568,7 @@ iD.data.presets = {
                 "opening_hours",
                 "takeaway",
                 "delivery",
+                "drive_through",
                 "smoking"
             ],
             "suggestion": true
@@ -15276,6 +15592,7 @@ iD.data.presets = {
                 "opening_hours",
                 "takeaway",
                 "delivery",
+                "drive_through",
                 "smoking"
             ],
             "suggestion": true
@@ -15299,6 +15616,7 @@ iD.data.presets = {
                 "opening_hours",
                 "takeaway",
                 "delivery",
+                "drive_through",
                 "smoking"
             ],
             "suggestion": true
@@ -15322,6 +15640,7 @@ iD.data.presets = {
                 "opening_hours",
                 "takeaway",
                 "delivery",
+                "drive_through",
                 "smoking"
             ],
             "suggestion": true
@@ -15345,6 +15664,7 @@ iD.data.presets = {
                 "opening_hours",
                 "takeaway",
                 "delivery",
+                "drive_through",
                 "smoking"
             ],
             "suggestion": true
@@ -15368,6 +15688,7 @@ iD.data.presets = {
                 "opening_hours",
                 "takeaway",
                 "delivery",
+                "drive_through",
                 "smoking"
             ],
             "suggestion": true
@@ -15391,6 +15712,7 @@ iD.data.presets = {
                 "opening_hours",
                 "takeaway",
                 "delivery",
+                "drive_through",
                 "smoking"
             ],
             "suggestion": true
@@ -15415,6 +15737,7 @@ iD.data.presets = {
                 "opening_hours",
                 "takeaway",
                 "delivery",
+                "drive_through",
                 "smoking"
             ],
             "suggestion": true
@@ -15438,6 +15761,7 @@ iD.data.presets = {
                 "opening_hours",
                 "takeaway",
                 "delivery",
+                "drive_through",
                 "smoking"
             ],
             "suggestion": true
@@ -15461,6 +15785,7 @@ iD.data.presets = {
                 "opening_hours",
                 "takeaway",
                 "delivery",
+                "drive_through",
                 "smoking"
             ],
             "suggestion": true
@@ -15484,6 +15809,7 @@ iD.data.presets = {
                 "opening_hours",
                 "takeaway",
                 "delivery",
+                "drive_through",
                 "smoking"
             ],
             "suggestion": true
@@ -15508,6 +15834,7 @@ iD.data.presets = {
                 "opening_hours",
                 "takeaway",
                 "delivery",
+                "drive_through",
                 "smoking"
             ],
             "suggestion": true
@@ -15532,6 +15859,7 @@ iD.data.presets = {
                 "opening_hours",
                 "takeaway",
                 "delivery",
+                "drive_through",
                 "smoking"
             ],
             "suggestion": true
@@ -15555,6 +15883,7 @@ iD.data.presets = {
                 "opening_hours",
                 "takeaway",
                 "delivery",
+                "drive_through",
                 "smoking"
             ],
             "suggestion": true
@@ -15578,6 +15907,7 @@ iD.data.presets = {
                 "opening_hours",
                 "takeaway",
                 "delivery",
+                "drive_through",
                 "smoking"
             ],
             "suggestion": true
@@ -18474,7 +18804,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -18494,7 +18825,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -18514,7 +18846,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -18534,7 +18867,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -18554,7 +18888,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -18574,7 +18909,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -18594,7 +18930,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -18614,7 +18951,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -18634,7 +18972,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -18654,7 +18993,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -18674,7 +19014,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -18694,7 +19035,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -18714,7 +19056,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -18734,7 +19077,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -18754,7 +19098,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -18774,7 +19119,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -18794,7 +19140,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -18814,7 +19161,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -18834,7 +19182,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -18854,7 +19203,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -18874,7 +19224,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -18894,7 +19245,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -18914,7 +19266,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -18934,7 +19287,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -18954,7 +19308,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -18974,7 +19329,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -18994,7 +19350,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -19014,7 +19371,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -19034,7 +19392,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -19054,7 +19413,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -19074,7 +19434,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -19094,7 +19455,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -19114,7 +19476,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -19134,7 +19497,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -19154,7 +19518,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -19174,7 +19539,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -19194,7 +19560,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -19214,7 +19581,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -19234,7 +19602,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -19254,7 +19623,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -19274,7 +19644,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -19294,7 +19665,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -19314,7 +19686,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -19334,7 +19707,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -19354,7 +19728,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -19374,7 +19749,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -19394,7 +19770,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -19414,7 +19791,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -19434,7 +19812,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -19454,7 +19833,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -19474,7 +19854,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -19494,7 +19875,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -19514,7 +19896,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -19534,7 +19917,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -19554,7 +19938,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -19574,7 +19959,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -19594,7 +19980,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -19614,7 +20001,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -19634,7 +20022,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -19654,7 +20043,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -19674,7 +20064,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -19694,7 +20085,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -19714,7 +20106,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -19734,7 +20127,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -19754,7 +20148,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -19774,7 +20169,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -19794,7 +20190,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -19814,7 +20211,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -19834,7 +20232,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -19854,7 +20253,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -19874,7 +20274,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -19894,7 +20295,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -19914,7 +20316,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -19934,7 +20337,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -19954,7 +20358,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -19974,7 +20379,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -19994,7 +20400,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -20014,7 +20421,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -20034,7 +20442,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -20054,7 +20463,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -20074,7 +20484,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -20094,7 +20505,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -20114,7 +20526,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -20134,7 +20547,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -20154,7 +20568,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -20174,7 +20589,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -20194,7 +20610,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -20214,7 +20631,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -20234,7 +20652,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -20254,7 +20673,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -20274,7 +20694,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -20294,7 +20715,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -20314,7 +20736,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -20334,7 +20757,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -20354,7 +20778,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -20374,7 +20799,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -20394,7 +20820,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -20414,7 +20841,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -20434,7 +20862,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -20454,7 +20883,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -20474,7 +20904,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -20494,7 +20925,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -20514,7 +20946,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -20534,7 +20967,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -20554,7 +20988,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -20574,7 +21009,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -20594,7 +21030,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -20614,7 +21051,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -20634,7 +21072,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -20654,7 +21093,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -20674,7 +21114,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -20694,7 +21135,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -20714,7 +21156,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -20734,7 +21177,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -20754,7 +21198,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -20774,7 +21219,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -20794,7 +21240,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -20814,7 +21261,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -20834,7 +21282,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -20854,7 +21303,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -20874,7 +21324,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -20894,7 +21345,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -20914,7 +21366,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -20934,7 +21387,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -20954,7 +21408,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -20974,7 +21429,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -20994,7 +21450,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -21014,7 +21471,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -21034,7 +21492,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -21054,7 +21513,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -21074,7 +21534,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -21094,7 +21555,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -21114,7 +21576,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -21134,7 +21597,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -21154,7 +21618,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -21174,7 +21639,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -21194,7 +21660,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -21214,7 +21681,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -21234,7 +21702,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -21254,7 +21723,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -21274,7 +21744,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -21294,7 +21765,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -21314,7 +21786,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -21334,7 +21807,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -21354,7 +21828,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -21374,7 +21849,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -21394,7 +21870,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -21414,7 +21891,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -21434,7 +21912,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -21454,7 +21933,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -21474,7 +21954,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -21494,7 +21975,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -21514,7 +21996,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -21534,7 +22017,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -21554,7 +22038,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -21574,7 +22059,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -21594,7 +22080,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -21614,7 +22101,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -21634,7 +22122,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -21654,7 +22143,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -21674,7 +22164,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -21694,7 +22185,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -21714,7 +22206,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -21734,7 +22227,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -21754,7 +22248,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -21774,7 +22269,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -21794,7 +22290,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -21814,7 +22311,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -21834,7 +22332,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -21854,7 +22353,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -21874,7 +22374,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -21894,7 +22395,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -21914,7 +22416,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -21934,7 +22437,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -21954,7 +22458,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -21974,7 +22479,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -21994,7 +22500,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -22014,7 +22521,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -22034,7 +22542,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -22054,7 +22563,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -22074,7 +22584,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -22094,7 +22605,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -22114,7 +22626,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -22134,7 +22647,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -22154,7 +22668,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -22174,7 +22689,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -22194,7 +22710,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -22214,7 +22731,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -22234,7 +22752,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -22254,7 +22773,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -22274,7 +22794,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -22294,7 +22815,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -22314,7 +22836,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -22334,7 +22857,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -22354,7 +22878,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -22374,7 +22899,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -22394,7 +22920,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -22414,7 +22941,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -22434,7 +22962,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -22454,7 +22983,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -22474,7 +23004,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -22494,7 +23025,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -22514,7 +23046,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -22534,7 +23067,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -22554,7 +23088,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -22574,7 +23109,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -22594,7 +23130,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -22614,7 +23151,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -22634,7 +23172,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -22654,7 +23193,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -22674,7 +23214,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -22694,7 +23235,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -22715,7 +23257,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -22736,7 +23279,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -22757,7 +23301,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -22778,7 +23323,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -22799,7 +23345,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -22819,7 +23366,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -22839,7 +23387,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -22859,7 +23408,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -22879,7 +23429,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -22899,7 +23450,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -22919,7 +23471,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -22939,7 +23492,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -22960,7 +23514,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -22980,7 +23535,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -23000,7 +23556,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -23020,7 +23577,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -23040,7 +23598,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -23060,7 +23619,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -23080,7 +23640,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -23100,7 +23661,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -23120,7 +23682,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -23140,7 +23703,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -23160,7 +23724,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -23180,7 +23745,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -23200,7 +23766,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -23220,7 +23787,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -23240,7 +23808,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -23260,7 +23829,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -23280,7 +23850,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -23300,7 +23871,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -23320,7 +23892,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -23340,7 +23913,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -23361,7 +23935,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -23381,7 +23956,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -23401,7 +23977,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -23421,7 +23998,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -23441,7 +24019,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -23461,7 +24040,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -23481,7 +24061,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -23501,7 +24082,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -23632,7 +24214,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -23651,7 +24234,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -23670,7 +24254,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -23689,7 +24274,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -23708,7 +24294,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -23727,7 +24314,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -23746,7 +24334,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -23765,7 +24354,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -23784,7 +24374,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -23803,7 +24394,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -23822,7 +24414,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -23841,7 +24434,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -23860,7 +24454,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -23879,7 +24474,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -23898,7 +24494,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -23917,7 +24514,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -23936,7 +24534,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -23955,7 +24554,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -23974,7 +24574,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -23993,7 +24594,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -24012,7 +24614,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -24031,7 +24634,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -24050,7 +24654,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -24069,7 +24674,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -24088,7 +24694,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -24107,7 +24714,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -24126,7 +24734,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -24145,7 +24754,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -24164,7 +24774,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -24183,7 +24794,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -24202,7 +24814,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -24221,7 +24834,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -24240,7 +24854,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -24259,7 +24874,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -24278,7 +24894,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -24297,7 +24914,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -24316,7 +24934,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -24335,7 +24954,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -24354,7 +24974,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -24373,7 +24994,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -24392,7 +25014,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -24411,7 +25034,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -24430,7 +25054,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -24449,7 +25074,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -24468,7 +25094,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -24487,7 +25114,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -24506,7 +25134,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -24525,7 +25154,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -24544,7 +25174,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -24563,7 +25194,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -24582,7 +25214,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -24601,7 +25234,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -24620,7 +25254,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -24639,7 +25274,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -24658,7 +25294,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -24677,7 +25314,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -24696,7 +25334,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -24715,7 +25354,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -24734,7 +25374,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -24753,7 +25394,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -24772,7 +25414,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -24791,7 +25434,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -24810,7 +25454,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -24829,7 +25474,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -24848,7 +25494,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -24867,7 +25514,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -24886,7 +25534,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -24905,7 +25554,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -24924,7 +25574,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -24943,7 +25594,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -24962,7 +25614,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -24981,7 +25634,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -25000,7 +25654,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -25019,7 +25674,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -35973,7 +36629,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -35992,7 +36649,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -36011,7 +36669,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -36030,7 +36689,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -36049,7 +36709,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -36068,7 +36729,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -36087,7 +36749,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -36106,7 +36769,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -36125,7 +36789,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -36144,7 +36809,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -36163,7 +36829,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -36182,7 +36849,8 @@ iD.data.presets = {
                 "operator",
                 "address",
                 "building_area",
-                "opening_hours"
+                "opening_hours",
+                "drive_through"
             ],
             "suggestion": true
         },
@@ -38841,7 +39509,7 @@ iD.data.presets = {
         },
         "building_area": {
             "key": "building",
-            "type": "defaultcheck",
+            "type": "combo",
             "default": "yes",
             "geometry": "area",
             "label": "Building"
@@ -38898,6 +39566,11 @@ iD.data.presets = {
             "type": "combo",
             "label": "Type"
         },
+        "content": {
+            "key": "content",
+            "type": "combo",
+            "label": "Contents"
+        },
         "country": {
             "key": "country",
             "type": "combo",
@@ -38947,6 +39620,11 @@ iD.data.presets = {
             "key": "description",
             "type": "textarea",
             "label": "Description"
+        },
+        "drive_through": {
+            "key": "drive_through",
+            "type": "check",
+            "label": "Drive-Through"
         },
         "electrified": {
             "key": "electrified",
@@ -39142,6 +39820,17 @@ iD.data.presets = {
             "key": "incline",
             "type": "combo",
             "label": "Incline"
+        },
+        "incline_steps": {
+            "key": "incline",
+            "type": "combo",
+            "label": "Incline",
+            "strings": {
+                "options": {
+                    "up": "Up",
+                    "down": "Down"
+                }
+            }
         },
         "information": {
             "key": "information",
@@ -39457,6 +40146,11 @@ iD.data.presets = {
             "type": "typeCombo",
             "label": "Type"
         },
+        "power_supply": {
+            "key": "power_supply",
+            "type": "check",
+            "label": "Power Supply"
+        },
         "railway": {
             "key": "railway",
             "type": "typeCombo",
@@ -39537,6 +40231,11 @@ iD.data.presets = {
                 }
             }
         },
+        "sanitary_dump_station": {
+            "key": "sanitary_dump_station",
+            "type": "check",
+            "label": "Toilet Disposal"
+        },
         "seasonal": {
             "key": "seasonal",
             "type": "check",
@@ -39554,8 +40253,8 @@ iD.data.presets = {
                 "drive-through"
             ]
         },
-        "service/bicycle/chaintool": {
-            "key": "service:bicycle:chaintool",
+        "service/bicycle/chain_tool": {
+            "key": "service:bicycle:chain_tool",
             "type": "check",
             "label": "Chain Tool",
             "strings": {
@@ -39575,6 +40274,19 @@ iD.data.presets = {
                     "undefined": "Assumed to be No",
                     "yes": "Yes",
                     "no": "No"
+                }
+            }
+        },
+        "service_rail": {
+            "key": "service",
+            "type": "combo",
+            "label": "Service Type",
+            "strings": {
+                "options": {
+                    "spur": "Spur",
+                    "yard": "Yard",
+                    "siding": "Siding",
+                    "crossover": "Crossover"
                 }
             }
         },
@@ -39828,6 +40540,11 @@ iD.data.presets = {
             "key": "water",
             "type": "combo",
             "label": "Type"
+        },
+        "water_point": {
+            "key": "water_point",
+            "type": "check",
+            "label": "Water Point"
         },
         "waterway": {
             "key": "waterway",
