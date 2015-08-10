@@ -82,7 +82,7 @@ iD.operations.Slide = function(selectedIds, context) {
             return [node.loc[1], node.loc[0]];
         });
 
-        loading = iD.ui.Loading(context).message('Sliding');
+        loading = iD.ui.Loading(context).blocking(true).message('Sliding');
         context.container().call(loading);
 
         // run the async request
