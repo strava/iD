@@ -41,7 +41,7 @@
     {
         "name": "Strava Heat masked by OSM",
         "type": "tms",
-        "template": "http://gometry.strava.com/osm_mask/tiles/both/color2/{zoom}/{x}/{y}.png",
+        "template": "https://gometry.strava.com/osm_mask/tiles/both/color2/{zoom}/{x}/{y}.png",
         "overlay": true,
         "description": "Strava Heat masked by OSM (experimental layer)",
         "scaleExtent": [
