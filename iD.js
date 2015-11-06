@@ -25629,7 +25629,7 @@ iD.operations.Rotate = function(selectedIDs, context) {
     return operation;
 };
 iD.operations.Slide = function(selectedIds, context) {
-    var slideOperationURI = window.location.hostname == 'localhost' ? "http://localhost:8200/slide" : "http://gometry.strava.com/slide";
+    var slideOperationURI = window.location.hostname == 'localhost' ? "http://localhost:8200/slide" : "https://gometry.strava.com/slide";
 
     function sharedWayId(nodeIds) {
         var graph = context.graph(),
