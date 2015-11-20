@@ -152,7 +152,6 @@
     },
     "logout": "logg ut",
     "loading_auth": "Kobler til OpenStreetMap...",
-    "report_a_bug": "meld en programvarefeil",
     "commit": {
         "title": "Lagre endringer",
         "description_placeholder": "Kort beskrivelse av dine bidrag",
@@ -285,7 +284,6 @@
         },
         "fields": {
             "access": {
-                "label": "Tilgang",
                 "options": {
                     "designated": {
                         "description": "Tilgang tillatt i henhold til skilt eller spesifike lokale lover"
@@ -311,7 +309,6 @@
                         "title": "Tillatt"
                     }
                 },
-                "placeholder": "Ukjent",
                 "types": {
                     "bicycle": "Sykler",
                     "foot": "Fot",
@@ -807,9 +804,6 @@
             "highway/bus_stop": {
                 "name": "Busstopp"
             },
-            "highway/crossing": {
-                "name": "Overgang"
-            },
             "highway/cycleway": {
                 "name": "Sykkelvei"
             },
@@ -830,9 +824,6 @@
             },
             "highway/path": {
                 "name": "Sti"
-            },
-            "highway/pedestrian": {
-                "name": "Gående"
             },
             "highway/primary": {
                 "name": "Primær hovedvei"
@@ -890,12 +881,6 @@
             },
             "historic/ruins": {
                 "name": "Ruiner"
-            },
-            "landuse": {
-                "name": "Arealbruk"
-            },
-            "landuse/allotments": {
-                "name": "Kolonihage"
             },
             "landuse/cemetery": {
                 "name": "Kirkegård"
@@ -1085,9 +1070,6 @@
             },
             "railway": {
                 "name": "Jernbane"
-            },
-            "railway/level_crossing": {
-                "name": "Jernbaneovergang"
             },
             "railway/monorail": {
                 "name": "Monorail"

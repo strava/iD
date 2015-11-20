@@ -188,7 +188,6 @@
     "zoom_in_edit": "সম্পাদনার জন্য জুম ইন করুন",
     "logout": "বেরিয়ে যান",
     "loading_auth": "ওপেনস্ট্রীটম্যাপ-এর সাথে যোগাযোগ করা হচ্ছে ...",
-    "report_a_bug": "একটি বাগ রিপোর্ট করুন",
     "status": {
         "error": "API-এর সাথে যোগাযোগ করা যাচ্ছে না।",
         "offline": "API-টি এই মুহুর্তে অফলাইন। একটু পরে চেষ্টা করুন।"
@@ -366,7 +365,6 @@
         },
         "fields": {
             "access": {
-                "label": "প্রবেশ করা",
                 "options": {
                     "designated": {
                         "description": "কোন চিহ্ন বা স্থানীয় অাইন অনুযায়ী প্রবেশ অনুমোদিত।"
@@ -392,9 +390,7 @@
                         "title": "অনুমোদিত"
                     }
                 },
-                "placeholder": "অজানা",
                 "types": {
-                    "access": "সাধারণ",
                     "bicycle": "সাইকেল",
                     "foot": "পদচালন",
                     "horse": "ঘোড়া",
@@ -402,7 +398,6 @@
                 }
             },
             "access_simple": {
-                "label": "প্রবেশ করা",
                 "placeholder": "হ্যা"
             },
             "access_toilets": {
@@ -891,17 +886,11 @@
             "emergency/phone": {
                 "name": "অাপদকালীন দুরভাষ"
             },
-            "footway/crossing": {
-                "name": "ক্রসিং"
-            },
             "highway": {
                 "name": "রাজপথ"
             },
             "highway/bus_stop": {
                 "name": "বাস স্টপ"
-            },
-            "highway/crossing": {
-                "name": "ক্রসিং"
             },
             "highway/cycleway": {
                 "name": "সাইকেল-এর রাস্তা"
@@ -914,9 +903,6 @@
             },
             "highway/path": {
                 "name": "পথ"
-            },
-            "highway/pedestrian": {
-                "name": "পথচারী"
             },
             "highway/primary": {
                 "name": "প্রাথমিক রাস্তা"
@@ -965,12 +951,6 @@
             },
             "historic/ruins": {
                 "name": "ধ্বংসাবশেষ"
-            },
-            "landuse": {
-                "name": "ভূমি ব্যবহার"
-            },
-            "landuse/allotments": {
-                "name": "আবন্টন"
             },
             "landuse/cemetery": {
                 "name": "কবরখানা"
@@ -1154,9 +1134,6 @@
             },
             "railway/disused": {
                 "name": "অব্যবহৃত রেলপথ"
-            },
-            "railway/level_crossing": {
-                "name": "রেল ক্রসি"
             },
             "railway/monorail": {
                 "name": "মনোরেল"

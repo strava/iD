@@ -175,7 +175,6 @@
     "zoom_in_edit": "放大编辑",
     "logout": "退出",
     "loading_auth": "连接OpenStreetMap...",
-    "report_a_bug": "报告bug",
     "status": {
         "error": "无法连接到API。",
         "offline": "API是离线的。请稍后尝试编辑。",
@@ -350,7 +349,6 @@
         },
         "fields": {
             "access": {
-                "label": "通行限制",
                 "options": {
                     "designated": {
                         "description": "只限标志指定或特定本地法律容许人士进入",
@@ -377,9 +375,7 @@
                         "title": "允许的"
                     }
                 },
-                "placeholder": "未知种类",
                 "types": {
-                    "access": "普通",
                     "bicycle": "自行车",
                     "foot": "步行",
                     "horse": "马匹",
@@ -857,9 +853,6 @@
             "highway/bus_stop": {
                 "name": "公交车站"
             },
-            "highway/crossing": {
-                "name": "人行横道"
-            },
             "highway/cycleway": {
                 "name": "自行车道"
             },
@@ -880,9 +873,6 @@
             },
             "highway/path": {
                 "name": "路径"
-            },
-            "highway/pedestrian": {
-                "name": "行人专用路"
             },
             "highway/primary": {
                 "name": "主要道路"
@@ -973,12 +963,6 @@
             },
             "historic/wayside_shrine": {
                 "name": "路边神社"
-            },
-            "landuse": {
-                "name": "土地用途"
-            },
-            "landuse/allotments": {
-                "name": "社区花园"
             },
             "landuse/basin": {
                 "name": "水池"
@@ -1204,9 +1188,6 @@
             },
             "railway/disused": {
                 "name": "废弃的铁路"
-            },
-            "railway/level_crossing": {
-                "name": "平交路口"
             },
             "railway/monorail": {
                 "name": "单轨铁路"

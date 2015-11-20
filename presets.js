@@ -32,6 +32,7 @@ iD.data.presets = {
                 "funifor",
                 "funitel"
             ],
+            "searchable": false,
             "name": "Aerialway"
         },
         "aerialway/cable_car": {
@@ -188,6 +189,7 @@ iD.data.presets = {
             "tags": {
                 "aeroway": "*"
             },
+            "searchable": false,
             "name": "Aeroway"
         },
         "aeroway/aerodrome": {
@@ -1133,6 +1135,24 @@ iD.data.presets = {
             },
             "name": "Marketplace"
         },
+        "amenity/motorcycle_parking": {
+            "icon": "scooter",
+            "fields": [
+                "capacity",
+                "operator",
+                "covered",
+                "access_simple"
+            ],
+            "geometry": [
+                "point",
+                "vertex",
+                "area"
+            ],
+            "tags": {
+                "amenity": "motorcycle_parking"
+            },
+            "name": "Motorcycle Parking"
+        },
         "amenity/nightclub": {
             "icon": "bar",
             "fields": [
@@ -1167,6 +1187,7 @@ iD.data.presets = {
                 "access_simple",
                 "supervised",
                 "park_ride",
+                "surface",
                 "address"
             ],
             "geometry": [
@@ -1509,8 +1530,10 @@ iD.data.presets = {
                 "address",
                 "recycling/type",
                 "recycling/cans",
-                "recycling/glass",
+                "recycling/glass_bottles",
                 "recycling/paper",
+                "recycling/glass",
+                "recycling/plastic",
                 "recycling/clothes"
             ],
             "geometry": [
@@ -2373,7 +2396,14 @@ iD.data.presets = {
             "tags": {
                 "building": "detached"
             },
-            "name": "Detached Home"
+            "terms": [
+                "home",
+                "single",
+                "family",
+                "residence",
+                "dwelling"
+            ],
+            "name": "Detached House"
         },
         "building/dormitory": {
             "icon": "building",
@@ -2489,6 +2519,12 @@ iD.data.presets = {
             "tags": {
                 "building": "house"
             },
+            "terms": [
+                "home",
+                "family",
+                "residence",
+                "dwelling"
+            ],
             "name": "House"
         },
         "building/hut": {
@@ -2617,6 +2653,30 @@ iD.data.presets = {
             },
             "name": "School Building"
         },
+        "building/semidetached_house": {
+            "icon": "building",
+            "fields": [
+                "address",
+                "levels"
+            ],
+            "geometry": [
+                "point",
+                "area"
+            ],
+            "tags": {
+                "building": "semidetached_house"
+            },
+            "terms": [
+                "home",
+                "double",
+                "duplex",
+                "twin",
+                "family",
+                "residence",
+                "dwelling"
+            ],
+            "name": "Semi-Detached House"
+        },
         "building/shed": {
             "icon": "building",
             "fields": [
@@ -2675,6 +2735,14 @@ iD.data.presets = {
             "tags": {
                 "building": "terrace"
             },
+            "terms": [
+                "home",
+                "terrace",
+                "brownstone",
+                "family",
+                "residence",
+                "dwelling"
+            ],
             "name": "Row Houses"
         },
         "building/train_station": {
@@ -3707,6 +3775,7 @@ iD.data.presets = {
             "name": "Pedestrian Crosswalk"
         },
         "footway/sidewalk": {
+            "icon": "highway-footway",
             "fields": [
                 "surface",
                 "lit",
@@ -3849,6 +3918,7 @@ iD.data.presets = {
             "tags": {
                 "highway": "*"
             },
+            "searchable": false,
             "name": "Highway"
         },
         "highway/bridleway": {
@@ -4550,6 +4620,9 @@ iD.data.presets = {
             "tags": {
                 "highway": "traffic_signals"
             },
+            "fields": [
+                "traffic_signals"
+            ],
             "terms": [
                 "light",
                 "stoplight",
@@ -4754,7 +4827,7 @@ iD.data.presets = {
             "tags": {
                 "landuse": "*"
             },
-            "name": "Landuse"
+            "name": "Land Use"
         },
         "landuse/allotments": {
             "geometry": [
@@ -4763,8 +4836,11 @@ iD.data.presets = {
             "tags": {
                 "landuse": "allotments"
             },
-            "terms": [],
-            "name": "Allotments"
+            "terms": [
+                "allotment",
+                "garden"
+            ],
+            "name": "Community Garden"
         },
         "landuse/basin": {
             "geometry": [
@@ -5061,6 +5137,24 @@ iD.data.presets = {
             },
             "name": "Adult Gaming Center"
         },
+        "leisure/bowling_alley": {
+            "fields": [
+                "operator",
+                "address",
+                "building_area",
+                "opening_hours",
+                "smoking"
+            ],
+            "geometry": [
+                "point",
+                "area"
+            ],
+            "terms": [],
+            "tags": {
+                "leisure": "bowling_alley"
+            },
+            "name": "Bowling Alley"
+        },
         "leisure/common": {
             "geometry": [
                 "point",
@@ -5308,6 +5402,40 @@ iD.data.presets = {
             },
             "terms": [],
             "name": "Basketball Court"
+        },
+        "leisure/pitch/rugby_league": {
+            "icon": "america-football",
+            "fields": [
+                "surface",
+                "lit"
+            ],
+            "geometry": [
+                "point",
+                "area"
+            ],
+            "tags": {
+                "leisure": "pitch",
+                "sport": "rugby_league"
+            },
+            "terms": [],
+            "name": "Rugby League Field"
+        },
+        "leisure/pitch/rugby_union": {
+            "icon": "america-football",
+            "fields": [
+                "surface",
+                "lit"
+            ],
+            "geometry": [
+                "point",
+                "area"
+            ],
+            "tags": {
+                "leisure": "pitch",
+                "sport": "rugby_union"
+            },
+            "terms": [],
+            "name": "Rugby Union Field"
         },
         "leisure/pitch/skateboard": {
             "icon": "pitch",
@@ -5656,7 +5784,7 @@ iD.data.presets = {
             "name": "Pier"
         },
         "man_made/pipeline": {
-            "icon": "pipeline",
+            "icon": "pipeline-line",
             "fields": [
                 "location",
                 "operator"
@@ -5834,6 +5962,54 @@ iD.data.presets = {
             },
             "name": "Bunker"
         },
+        "military/checkpoint": {
+            "geometry": [
+                "point",
+                "vertex",
+                "area"
+            ],
+            "terms": [],
+            "tags": {
+                "military": "checkpoint"
+            },
+            "name": "Checkpoint"
+        },
+        "military/danger_area": {
+            "geometry": [
+                "point",
+                "vertex",
+                "area"
+            ],
+            "terms": [],
+            "tags": {
+                "military": "danger_area"
+            },
+            "name": "Danger Area"
+        },
+        "military/naval_base": {
+            "geometry": [
+                "point",
+                "vertex",
+                "area"
+            ],
+            "terms": [],
+            "tags": {
+                "military": "naval_base"
+            },
+            "name": "Naval Base"
+        },
+        "military/obstacle_course": {
+            "geometry": [
+                "point",
+                "vertex",
+                "area"
+            ],
+            "terms": [],
+            "tags": {
+                "military": "obstacle_course"
+            },
+            "name": "Obstacle Course"
+        },
         "military/range": {
             "geometry": [
                 "point",
@@ -5845,6 +6021,18 @@ iD.data.presets = {
                 "military": "range"
             },
             "name": "Military Range"
+        },
+        "military/training_area": {
+            "geometry": [
+                "point",
+                "vertex",
+                "area"
+            ],
+            "terms": [],
+            "tags": {
+                "military": "training_area"
+            },
+            "name": "Training area"
         },
         "natural": {
             "fields": [
@@ -6058,8 +6246,8 @@ iD.data.presets = {
         },
         "natural/tree": {
             "fields": [
-                "leaf_type",
-                "leaf_cycle",
+                "leaf_type_singular",
+                "leaf_cycle_singular",
                 "denotation"
             ],
             "icon": "park",
@@ -6623,6 +6811,7 @@ iD.data.presets = {
             "tags": {
                 "place": "*"
             },
+            "searchable": false,
             "name": "Place"
         },
         "place/city": {
@@ -6792,6 +6981,7 @@ iD.data.presets = {
             "fields": [
                 "power"
             ],
+            "searchable": false,
             "name": "Power"
         },
         "power/generator": {
@@ -6937,6 +7127,7 @@ iD.data.presets = {
             "tags": {
                 "railway": "*"
             },
+            "searchable": false,
             "name": "Railway"
         },
         "railway/abandoned": {
@@ -7184,7 +7375,7 @@ iD.data.presets = {
             "searchable": false
         },
         "route/ferry": {
-            "icon": "ferry",
+            "icon": "ferry-line",
             "geometry": [
                 "line"
             ],
@@ -9949,6 +10140,7 @@ iD.data.presets = {
             "tags": {
                 "waterway": "*"
             },
+            "searchable": false,
             "name": "Waterway"
         },
         "waterway/canal": {
@@ -39172,11 +39364,11 @@ iD.data.presets = {
                 "key": "access"
             },
             "type": "access",
-            "label": "Access",
-            "placeholder": "Unknown",
+            "label": "Allowed Access",
+            "placeholder": "Not Specified",
             "strings": {
                 "types": {
-                    "access": "General",
+                    "access": "All",
                     "foot": "Foot",
                     "motor_vehicle": "Motor Vehicles",
                     "bicycle": "Bicycles",
@@ -39206,6 +39398,10 @@ iD.data.presets = {
                     "destination": {
                         "title": "Destination",
                         "description": "Access permitted only to reach a destination"
+                    },
+                    "dismount": {
+                        "title": "Dismount",
+                        "description": "Access permitted but rider must dismount"
                     }
                 }
             }
@@ -39213,7 +39409,7 @@ iD.data.presets = {
         "access_simple": {
             "key": "access",
             "type": "combo",
-            "label": "Access",
+            "label": "Allowed Access",
             "placeholder": "yes",
             "options": [
                 "permissive",
@@ -39830,6 +40026,19 @@ iD.data.presets = {
                 }
             }
         },
+        "leaf_cycle_singular": {
+            "key": "leaf_cycle",
+            "type": "combo",
+            "label": "Leaf Cycle",
+            "strings": {
+                "options": {
+                    "evergreen": "Evergreen",
+                    "deciduous": "Deciduous",
+                    "semi_evergreen": "Semi-Evergreen",
+                    "semi_deciduous": "Semi-Deciduous"
+                }
+            }
+        },
         "leaf_type": {
             "key": "leaf_type",
             "type": "combo",
@@ -39839,6 +40048,18 @@ iD.data.presets = {
                     "broadleaved": "Broadleaved",
                     "needleleaved": "Needleleaved",
                     "mixed": "Mixed",
+                    "leafless": "Leafless"
+                }
+            }
+        },
+        "leaf_type_singular": {
+            "key": "leaf_type",
+            "type": "combo",
+            "label": "Leaf Type",
+            "strings": {
+                "options": {
+                    "broadleaved": "Broadleaved",
+                    "needleleaved": "Needleleaved",
                     "leafless": "Leafless"
                 }
             }
@@ -40121,10 +40342,20 @@ iD.data.presets = {
             "type": "check",
             "label": "Accepts Glass"
         },
+        "recycling/glass_bottles": {
+            "key": "recycling:glass_bottles",
+            "type": "check",
+            "label": "Accepts Glass Bottles"
+        },
         "recycling/paper": {
             "key": "recycling:paper",
             "type": "check",
             "label": "Accepts Paper"
+        },
+        "recycling/plastic": {
+            "key": "recycling:plastic",
+            "type": "check",
+            "label": "Accepts Plastic"
         },
         "recycling/type": {
             "key": "recycling_type",
@@ -40465,6 +40696,12 @@ iD.data.presets = {
                     "grade5": "Soft: soil/sand/grass"
                 }
             }
+        },
+        "traffic_signals": {
+            "key": "traffic_signals",
+            "type": "combo",
+            "label": "Type",
+            "default": "signal"
         },
         "trail_visibility": {
             "key": "trail_visibility",

@@ -150,7 +150,6 @@
     "browser_notice": "Hierdie program is bruikbaar in Firefox, Chrome, Safair, Opera en Internet Explorer 9 en later weergawes. Gradeer asseblief jou webbrowser op of gebruik Potlatch 2 om die kaart te verander.",
     "logout": "voetsek",
     "loading_auth": "Maak kontak met OpenStreetMap...",
-    "report_a_bug": "Raporteer 'n probleem",
     "status": {
         "error": "Kan nie aan die API koppel nie.",
         "offline": "Die API is aflyn, probeer asseblief later weer.",
@@ -294,7 +293,6 @@
         },
         "fields": {
             "access": {
-                "label": "Toegang",
                 "options": {
                     "designated": {
                         "description": "Voorgeskrewe toegang",
@@ -319,9 +317,7 @@
                         "title": "Toegelaat"
                     }
                 },
-                "placeholder": "Onbekend",
                 "types": {
-                    "access": "Algemene",
                     "bicycle": "Fietse",
                     "foot": "Voet",
                     "horse": "Perde",
@@ -329,7 +325,6 @@
                 }
             },
             "access_simple": {
-                "label": "Toegang",
                 "placeholder": "ja"
             },
             "address": {
@@ -855,9 +850,6 @@
             "highway/bus_stop": {
                 "name": "Busstop"
             },
-            "highway/crossing": {
-                "name": "Oorgang"
-            },
             "highway/cycleway": {
                 "name": "Fietsrypad"
             },
@@ -875,9 +867,6 @@
             },
             "highway/path": {
                 "name": "Paadjie"
-            },
-            "highway/pedestrian": {
-                "name": "Voetganger"
             },
             "highway/primary": {
                 "name": "Primere Pad"
@@ -950,12 +939,6 @@
             },
             "historic/wayside_cross": {
                 "name": "Padteken"
-            },
-            "landuse": {
-                "name": "Landsgebruik"
-            },
-            "landuse/allotments": {
-                "name": "Toegewysde lappie grond"
             },
             "landuse/basin": {
                 "name": "Laagte"
@@ -1237,9 +1220,6 @@
             },
             "railway/disused": {
                 "name": "Ongebruikte spoorweg"
-            },
-            "railway/level_crossing": {
-                "name": "Spooroorgang"
             },
             "railway/monorail": {
                 "name": "Enkelspoorbaan"

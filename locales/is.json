@@ -205,7 +205,6 @@
     "zoom_in_edit": "Þysja inn til að breyta",
     "logout": "útskrá",
     "loading_auth": "Tengist við OpenStreetMap...",
-    "report_a_bug": "tilkynna villu",
     "status": {
         "error": "Get ekki tengst við API.",
         "offline": "API er ekki tiltækur. Vinsamlegast reyndu að breyta aftur síðar.",
@@ -463,7 +462,6 @@
         },
         "fields": {
             "access": {
-                "label": "Aðgangur",
                 "options": {
                     "designated": {
                         "description": "Aðgangur heimill sökum skilta eða reglna",
@@ -490,9 +488,7 @@
                         "title": "Leyft"
                     }
                 },
-                "placeholder": "Óþekkt",
                 "types": {
-                    "access": "Almennt",
                     "bicycle": "Hjól",
                     "foot": "Fótgangandi",
                     "horse": "Hestar",
@@ -500,7 +496,6 @@
                 }
             },
             "access_simple": {
-                "label": "Aðgangur",
                 "placeholder": "já"
             },
             "access_toilets": {
@@ -1132,9 +1127,6 @@
             "building/construction": {
                 "name": "Á byggingarstigi"
             },
-            "building/detached": {
-                "name": "Raðhús"
-            },
             "building/dormitory": {
                 "name": "Heimavist"
             },
@@ -1268,9 +1260,6 @@
             "highway/bus_stop": {
                 "name": "Stoppistöð"
             },
-            "highway/crossing": {
-                "name": "Þverun"
-            },
             "highway/cycleway": {
                 "name": "Hjólastígur"
             },
@@ -1291,9 +1280,6 @@
             },
             "highway/path": {
                 "name": "Stígur"
-            },
-            "highway/pedestrian": {
-                "name": "Fótgangandi"
             },
             "highway/primary": {
                 "name": "Stofnbraut"
@@ -1391,12 +1377,6 @@
             },
             "historic/wayside_shrine": {
                 "name": "Tilbeiðsluskríni"
-            },
-            "landuse": {
-                "name": "Landnotkun"
-            },
-            "landuse/allotments": {
-                "name": "Ræktunargarðar"
             },
             "landuse/basin": {
                 "name": "Lægð"
@@ -1673,9 +1653,6 @@
             },
             "railway/funicular": {
                 "name": "Toglest"
-            },
-            "railway/level_crossing": {
-                "name": "Jöfn vegamót"
             },
             "railway/monorail": {
                 "name": "Monorail"
