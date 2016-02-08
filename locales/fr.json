@@ -250,7 +250,9 @@
         "warnings": "Attention",
         "modified": "Modifié",
         "deleted": "Supprimé",
-        "created": "Créé"
+        "created": "Créé",
+        "about_changeset_comments": "À propos des commentaires de groupe de modifications",
+        "about_changeset_comments_link": "//wiki.openstreetmap.org/wiki/Good_changeset_comments"
     },
     "contributors": {
         "list": "Editions de {users}",
@@ -289,6 +291,7 @@
         "no_documentation_key": "Aucune documentation n'est disponible pour cette clé",
         "show_more": "Plus d'informations",
         "view_on_osm": "Visualiser sur openstreetmap.org",
+        "all_fields": "Tous les champs",
         "all_tags": "Tous les tags",
         "all_members": "Tous les membres",
         "all_relations": "Toutes les relations",
@@ -448,7 +451,9 @@
         "facebook": "Partager sur Facebook",
         "twitter": "Partager sur Twitter",
         "google": "Partager sur Google+",
-        "help_html": "Vos changements doivent apparaitre sur la couche \"Standard\" dans quelques minutes. Les autres couches, et certains éléments nécessiteront plus de temps\n(<a href='https://help.openstreetmap.org/questions/4705/why-havent-my-changes-appeared-on-the-map' target='_blank'>détails</a>).\n"
+        "help_html": "Vos changements devraient apparaître dans le calque \"Standard\" d'ici quelques minutes. Pour d'autres calques et certains éléments, cela peut prendre plus de temps.",
+        "help_link_text": "Détails",
+        "help_link_url": "https://wiki.openstreetmap.org/wiki/FAQ#I_have_just_made_some_changes_to_the_map._How_do_I_get_to_see_my_changes.3F"
     },
     "confirm": {
         "okay": "OK",
@@ -511,50 +516,82 @@
         "relations": "# Relations⏎\n⏎\nUne relation est un élément spécial dans OpenStreetMap qui permet de regrouper ensemble d'autre éléments\nPar exemple, les deux plus courants types de relations sont *route relations*,\nqui regroupe des sections de route qui appartiennent à une autoroute, \net *multipolygons*, qui regroupe plusieurs lignes qui définissent\nune zone complexe (une avec plusieurs pièces ou trous à l’intérieur comme un donut).⏎\n⏎\nLe groupe d'éléments dans une relation sont appelés *members*. Dans le menu de côté, vous pouvez\nvoir dans quelles relations l'élément appartient, et sélectionner une des relations pour voir.\nLorsque la relation est sélectionnée, vous pouvez voir tous\nles membres listés dans le menu de côté et la mettre en sur-impression sur la carte.⏎\n⏎\nPour la plus part, iD veillera à maintenir les relations automatiquement\npendant que vous éditez. La chose la plus importe que vous devez savoir est que si vous effacez une\nsection de route pour la rendre plus précise, vous devez vous assurer que \nla nouvelle section est un membre des même relations que l'originale.⏎\n⏎\n## Modifier des Relations⏎\n⏎\nSi vous voulez modifier des relations, voici les bases.⏎\n⏎\nPour apporter une information à une relation, sélectionnez l'élément, appuyez sur le bouton \"+\" dans la\nsection \"All relations\" du menu du côté, et sélectionnez ou saisissez le nom de la relation.⏎\n⏎\nPour créer une nouvelle relation, sélectionnez le premier élément qui doit en être membre,\nappuyez sur le bouton \"+\" dans le section \"All relations\", et sélectionner \"New relation...\".\n⏎\nPour retirer un élément d'une relation, sélectionnez l’élément et appuyez sur le symbole de la corbeille.\nbutton next de la relation si vous souhaitez la supprimer.⏎\n⏎\nVous pouvez créer des multipolygons avec des trous en utilisant l'outil \"Merge\". Dessinez deux polygones (inner\net outer), maintenez la touche Shift/Majuscule et appuyez sur chacune d'elles pour les sélectionner, et après\nappuyez le bouton \"Merge\" (+) .⏎\n"
     },
     "intro": {
+        "graph": {
+            "city_hall": "Mairie",
+            "fire_department": "Caserne de pompiers",
+            "memory_isle_park": "Parc Paumier",
+            "riverwalk_trail": "Sentier fleuri",
+            "w_michigan_ave": "Avenue des lilas",
+            "e_michigan_ave": "Avenue George Sand",
+            "spring_st": "Rue Curie",
+            "scidmore_park": "Parc Fleurette",
+            "petting_zoo": "Zoo",
+            "n_andrews_st": "Rue Robespierre",
+            "s_andrews_st": "Rue de la Liberté",
+            "n_constantine_st": "Rue de la Fraternité",
+            "s_constantine_st": "Rue de l'Egalité",
+            "rocky_river": "Le boulan",
+            "railroad_dr": "Allée ferrée",
+            "conrail_rr": "Chemin de fer",
+            "st_joseph_river": "La margoune",
+            "n_main_st": "Rue de la République",
+            "s_main_st": "Rue de la République",
+            "water_st": "Rue froide",
+            "foster_st": "Rue Victor Hugo",
+            "portage_river": "Le chil",
+            "flower_st": "Rue des pains",
+            "elm_st": "Rue Jules Verne",
+            "walnut_st": "Rue Simone de Beauvoir",
+            "morris_ave": "Avenue Simone Veil",
+            "east_st": "Rue du Japon",
+            "portage_ave": "Avenue de la paix"
+        },
         "navigation": {
             "title": "Navigation",
             "drag": "La vue principale montre les données OpenStreetMap par dessus un fond de carte. Vous pouvez naviguer au sein de la vue en faisant du cliquer-glisser, ou avec les barres de navigation, comme n'importe quelle carte sur Internet. **Faites glisser la carte !**",
             "select": "Les éléments cartographiques sont de trois types : les points, les lignes et les polygones. Chaque élément peut être sélectionné en cliquant dessus. **Cliquez sur le point pour le sélectionner.**",
-            "header": "L'entête nous montre le type d'élément.",
-            "pane": "Lorsqu'un élément est sélectionné, l'éditeur d'éléments est affiché. L'entête nous indique le type d'élément et le panneau principal nous montre les attributs de l'élément, tels que son nom et son adresse. **Fermez l'éditeur d'éléments en cliquant sur le bouton de fermeture en haut à droite.**"
+            "pane": "Lorsqu'un élément est sélectionné, l'éditeur d'éléments est affiché. L'entête nous indique que le type d'élément et le panneau principal nous montre les attributs de l'élément, tels que son nom et son adresse. **Fermez l'éditeur d'éléments en cliquant sur le {button} bouton de fermeture en haut à droite.**",
+            "search": "Vous pouvez aussi rechercher des éléments pour la vue courante, ou le monde entier. **Recherchez '{name}'**",
+            "choose": "** Choisissez {name} depuis la liste pour le selectionner. ** ",
+            "chosen": "Super ! {name} est sélectionné. **Fermer l'éditeur d'élément en cliquant sur le bouton {button}.**"
         },
         "points": {
             "title": "Points",
-            "add": "Des points peuvent être utilisés pour représenter des éléments comme des magasins, restaurants ou monuments. Ils indiquent une position précise et décrivent ce qu'il y a à cet endroit. **Cliquez sur le bouton \"Point\" pour ajouter un point.**",
-            "place": "Le point peut être placé en cliquant sur la carte. **Placer le point sur le dessus du bâtiment.**",
+            "add": "Les points sont utilisés pour représenter des éléments tels que des magasins, des restaurants ou des monuments. Ils indiquent une position précise, et décrivent ce qui s'y trouve. **Clickez sur le {button} bouton Point pour ajouter un nouveau point.**",
+            "place": "Le point peut être placé en cliquant sur la carte. **Cliquez sur la carte pour positionner le nouveau point sur le bâtiment.**",
             "search": "De nombreux éléments peuvent être représentés par des points. Le point que vous venez d'ajouter est un café. \n**Cherchez '{name}'**",
             "choose": "**Choisi Café dans la liste.**",
             "describe": "Le point est désormais marqué comme étant un café. Nous pouvons ajouter davantage d'informations grâce à l'éditeur d'élément. **Ajoutez un nom au café.**",
-            "close": "L'éditeur d'éléments peut être fermé en cliquant sur le bouton de fermeture. **Fermez l'éditeur d'éléments.**",
-            "reselect": "Souvent, des points existent déjà, mais contiennent des erreurs ou sont incomplets. Vous pouvez éditer des points déjà existants. **Sélectionnez le point que vous venez de créer.*",
-            "fixname": "**Modifier le nom et fermez l'éditeur d'éléments.**",
-            "reselect_delete": "Tous les éléments de la carte peuvent être supprimés. **Cliquez sur le point que vous venez de créer.**",
-            "delete": "Le menu autour du point contient des opérations que vous pouvez lui appliquer, notamment sa suppression. **Supprimez le point.**"
+            "close": "L'éditeur d'élément enregistre automatiquement tous vos changements. Quand vous éditez une caractéristique, the bouton fermer se transforme en coche. **Cliquez sur le {button} bouton pour fermer l'éditeur d'élément.\"",
+            "reselect": "En général, les points existent déjà, mais sont incomplets ou contiennent des erreurs. Il est possible de modifier un point existant. **Cliquez pour sélectionner le point que vous venez de créer.**",
+            "fixname": "**Changez le nom, puis cliquez sur le {button} bouton pour fermer l'éditeur d'élément.**",
+            "reselect_delete": "Toutes les caractéristiques de la carte peuvent être supprimées. **Cliquez pour sélectionnez le point que vous avez créé**",
+            "delete": "Le menu autour du point affiche les opérations disponibles sur ce point, dont la suppression. **Cliquez sur le {button} bouton pour effacer le point.**"
         },
         "areas": {
             "title": "Polygone",
-            "add": "Les polygones sont utilisés pour montrer les frontières d'éléments comme des lacs, des bâtiments, et des zones résidentielles. Ils peuvent être également utilisés pour une cartographie plus détaillée de beaucoup d'éléments que vous pourriez normalement cartographier comme des points. **Cliquez sur le bouton Polygone pour ajouter un nouveau polygone.**",
-            "corner": "Les polygones sont dessinés en plaçant des nœuds l'un après l'autre. **Ajoutez un premier nœud sur un coin de l'aire de jeu.**",
+            "add": "Les zones sont utilisées pour montrer les forntières d'éleme,ts comme des lacs, batiments et des zones résidentielles. Elles peuvent aussi être utilisées pour cartographier plus en détail des élements que l'on peut cartographier comme des points. **Cliquer sur le {button} zone pour ajouter une nouvelle zone. ",
+            "corner": "Dessinez la zone en positionnant les noeuds qui forment la frontière de la zone. **Cliquer sur l'un des coins du terrain de jeux pour démarrer.  ",
             "place": "Dessinez le polygone en ajoutant des nœuds. Terminez le polygone en cliquant sur le nœud de départ. **Dessinez un polygone pour l'aire de jeu.**",
             "search": "**Rechercher '{name}'.**",
             "choose": "**Choisi Terrain de jeu dans la liste.**",
-            "describe": "**Ajouter un nom, et fermez l'éditeur d'éléments.**"
+            "describe": "**Ajoutez un nom et ensuite cliquez sur le bouton {button} pour fermer l'éditeur d'éléments**"
         },
         "lines": {
             "title": "Lignes",
-            "add": "Les lignes sont utilisées pour représenter des éléments tels que des routes, des voies ferrées ou des rivières. **Cliquer sur le bouton Ligne pour ajouter une nouvelle ligne.**",
+            "add": "Les lignes sont utilisées pour représenter des éléments tels que des routes, chemins de fer ou rivières. **Cliquer sur le {button} Line pour ajouter une nouvelle ligne.",
             "start": "**Commencez la ligne en cliquant sur l'extrémité de la route.**",
-            "intersect": "Cliquez pour ajouter des nœuds à la ligne.Si nécessaire, Vous pouvez déplacer la carte pendant le dessin. Les routes, comme d'autres types de lignes, font partie d'un réseau plus large : il est important que ces lignes soient correctement connectées afin que les applications de \"routing\" fonctionnent. **Cliquez sur Flower Street pour créer une intersection qui connecte les deux lignes.**",
+            "intersect": "Cliquez pour ajouter plus de noeuds à la ligne. Il est possible de déplacer la carte pendant le traçage. Les routes et les autres types de ligne font partie d'un plus grand réseau. Il est important que les lignes soient correctement connectées pour permettre aux applications de fonctionner. **Cliquer sur {name} pour créer une intersection connectant les deux lignes. ",
             "finish": "Les lignes peuvent être terminées en cliquant une seconde fois sur le dernier nœud. **Terminez le dessin de la route**",
             "road": "**Choisi Rue dans la liste**",
             "residential": "Il y a différent types de routes, le plus commun est \"Résidentielle\" (Residential). **Sélectionnez le type \"Résidentielle\".**",
-            "describe": "**Donnez un nom à la rue et fermez l'éditeur d'éléments.**",
-            "restart": "La route nécessite d'être interconnectée avec Flower Street.",
+            "describe": "**Donnez un nom à la route, puis cliquez sur le {button} bouton pour fermer l'éditeur d'élément.**",
+            "restart": "La route doit couper {name}.",
             "wrong_preset": "Vous n'avez pas sélectionné de type de rue résidentielle. **Cliquez ici pour rechoisir** "
         },
         "startediting": {
             "title": "Commencer à éditer",
-            "help": "Ce tutoriel et d'autres informations sont disponibles ici.",
+            "help": "Vous pouvez rejouer cette démonstration ou accéder à plus de documentation en cliquant sur le {button} bouton Aide.",
             "save": "N'oubliez pas de sauver régulièrement vos modifications !",
             "start": "Commencer à cartographier !"
         }
@@ -851,6 +888,12 @@
             "description": {
                 "label": "Description"
             },
+            "diaper": {
+                "label": "Table à langer disponible"
+            },
+            "dock": {
+                "label": "Type"
+            },
             "drive_through": {
                 "label": "Point-retrait"
             },
@@ -1078,10 +1121,10 @@
                 "label": "Difficulté VTT",
                 "options": {
                     "0": "0 : Gravier/terre battue, pas d'obstacles, de grandes courbes",
-                    "1": "1 : Quelques graviers, de petits obstacles, de grandes courbes",
-                    "2": "2 : Grande surface, grands obstacles, des épingles à cheveux faciles",
-                    "3": "3 : Surface glissante, de gros obstacles épingles serrées",
-                    "4": "4 : Surface avec des rochers, des épingles à cheveux dangereuses",
+                    "1": "1 : Quelques revêtements mous, de petits obstacles, de grandes courbes",
+                    "2": "2 : Beaucoup de surfaces molles, grands obstacles, des épingles à cheveux faciles",
+                    "3": "3 : Revêtement glissant, de gros obstacles épingles serrées",
+                    "4": "4 : Revêtement avec des rochers, des épingles à cheveux dangereuses",
                     "5": "5 : Difficulté maximale, champs de blocs, glissements de terrain",
                     "6": "6 : Non praticable, que par les meilleurs vététistes"
                 },
@@ -1103,8 +1146,8 @@
                 "options": {
                     "0": "0: Inclinaison <10% , sol consistent, pas d'obstacles",
                     "1": "1: Inclinaison < 15%, sol consistant, quelques petits obstacles",
-                    "2": "2: Inclinaison <20%, surface stable, pierres/racines",
-                    "3": "3: Inclinaison <25%, différents types de terrains, pierres/branches",
+                    "2": "2: Inclinaison <20%, revêtement stable, pierres/racines",
+                    "3": "3: Inclinaison <25%, revêtement variable, pierres/branches",
                     "4": "4: Inclinaison <30%, conditions difficiles, rochers/branches",
                     "5": "5: Abrupt, le vélo doit généralement être porté ou poussé"
                 },
@@ -1163,7 +1206,7 @@
                     "lane": "Route",
                     "multi-storey": "Multiples étages",
                     "sheds": "Cabanes",
-                    "surface": "Surface",
+                    "surface": "Revêtement",
                     "underground": "Souterrain"
                 }
             },
@@ -1423,7 +1466,7 @@
             "tracktype": {
                 "label": "Type de voie",
                 "options": {
-                    "grade1": "Dur : pavé ou surface très compacte",
+                    "grade1": "Dur : pavé ou revêtement très compacte",
                     "grade2": "Majoritairement dur : gravier/pierre avec quelque matériaux mous mélangés dedans",
                     "grade3": "Mélange à égalité entre matériaux mous et durs",
                     "grade4": "Majoritairement mou : terre/sable/herbe avec quelque matériaux durs mélangés dedans",
@@ -1599,8 +1642,8 @@
                 "terms": "Location de vélo, Location de bicyclette"
             },
             "amenity/bicycle_repair_station": {
-                "name": "Station de réparation de vélos",
-                "terms": "Borne de réparation de vélos,Point de réparation de vélos"
+                "name": "Stand D'outils De Réparation De Vélos",
+                "terms": "Magasin de vélos , Atelier De Réparation De Vélos"
             },
             "amenity/biergarten": {
                 "name": "Brasserie de plein air",
@@ -1664,7 +1707,7 @@
             },
             "amenity/community_centre": {
                 "name": "Salle des fêtes",
-                "terms": "Salle festive, Salle polyvalente, Centre communautaire"
+                "terms": "Salle festive, Salle polyvalente, Centre communautaire, Salle des associations"
             },
             "amenity/compressed_air": {
                 "name": "Air comprimé",
@@ -1678,7 +1721,7 @@
                 "name": "Dentiste",
                 "terms": "Dentiste"
             },
-            "amenity/doctor": {
+            "amenity/doctors": {
                 "name": "Médecin",
                 "terms": "Docteur, Médecin"
             },
@@ -1697,6 +1740,10 @@
             "amenity/fast_food": {
                 "name": "Restauration rapide",
                 "terms": "Fast Food, Restauration Rapide"
+            },
+            "amenity/ferry_terminal": {
+                "name": "Terminal ferry",
+                "terms": "Terminal des ferries, Gare maritime"
             },
             "amenity/fire_station": {
                 "name": "Caserne de pompiers",
@@ -1721,6 +1768,10 @@
             "amenity/hospital": {
                 "name": "Terrains d'hôpital",
                 "terms": "Terrains d'hôpital"
+            },
+            "amenity/hunting_stand": {
+                "name": "Mirador",
+                "terms": "Mirador"
             },
             "amenity/kindergarten": {
                 "name": "Terrains d'école maternelle / jardin d'enfants",
@@ -1749,6 +1800,10 @@
             "amenity/parking_entrance": {
                 "name": "Entrée/Sortie de parking",
                 "terms": "Entrée/Sortie de parking"
+            },
+            "amenity/parking_space": {
+                "name": "Place de parking",
+                "terms": "Parking, Zone de stationnement"
             },
             "amenity/pharmacy": {
                 "name": "Pharmacie",
@@ -1917,6 +1972,14 @@
             "amenity/waste_basket": {
                 "name": "Corbeille",
                 "terms": "Corbeille, Poubelle"
+            },
+            "amenity/waste_disposal": {
+                "name": "Bac à déchets",
+                "terms": "Benne à ordures, poubelle"
+            },
+            "amenity/water_point": {
+                "name": "Eau potable",
+                "terms": "Eau potable"
             },
             "area": {
                 "name": "Polygone",
@@ -2559,8 +2622,8 @@
                 "terms": "Point de retournement"
             },
             "highway/unclassified": {
-                "name": "Route de desserte locale",
-                "terms": "Route inconnue"
+                "name": "Route secondaire",
+                "terms": "Voie secondaire"
             },
             "historic": {
                 "name": "Site historique",
@@ -2798,9 +2861,13 @@
                 "name": "Plan incliné",
                 "terms": "Cale de lancement, Cale, Cale de mise à l'eau"
             },
-            "leisure/sports_center": {
+            "leisure/sports_centre": {
                 "name": "Centre sportif / Salle de gymnastique",
-                "terms": "Centre sportif,Salle de sport,Gymnase,Terrain de sport,Piscine"
+                "terms": "Centre sportif,Salle de sport"
+            },
+            "leisure/sports_centre/swimming": {
+                "name": "Piscine",
+                "terms": "Piscine"
             },
             "leisure/stadium": {
                 "name": "Stade",
@@ -2813,6 +2880,10 @@
             "leisure/track": {
                 "name": "Piste de course (sports non motorisés)",
                 "terms": "Piste de course (sports non motorisés)"
+            },
+            "leisure/water_park": {
+                "name": "Parc à thème aquatique",
+                "terms": "Parc d'attractions aquatiques"
             },
             "line": {
                 "name": "Ligne",
@@ -2830,6 +2901,10 @@
                 "name": "Brise-lames",
                 "terms": "Brise-lames"
             },
+            "man_made/chimney": {
+                "name": "Cheminée",
+                "terms": "Cheminée"
+            },
             "man_made/cutline": {
                 "name": "Ligne de coupe",
                 "terms": "ligne de coupe forestière"
@@ -2841,6 +2916,14 @@
             "man_made/flagpole": {
                 "name": "Porte-drapeau",
                 "terms": "Hampe"
+            },
+            "man_made/gasometer": {
+                "name": "Gazomètre",
+                "terms": "Gazomètre"
+            },
+            "man_made/groyne": {
+                "name": "Épi maritime",
+                "terms": "épi maritime"
             },
             "man_made/lighthouse": {
                 "name": "Phare",
@@ -2874,6 +2957,10 @@
                 "name": "Réservoir de stockage",
                 "terms": "Silo de stockage"
             },
+            "man_made/surveillance": {
+                "name": "Caméra de surveillance",
+                "terms": "caméra, vidéo"
+            },
             "man_made/survey_point": {
                 "name": "Poteau de triangulation",
                 "terms": "Borne géodésique, monument géodésique, repère géodésique"
@@ -2897,6 +2984,10 @@
             "man_made/water_works": {
                 "name": "Station de pompage d'eau potable",
                 "terms": "Station de pompage"
+            },
+            "man_made/works": {
+                "name": "Usine",
+                "terms": "usine, site industriel"
             },
             "military/airfield": {
                 "name": "Aérodrome",
@@ -3902,6 +3993,10 @@
                 "name": "Voie navigable",
                 "terms": "Voie d'eau, Cours d'eau"
             },
+            "waterway/boatyard": {
+                "name": "Chantier naval",
+                "terms": "Chantier naval, Chantier maritime"
+            },
             "waterway/canal": {
                 "name": "Canal",
                 "terms": "Canal"
@@ -3913,6 +4008,10 @@
             "waterway/ditch": {
                 "name": "Fossé",
                 "terms": "Fossé"
+            },
+            "waterway/dock": {
+                "name": "Quai",
+                "terms": "Quai, Dock"
             },
             "waterway/drain": {
                 "name": "Canal d'évacuation d'eau pluviale",
@@ -3937,6 +4036,10 @@
             "waterway/stream": {
                 "name": "Ruisseau",
                 "terms": "Ruisseau"
+            },
+            "waterway/water_point": {
+                "name": "Eau potable",
+                "terms": "Eau potable"
             },
             "waterway/weir": {
                 "name": "Seuil",

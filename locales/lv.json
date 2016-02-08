@@ -263,8 +263,7 @@
         },
         "lines": {
             "title": "Līnijas",
-            "start": "**Uzsāciet līniju, klikšķinot ceļa beigu punktā.**",
-            "restart": "Ceļam jākrusto Flower Street."
+            "start": "**Uzsāciet līniju, klikšķinot ceļa beigu punktā.**"
         },
         "startediting": {
             "save": "Neizmirstiet regulāri saglabāt izmaiņas!",
@@ -690,9 +689,6 @@
             },
             "highway/turning_circle": {
                 "name": "Apgriešanās riņķis"
-            },
-            "highway/unclassified": {
-                "name": "Neklasificēts ceļš"
             },
             "historic": {
                 "name": "Vēsturiska vieta"

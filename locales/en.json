@@ -140,7 +140,8 @@
             "key": "D",
             "annotation": "Disconnected lines/areas.",
             "not_connected": "There aren't enough lines/areas here to disconnect.",
-            "connected_to_hidden": "This can't be disconnected because it is connected to a hidden feature."
+            "connected_to_hidden": "This can't be disconnected because it is connected to a hidden feature.",
+            "relation": "This can't be disconnected because it connects members of a relation."
         },
         "merge": {
             "title": "Merge",
@@ -257,7 +258,9 @@
         "warnings": "Warnings",
         "modified": "Modified",
         "deleted": "Deleted",
-        "created": "Created"
+        "created": "Created",
+        "about_changeset_comments": "About changeset comments",
+        "about_changeset_comments_link": "//wiki.openstreetmap.org/wiki/Good_changeset_comments"
     },
     "contributors": {
         "list": "Edits by {users}",
@@ -296,6 +299,7 @@
         "no_documentation_key": "There is no documentation available for this key",
         "show_more": "Show More",
         "view_on_osm": "View on openstreetmap.org",
+        "all_fields": "All fields",
         "all_tags": "All tags",
         "all_members": "All members",
         "all_relations": "All relations",
@@ -328,10 +332,12 @@
         "description": "Background settings",
         "percent_brightness": "{opacity}% brightness",
         "none": "None",
+        "best_imagery": "Best known imagery source for this location",
         "custom": "Custom",
         "custom_button": "Edit custom background",
         "custom_prompt": "Enter a tile URL template. Valid tokens are {z}, {x}, {y} for Z/X/Y scheme and {u} for quadtile scheme.",
         "fix_misalignment": "Fix alignment",
+        "imagery_source_faq": "Where does this imagery come from?",
         "reset": "reset",
         "minimap": {
             "description": "Minimap",
@@ -455,7 +461,9 @@
         "facebook": "Share on Facebook",
         "twitter": "Share on Twitter",
         "google": "Share on Google+",
-        "help_html": "Your changes should appear in the \"Standard\" layer in a few minutes. Other layers, and certain features, may take longer\n(<a href='https://help.openstreetmap.org/questions/4705/why-havent-my-changes-appeared-on-the-map' target='_blank'>details</a>).\n"
+        "help_html": "Your changes should appear in the \"Standard\" layer in a few minutes. Other layers, and certain features, may take longer.",
+        "help_link_text": "Details",
+        "help_link_url": "https://wiki.openstreetmap.org/wiki/FAQ#I_have_just_made_some_changes_to_the_map._How_do_I_get_to_see_my_changes.3F"
     },
     "confirm": {
         "okay": "Okay",
@@ -518,50 +526,82 @@
         "relations": "# Relations\n\nA relation is a special type of feature in OpenStreetMap that groups together\nother features. For example, two common types of relations are *route relations*,\nwhich group together sections of road that belong to a specific freeway or\nhighway, and *multipolygons*, which group together several lines that define\na complex area (one with several pieces or holes in it like a donut).\n\nThe group of features in a relation are called *members*. In the sidebar, you can\nsee which relations a feature is a member of, and click on a relation there\nto select the it. When the relation is selected, you can see all of its\nmembers listed in the sidebar and highlighted on the map.\n\nFor the most part, iD will take care of maintaining relations automatically\nwhile you edit. The main thing you should be aware of is that if you delete a\nsection of road to redraw it more accurately, you should make sure that the\nnew section is a member of the same relations as the original.\n\n## Editing Relations\n\nIf you want to edit relations, here are the basics.\n\nTo add a feature to a relation, select the feature, click the \"+\" button in the\n\"All relations\" section of the sidebar, and select or type the name of the relation.\n\nTo create a new relation, select the first feature that should be a member,\nclick the \"+\" button in the \"All relations\" section, and select \"New relation...\".\n\nTo remove a feature from a relation, select the feature and click the trash\nbutton next to the relation you want to remove it from.\n\nYou can create multipolygons with holes using the \"Merge\" tool. Draw two areas (inner\nand outer), hold the Shift key and click on each of them to select them both, and then\nclick the \"Merge\" (+) button.\n"
     },
     "intro": {
+        "graph": {
+            "city_hall": "Three Rivers City Hall",
+            "fire_department": "Three Rivers Fire Department",
+            "memory_isle_park": "Memory Isle Park",
+            "riverwalk_trail": "Riverwalk Trail",
+            "w_michigan_ave": "West Michigan Avenue",
+            "e_michigan_ave": "East Michigan Avenue",
+            "spring_st": "Spring Street",
+            "scidmore_park": "Scidmore Park",
+            "petting_zoo": "Scidmore Park Petting Zoo",
+            "n_andrews_st": "North Andrews Street",
+            "s_andrews_st": "South Andrews Street",
+            "n_constantine_st": "North Constantine Street",
+            "s_constantine_st": "South Constantine Street",
+            "rocky_river": "Rocky River",
+            "railroad_dr": "Railroad Drive",
+            "conrail_rr": "Conrail Railroad",
+            "st_joseph_river": "Saint Joseph River",
+            "n_main_st": "North Main Street",
+            "s_main_st": "South Main Street",
+            "water_st": "Water Street",
+            "foster_st": "Foster Street",
+            "portage_river": "Portage River",
+            "flower_st": "Flower Street",
+            "elm_st": "Elm Street",
+            "walnut_st": "Walnut Street",
+            "morris_ave": "Morris Avenue",
+            "east_st": "East Street",
+            "portage_ave": "Portage Avenue"
+        },
         "navigation": {
             "title": "Navigation",
             "drag": "The main map area shows OpenStreetMap data on top of a background. You can navigate by dragging and scrolling, just like any web map. **Drag the map!**",
             "select": "Map features are represented three ways: using points, lines or areas. All features can be selected by clicking on them. **Click on the point to select it.**",
-            "header": "The header shows us the feature type.",
-            "pane": "When a feature is selected, the feature editor is displayed. The header shows us the feature type and the main pane shows the feature's attributes, such as its name and address. **Close the feature editor with the close button in the top right.**"
+            "pane": "When a feature is selected, the feature editor is displayed. The header shows us the feature type and the main pane shows the feature's attributes, such as its name and address. **Close the feature editor by pressing the {button} button in the top right.**",
+            "search": "You can also search for features in the current view, or worldwide. **Search for '{name}'**",
+            "choose": "**Choose {name} from the list to select it.**",
+            "chosen": "Great! {name} is now selected. **Close the feature editor by pressing the {button} button.**"
         },
         "points": {
             "title": "Points",
-            "add": "Points can be used to represent features such as shops, restaurants and monuments. They mark a specific location, and describe what's there. **Click the Point button to add a new point.**",
-            "place": "The point can be placed by clicking on the map. **Place the point on top of the building.**",
+            "add": "Points can be used to represent features such as shops, restaurants, and monuments. They mark a specific location, and describe what's there. **Click the {button} Point button to add a new point.**",
+            "place": "The point can be placed by clicking on the map. **Click the map to place the new point on top of the building.**",
             "search": "There are many different features that can be represented by points. The point you just added is a Cafe. **Search for '{name}'**",
             "choose": "**Choose Cafe from the list.**",
             "describe": "The point is now marked as a cafe. Using the feature editor, we can add more information about the feature. **Add a name**",
-            "close": "The feature editor can be closed by clicking on the close button. **Close the feature editor**",
-            "reselect": "Often points will already exist, but have mistakes or be incomplete. We can edit existing points. **Select the point you just created.**",
-            "fixname": "**Change the name and close the feature editor.**",
-            "reselect_delete": "All features on the map can be deleted. **Click on the point you created.**",
-            "delete": "The menu around the point contains operations that can be performed on it, including delete. **Delete the point.**"
+            "close": "The feature editor will remember all of your changes automatically.  When you change a feature, the close button will change to a checkmark. **Click the {button} button to close the feature editor**",
+            "reselect": "Often points will already exist, but have mistakes or be incomplete. We can edit existing points. **Click to select the point you just created.**",
+            "fixname": "**Change the name, then click the {button} button to close the feature editor.**",
+            "reselect_delete": "All features on the map can be deleted. **Click to select the point you created.**",
+            "delete": "The menu around the point contains operations that can be performed on it, including delete. **Click on the {button} button to delete the point.**"
         },
         "areas": {
             "title": "Areas",
-            "add": "Areas are used to show the boundaries of features like lakes, buildings, and residential areas. They can be also be used for more detailed mapping of many features you might normally map as points. **Click the Area button to add a new area.**",
-            "corner": "Areas are drawn by placing nodes that mark the boundary of the area. **Place the starting node on one of the corners of the playground.**",
+            "add": "Areas are used to show the boundaries of features like lakes, buildings, and residential areas. They can be also be used for more detailed mapping of many features you might normally map as points. **Click the {button} Area button to add a new area.**",
+            "corner": "Areas are drawn by placing nodes that mark the boundary of the area. **Click to place a starting node on one of the corners of the playground.**",
             "place": "Draw the area by placing more nodes. Finish the area by clicking on the starting node. **Draw an area for the playground.**",
             "search": "**Search for '{name}'.**",
             "choose": "**Choose Playground from the list.**",
-            "describe": "**Add a name, and close the feature editor**"
+            "describe": "**Add a name, then click the {button} button to close the feature editor**"
         },
         "lines": {
             "title": "Lines",
-            "add": "Lines are used to represent features such as roads, railroads and rivers. **Click the Line button to add a new line.**",
+            "add": "Lines are used to represent features such as roads, railroads, and rivers. **Click the {button} Line button to add a new line.**",
             "start": "**Start the line by clicking on the end of the road.**",
-            "intersect": "Click to add more nodes to the line. You can drag the map while drawing if necessary. Roads, and many other types of lines, are part of a larger network. It is important for these lines to be connected properly in order for routing applications to work. **Click on Flower Street, to create an intersection connecting the two lines.**",
+            "intersect": "Click to add more nodes to the line. You can drag the map while drawing if necessary. Roads, and many other types of lines, are part of a larger network. It is important for these lines to be connected properly in order for routing applications to work. **Click on {name} to create an intersection connecting the two lines.**",
             "finish": "Lines can be finished by clicking on the last node again. **Finish drawing the road.**",
             "road": "**Select Road from the list**",
             "residential": "There are different types of roads, the most common of which is Residential. **Choose the Residential road type**",
-            "describe": "**Name the road and close the feature editor.**",
-            "restart": "The road needs to intersect Flower Street.",
+            "describe": "**Name the road, then click the {button} button to close the feature editor.**",
+            "restart": "The road needs to intersect {name}.",
             "wrong_preset": "You didn't select the Residential road type. **Click here to choose again**"
         },
         "startediting": {
             "title": "Start Editing",
-            "help": "More documentation and this walkthrough are available here.",
+            "help": "You can replay this walkthrough or view more documentation by clicking the {button} Help button.",
             "save": "Don't forget to regularly save your changes!",
             "start": "Start mapping!"
         }
@@ -857,6 +897,12 @@
             },
             "description": {
                 "label": "Description"
+            },
+            "diaper": {
+                "label": "Diaper Changing Available"
+            },
+            "dock": {
+                "label": "Type"
             },
             "drive_through": {
                 "label": "Drive-Through"
@@ -1332,6 +1378,9 @@
             "shop": {
                 "label": "Type"
             },
+            "site": {
+                "label": "Type"
+            },
             "sloped_curb": {
                 "label": "Sloped Curb"
             },
@@ -1595,7 +1644,7 @@
             },
             "amenity/bench": {
                 "name": "Bench",
-                "terms": ""
+                "terms": "seat"
             },
             "amenity/bicycle_parking": {
                 "name": "Bicycle Parking",
@@ -1606,8 +1655,8 @@
                 "terms": "bike"
             },
             "amenity/bicycle_repair_station": {
-                "name": "Bicycle Repair Station",
-                "terms": "bike"
+                "name": "Bicycle Repair Tool Stand",
+                "terms": "bike,repair,chain,pump"
             },
             "amenity/biergarten": {
                 "name": "Beer Garden",
@@ -1627,7 +1676,7 @@
             },
             "amenity/cafe": {
                 "name": "Cafe",
-                "terms": "coffee,tea"
+                "terms": "bistro,coffee,tea"
             },
             "amenity/car_rental": {
                 "name": "Car Rental",
@@ -1685,7 +1734,7 @@
                 "name": "Dentist",
                 "terms": "tooth,teeth"
             },
-            "amenity/doctor": {
+            "amenity/doctors": {
                 "name": "Doctor",
                 "terms": "medic*"
             },
@@ -1705,6 +1754,10 @@
                 "name": "Fast Food",
                 "terms": "restaurant"
             },
+            "amenity/ferry_terminal": {
+                "name": "Ferry Terminal",
+                "terms": ""
+            },
             "amenity/fire_station": {
                 "name": "Fire Station",
                 "terms": ""
@@ -1715,7 +1768,7 @@
             },
             "amenity/fuel": {
                 "name": "Gas Station",
-                "terms": "petrol,fuel,propane,diesel,lng,cng,biodiesel"
+                "terms": "petrol,fuel,gasoline,propane,diesel,lng,cng,biodiesel"
             },
             "amenity/grave_yard": {
                 "name": "Graveyard",
@@ -1728,6 +1781,10 @@
             "amenity/hospital": {
                 "name": "Hospital Grounds",
                 "terms": "clinic,doctor,emergency room,health service,hospice,infirmary,institution,nursing home,sanatorium,sanitarium,sick,surgery,ward"
+            },
+            "amenity/hunting_stand": {
+                "name": "Hunting Stand",
+                "terms": ""
             },
             "amenity/kindergarten": {
                 "name": "Preschool/Kindergarten Grounds",
@@ -1755,6 +1812,10 @@
             },
             "amenity/parking_entrance": {
                 "name": "Parking Garage Entrance/Exit",
+                "terms": ""
+            },
+            "amenity/parking_space": {
+                "name": "Parking Space",
                 "terms": ""
             },
             "amenity/pharmacy": {
@@ -1923,7 +1984,15 @@
             },
             "amenity/waste_basket": {
                 "name": "Waste Basket",
-                "terms": "rubbish,litter,trash,garbage"
+                "terms": "bin,rubbish,litter,trash,garbage"
+            },
+            "amenity/waste_disposal": {
+                "name": "Garbage Dumpster",
+                "terms": "rubbish,litter,trash"
+            },
+            "amenity/water_point": {
+                "name": "RV Drinking Water",
+                "terms": ""
             },
             "area": {
                 "name": "Area",
@@ -2566,7 +2635,7 @@
                 "terms": "cul-de-sac"
             },
             "highway/unclassified": {
-                "name": "Unclassified Road",
+                "name": "Minor Road",
                 "terms": ""
             },
             "historic": {
@@ -2805,9 +2874,13 @@
                 "name": "Slipway",
                 "terms": "boat launch,boat ramp"
             },
-            "leisure/sports_center": {
+            "leisure/sports_centre": {
                 "name": "Sports Center / Gym",
                 "terms": "gym"
+            },
+            "leisure/sports_centre/swimming": {
+                "name": "Swimming Pool Facility",
+                "terms": "dive,water"
             },
             "leisure/stadium": {
                 "name": "Stadium",
@@ -2815,11 +2888,15 @@
             },
             "leisure/swimming_pool": {
                 "name": "Swimming Pool",
-                "terms": ""
+                "terms": "dive,water"
             },
             "leisure/track": {
                 "name": "Racetrack (non-Motorsport)",
                 "terms": ""
+            },
+            "leisure/water_park": {
+                "name": "Water Park",
+                "terms": "swim,pool,dive"
             },
             "line": {
                 "name": "Line",
@@ -2837,6 +2914,10 @@
                 "name": "Breakwater",
                 "terms": ""
             },
+            "man_made/chimney": {
+                "name": "Chimney",
+                "terms": ""
+            },
             "man_made/cutline": {
                 "name": "Cut line",
                 "terms": ""
@@ -2847,6 +2928,14 @@
             },
             "man_made/flagpole": {
                 "name": "Flagpole",
+                "terms": ""
+            },
+            "man_made/gasometer": {
+                "name": "Gasometer",
+                "terms": "gas holder"
+            },
+            "man_made/groyne": {
+                "name": "Groyne",
                 "terms": ""
             },
             "man_made/lighthouse": {
@@ -2881,6 +2970,10 @@
                 "name": "Storage Tank",
                 "terms": "water,oil,gas,petrol"
             },
+            "man_made/surveillance": {
+                "name": "Surveillance",
+                "terms": ""
+            },
             "man_made/survey_point": {
                 "name": "Survey Point",
                 "terms": ""
@@ -2904,6 +2997,10 @@
             "man_made/water_works": {
                 "name": "Water Works",
                 "terms": ""
+            },
+            "man_made/works": {
+                "name": "Works",
+                "terms": "car assembly plant,aluminium processing plant,brewery,furniture manufacture factory,oil refinery,plastic recycling"
             },
             "military/airfield": {
                 "name": "Airfield",
@@ -3335,7 +3432,7 @@
             },
             "shop/bicycle": {
                 "name": "Bicycle Shop",
-                "terms": ""
+                "terms": "bike,repair"
             },
             "shop/bookmaker": {
                 "name": "Bookmaker",
@@ -3649,6 +3746,10 @@
                 "name": "Stationery Store",
                 "terms": "card,paper"
             },
+            "shop/storage_rental": {
+                "name": "Storage Rental",
+                "terms": ""
+            },
             "shop/supermarket": {
                 "name": "Supermarket",
                 "terms": "grocery,store,shop"
@@ -3901,12 +4002,20 @@
                 "name": "Route Master",
                 "terms": ""
             },
+            "type/site": {
+                "name": "Site",
+                "terms": ""
+            },
             "vertex": {
                 "name": "Other",
                 "terms": ""
             },
             "waterway": {
                 "name": "Waterway",
+                "terms": ""
+            },
+            "waterway/boatyard": {
+                "name": "Boatyard",
                 "terms": ""
             },
             "waterway/canal": {
@@ -3919,6 +4028,10 @@
             },
             "waterway/ditch": {
                 "name": "Ditch",
+                "terms": ""
+            },
+            "waterway/dock": {
+                "name": "Dock",
                 "terms": ""
             },
             "waterway/drain": {
@@ -3944,6 +4057,10 @@
             "waterway/stream": {
                 "name": "Stream",
                 "terms": "beck,branch,brook,burn,course,creek,current,drift,flood,flow,freshet,race,rill,rindle,rivulet,run,runnel,rush,spate,spritz,surge,tide,torrent,tributary,watercourse"
+            },
+            "waterway/water_point": {
+                "name": "Marine Drinking Water",
+                "terms": ""
             },
             "waterway/weir": {
                 "name": "Weir",

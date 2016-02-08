@@ -669,9 +669,6 @@
             "amenity/clock": {
                 "name": "Klokke"
             },
-            "amenity/doctor": {
-                "name": "Doktor"
-            },
             "amenity/drinking_water": {
                 "name": "Drikkevann"
             },
@@ -860,9 +857,6 @@
             },
             "highway/traffic_signals": {
                 "name": "Trafikklys"
-            },
-            "highway/unclassified": {
-                "name": "Uklassifisert vei"
             },
             "historic": {
                 "name": "Historisk sted"
