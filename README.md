@@ -3,6 +3,27 @@
 [![Build Status](https://travis-ci.org/openstreetmap/iD.svg?branch=master)](https://travis-ci.org/openstreetmap/iD)
 [![Greenkeeper badge](https://badges.greenkeeper.io/openstreetmap/iD.svg)](https://greenkeeper.io/)
 
+## Rebase and publish
+
+	git remote add upstream git@github.com:openstreetmap/iD.git
+	git checkout master
+	git fetch upstream master
+	git rebase upstream/master
+	git push -f
+	make
+	cp -r dist /tmp/
+	git checkout gh-pages
+	cp -r /tmp/dist/* .
+	
+add all files (except the dist directory to the changeset)
+
+	git commit -a -m "rebase off upstream master"
+	git push
+
+	git checkout master
+
+For every update the conflicts have been very minor.
+
 ## Basics
 
 * iD is a JavaScript [OpenStreetMap](https://www.openstreetmap.org/) editor.
