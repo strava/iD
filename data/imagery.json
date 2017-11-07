@@ -2,12 +2,12 @@
     {
         "name": "Strava Global Heat",
         "type": "tms",
-        "template": "https://globalheat.strava.com/tiles/both/color4/{zoom}/{x}/{y}.png",
+        "template": "https://heatmap-external-a.strava.com/tiles/all/bluered/{zoom}/{x}/{y}.png?px=256",
         "overlay": true,
         "description": "Strava Global Heat",
         "scaleExtent": [
             13,
-            17
+            16
         ],
         "sourcetag": "Strava Global Heat",
         "default": "yes"
@@ -15,12 +15,12 @@
     {
         "name": "Strava Cycling Heat",
         "type": "tms",
-        "template": "https://globalheat.strava.com/tiles/cycling/color4/{zoom}/{x}/{y}.png",
+        "template": "https://heatmap-external-a.strava.com/tiles/cycling/bluered/{zoom}/{x}/{y}.png?px=256",
         "overlay": true,
         "description": "Strava Global Cycling Heat",
         "scaleExtent": [
             13,
-            17
+            16
         ],
         "sourcetag": "Strava Cycling Heat",
         "default": "no"
@@ -28,12 +28,12 @@
     {
         "name": "Strava Running Heat",
         "type": "tms",
-        "template": "https://globalheat.strava.com/tiles/running/color4/{zoom}/{x}/{y}.png",
+        "template": "https://heatmap-external-a.strava.com/tiles/running/bluered/{zoom}/{x}/{y}.png?px=256",
         "overlay": true,
         "description": "Strava Global Running Heat",
         "scaleExtent": [
             13,
-            17
+            16
         ],
         "sourcetag": "Strava Running Heat",
         "default": "no"
@@ -41,12 +41,12 @@
     {
         "name": "Strava Heat masked by OSM",
         "type": "tms",
-        "template": "https://gometry.strava.com/osm_mask/tiles/both/color2/{zoom}/{x}/{y}.png",
+        "template": "https://gometry.strava.com/osm_mask/tiles/all/bluered/{zoom}/{x}/{y}.png",
         "overlay": true,
         "description": "Strava Heat masked by OSM (experimental layer)",
         "scaleExtent": [
             15,
-            17
+            16
         ],
         "sourcetag": "Strava Heat OSM Mask",
         "default": "no"        
