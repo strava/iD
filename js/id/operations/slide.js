@@ -1,5 +1,5 @@
 iD.operations.Slide = function(selectedIds, context) {
-    var slideOperationURI = window.location.hostname == 'localhost' ? "http://localhost:8200/slide" : "https://gometry.strava.com/slide";
+    var slideOperationURI = window.location.hostname === 'localhost' ? 'http://localhost:8200/slide' : 'https://gometry.strava.com/slide';
 
     function sharedWayId(nodeIds) {
         var graph = context.graph(),
@@ -13,12 +13,13 @@ iD.operations.Slide = function(selectedIds, context) {
         
         // nodes selected case
         wayIds = _.pluck(graph.parentWays(graph.entity(nodeIds[0])), 'id');
+        var matcher = function(id) { return id === wayIds[j]; };
         for (i = 1; i < nodeIds.length; i++) {
             var vertexWayIds = _.pluck(graph.parentWays(graph.entity(nodeIds[i])), 'id');
 
             for (j = 0; j < wayIds.length; j++) {
                 // this is wayId is not part of this vertex, remove it from wayIds
-                if (!_.any(vertexWayIds, function(id) { return id === wayIds[j]; })) {
+                if (!_.any(vertexWayIds, matcher)) {
                     wayIds.splice(j, 1);
                     j--;
                 }
@@ -33,17 +34,17 @@ iD.operations.Slide = function(selectedIds, context) {
 
     function heatType() {
         var backgrounds = context.background().overlayLayerSources(),
-            hasBoth = _.any(backgrounds, function(b) { return (b.sourcetag === "Strava Global Heat"); }),
-            hasCycling = _.any(backgrounds, function(b) { return (b.sourcetag === "Strava Cycling Heat"); }),
-            hasRunning = _.any(backgrounds, function(b) { return (b.sourcetag === "Strava Running Heat"); }),
-            heat = "both";
+            hasBoth = _.any(backgrounds, function(b) { return (b.sourcetag === 'Strava Global Heat'); }),
+            hasCycling = _.any(backgrounds, function(b) { return (b.sourcetag === 'Strava Cycling Heat'); }),
+            hasRunning = _.any(backgrounds, function(b) { return (b.sourcetag === 'Strava Running Heat'); }),
+            heat = 'both';
 
         if (hasBoth || (hasCycling && hasRunning)) {
-            heat = "both";
+            heat = 'both';
         } else if (hasCycling) {
-            heat = "cycling";
+            heat = 'cycling';
         } else {
-            heat = "running";
+            heat = 'running';
         }
 
         return heat;
@@ -89,7 +90,6 @@ iD.operations.Slide = function(selectedIds, context) {
         d3.json(slideOperationURI + '?data_tiles=' + heatType() + '&path=' + encodeURIComponent(polylineEncode(path)), 
             function(error, json) {
                 loading.close();
-                if (error) return console.warn(error);
 
                 var action = iD.actions.Slide({
                     way: way,
@@ -110,7 +110,7 @@ iD.operations.Slide = function(selectedIds, context) {
         var vertexCount = 0;
 
         // selecting a single way case
-        if (selectedIds.length == 1 && context.geometry(selectedIds[0]) === 'line')
+        if (selectedIds.length === 1 && context.geometry(selectedIds[0]) === 'line')
             return true;
 
         // multiple vertexes
@@ -140,7 +140,7 @@ iD.operations.Slide = function(selectedIds, context) {
     /****************************************************************
      * polyline encoding stuff */
     function polylineEncode(points) {
-        var factor = 1.0e6, pLat = 0, pLng = 0, result = "";
+        var factor = 1.0e6, pLat = 0, pLng = 0, result = '';
 
         for(var i = 0; i < points.length; i++) {
             var p = points[i],
@@ -159,7 +159,7 @@ iD.operations.Slide = function(selectedIds, context) {
     }
 
     function encodeNumber(num)  {
-        var nextValue, finalValue, encodeString = "";
+        var nextValue, finalValue, encodeString = '';
 
         while (num >= 0x20) {
             nextValue = (0x20 | (num & 0x1f)) + 63;

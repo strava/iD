@@ -8,11 +8,6 @@ iD.actions.Slide = function(options, projection) {
             node.hasInterestingTags();
     }
 
-    function positionAlongWay(n, s, e) {
-        return ((n[0] - s[0]) * (e[0] - s[0]) + (n[1] - s[1]) * (e[1] - s[1]))/
-                (Math.pow(e[0] - s[0], 2) + Math.pow(e[1] - s[1], 2));
-    }
-
     var action = function(graph) {
         var way = options.way,
             allNodes = options.allNodes,
